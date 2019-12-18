@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="">
+    <title>뷰 디렉티브(5) - null</title>
+    <meta name="author" content="Moon Star">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"1. v-ifv-if는 조건부로 렌더링을 할때 사용을 합니다. 조건부가 참이면 렌더링을 거짓이면 렌더링을 하지 않습니다. 조건을 만족하지 않으면 렌더링 자체를 하지 않기때문에 돔에 추가 되지 않습니다.\n1&lt;div v-if=\"type === 'A'\"&gt;v-if를 사용해보겠습니다.&lt;/div&gt;\n\nv-else도 사용 가능합니다.\n12&lt;div v-if=\"type === 'A'\"&gt;참이면 실행하세요.&lt;/div&gt;    &lt;div v-else&gt;거짓이면 실행하세요.&lt;/div&gt;\n\nv-else-if도 사용가능합니다.\n12&lt;div v-if=\"type === 'A'\"&gt;type이 A이면 실행하세요.&lt;/div&gt;   &lt;div v-else-if=\"type === 'B'\"&gt;type이 B이면 실행하세요.&lt;/div&gt;\n\n조건에 따라서 화면에 보이거나 숨겨야 하는 경우 v-if를 사용하면 좋습니다. 하지만 토글기능을 사용해야 할 경우에는 렌더링을 다시 해주어야 하기 때문에 v-if 보다는 v-show가 좋을수있습니다. template 태그에서도 사용가능합니다.(template 태그 그 자체는 사용해도 화면에 렌더링 되지 않고 내부 자식 태그들만 렌더링 해줍니다.)\n2. v-showv-show는 v-if랑 비슷한 역할을 합니다. v-if랑 다른 건 렌더링은 모두 하지만 숨기고 보이는 건 css의 display none 속성을 사용합니다. v-if와 마찬가지로 조건을 만족하면 화면에 보이고 만족하지 않으면 보이지 않습니다.\n1&lt;div v-show&#x3D;&quot;true&quot;&gt;v-if를 사용해보겠습니다.&lt;&#x2F;div&gt;\n\n잦은 보이거나 숨기는 기능을 사용하게 된다면 v-show를 사용하면 좋습니다(렌더링을 다시 하는 것보단 css로 none또는 block하는게 더 효율적). v-show는 초기 렌더링 비용이 높기 때문에 유의 해야 합니다.\n3. v-forv-for는 지정한 뷰 데이터의 개수만큼 해당 HTML 태그를 반복해서 출력 합니다. 대상은 Array뿐아니라 Object도 가능합니다.\n123&lt;ul&gt;    &lt;li v-for=\"item in list\"&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;&lt;/ul&gt;\n\nfor문에 대한 index도 사용 가능합니다.\n123&lt;ul&gt;    &lt;li v-for=\"(item, index) in list\"&gt;&#123;&#123;index + ' : ' + item&#125;&#125;&lt;/li&gt;&lt;/ul&gt;\n\n정리\n하나의 태그에 두개 이상의 다중 for문은 작성이 불가능합니다.\nv-if랑 함께 사용은 가능 하나 공식가이드에서는 권고하지 않습니다.\nfor문을 사용할때는 :key 속성을 부여하는게 좋습니다(값은 유일값으로).\n컴포넌트에도 v-for를 사용 가능합니다.\n2.2 버전 이상부터는 :key 속성을 사용하여야 합니다(유일 값).\ntemplate 태그에서도 사용 가능합니다.\n리스트뿐 아니라 객체도 사용가능 =&gt; Collection에서 사용가능\n\n4. v-bindv-bind는 HTML 속성 값에 데이터를 바인딩하거나 하위 컴포넌트의 props 속성에 값을 바인딩 할때 사용합니다. 사용방법은 v-bind:속성명=&quot;데이터&quot; 또는 축약으로 :속성명=&quot;데이터&quot;으로도 사용가능합니다.\n12&lt;div v-bind:id=\"type\"&gt;&lt;/div&gt;    &lt;!-- 데이터 type의 값이 바인딩 됩니다. --&gt;&lt;div v-bind:id=\"'type'\"&gt;&lt;/div&gt;  &lt;!-- type이라는 문자열으로 설정합니다. --&gt;\n\nclass 속성에 객체를 전달할 수도 있습니다. 객체를 활용하면 여러개의 class를 쉽게 바인딩 할수 있습니다. 객체의 값이 true면 해당 객체의 key명이 class로 지정됩니다.\n12&lt;div v-bind:class=\"&#123;active: true&#125;\"&gt;&lt;/div&gt;&lt;div v-bind:class=\"&#123;active: true, on: true&#125;\"&gt;&lt;/div&gt;\n\n5. v-modelv-model은 form에서 주로 사용되는 속성입니다. 폼에 입력한 값을 뷰의 데이터와 바인딩하는 역할을 합니다. 다른 디렉티브와는 다르게 양방향으로 바인딩 되기 때문에 input에 값을 입력하면 뷰의 데이터도 변경이됩니다. v-model에서 사용하는 태그는 input, select, textarea 등이 있습니다.\n1&lt;input type=\"text\" v-model=\"value\"&gt;\n\n여러 체크박스를 하나의 배열로 바인딩 할수 있습니다. 체크를 하게 되면 배열에 하나씩 추가 됩니다.\n123&lt;input type=\"checkbox\" value=\"김씨\" v-model=\"checkboxNames\"&gt;&lt;input type=\"checkbox\" value=\"이씨\" v-model=\"checkboxNames\"&gt;&lt;input type=\"checkbox\" value=\"박씨\" v-model=\"checkboxNames\"&gt;\n\n.number 수식어를 사용하면 자동으로 숫자로 형변환은 해줍니다.\n1&lt;input type=\"text\" v-model.number=\"num\"&gt;\n\n.trim 수식어를 사용하면 자동으로 trim을 해줍니다.\n1&lt;input type=\"text\" v-model.trim=\"value\"&gt;\n\n6. v-onv-on은 이벤트를 감지하는 기능입니다. 사용하는 방법은 v-on:이벤트명=&quot;실행부&quot;이고 축약은 @이벤트명=&quot;실행부&quot; 입니다. 이벤트가 발생해서 메서드를 호출하면 파라미터로 아무것도 넘기지 않았다면 event가 넘어옵니다.\n1&lt;button v-on:click=\"onClick\"&gt;클릭&lt;/button&gt;  &lt;!-- onClick은 메서드로써 괄호()는 넣지 않아도 됨 --&gt;\n\n이벤트를 실행시킬때 파라미터를 넘겨줄수 있습니다.\n1&lt;button v-on:click=\"onClick('type')\"&gt;&lt;/button&gt;   &lt;!-- 해당 버튼을 눌렀을 때 onClick 메서드를 호출하면서 type이라는 문자열을 파라미터로 전달 --&gt;\n\n사용자 파라미터를 넘겨주면서 이벤트 객체도 넘겨 줄때는 $event를 사용합니다.\n1&lt;button v-on:click=\"onClick('type', $event)\"&gt;&lt;/button&gt;\n\n\n.stop 수식어를 통해서 버블링을 막을수 있습니다.\n1&lt;button v-on:click.stop=\"onClick\"&gt;버튼&lt;/button&gt;\n\n.prevent 수식어를 통해서 event.preventDefault() 역할을 대신 할수있습니다.\n1&lt;form v-on:submit.prevent=\"onSubmit\"&gt;&lt;/form&gt;\n\n.once 수식어는 최대 한번만 실행 가능하도록 설정합니다.\n1&lt;form v-on:submit.once=\"onSubmit\"&gt;&lt;/form&gt;\n\n키에 대한 수식어를 사용 가능합니다. 종류에는 .enter, .tab, .delete(Delete와 Backspace 모두), .esc, .up, .down, .left, .right가 존재하며 config.keyCodes를 통해서 사용자 정의 키 수식어를 만들수도 있습니다.\n1&lt;input type=\"text\" v-on:keyup.enter=\"onSubmit\"&gt;\n\n\n수식어는 체이닝이 됩니다.이벤트는 기본이벤트 뿐 아니라 사용자 정의 이벤트도 사용가능합니다.\n\n","dateCreated":"2019-12-18T23:53:50+09:00","dateModified":"2019-12-19T01:04:58+09:00","datePublished":"2019-12-18T23:53:50+09:00","description":"","headline":"뷰 디렉티브(5)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/18/vue-directive/","keywords":"vue"}</script>
+    <meta name="description" content="1. v-ifv-if는 조건부로 렌더링을 할때 사용을 합니다. 조건부가 참이면 렌더링을 거짓이면 렌더링을 하지 않습니다. 조건을 만족하지 않으면 렌더링 자체를 하지 않기때문에 돔에 추가 되지 않습니다. 1&lt;div v-if&#x3D;&quot;type &#x3D;&#x3D;&#x3D; &#39;A&#39;&quot;&gt;v-if를 사용해보겠습니다.&lt;&#x2F;div&gt;  v-else도 사용 가능합니다. 12&lt;di">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="뷰 디렉티브(5)">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;18&#x2F;vue-directive&#x2F;index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="1. v-ifv-if는 조건부로 렌더링을 할때 사용을 합니다. 조건부가 참이면 렌더링을 거짓이면 렌더링을 하지 않습니다. 조건을 만족하지 않으면 렌더링 자체를 하지 않기때문에 돔에 추가 되지 않습니다. 1&lt;div v-if&#x3D;&quot;type &#x3D;&#x3D;&#x3D; &#39;A&#39;&quot;&gt;v-if를 사용해보겠습니다.&lt;&#x2F;div&gt;  v-else도 사용 가능합니다. 12&lt;di">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-18T14:53:50.000Z">
+<meta property="article:modified_time" content="2019-12-18T16:04:58.534Z">
+<meta property="article:author" content="Moon Star">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/code_repository/%20"
+            aria-label=""
+        >
+            
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /code_repository/#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/%20"
+                            
+                            title="홈"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/all-categories"
+                            
+                            title="카테고리"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/all-tags"
+                            
+                            title="태그"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/all-archives"
+                            
+                            title="아카이브"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="검색"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            뷰 디렉티브(5)
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-12-18T23:53:50+09:00">
+	
+		    Dec 18, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/code_repository/categories/vue/">vue</a>, <a class="category-link" href="/code_repository/categories/vue/vue-%EA%B8%B0%EB%B3%B8%EB%AC%B8%EB%B2%95/">vue 기본문법</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="1-v-if"><a href="#1-v-if" class="headerlink" title="1. v-if"></a>1. v-if</h2><p>v-if는 조건부로 렌더링을 할때 사용을 합니다. 조건부가 참이면 렌더링을 거짓이면 렌더링을 하지 않습니다. 조건을 만족하지 않으면 렌더링 자체를 하지 않기때문에 돔에 추가 되지 않습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">"type === 'A'"</span>&gt;</span>v-if를 사용해보겠습니다.<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>v-else도 사용 가능합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">"type === 'A'"</span>&gt;</span>참이면 실행하세요.<span class="tag">&lt;/<span class="name">div</span>&gt;</span>    </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else</span>&gt;</span>거짓이면 실행하세요.<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>v-else-if도 사용가능합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">"type === 'A'"</span>&gt;</span>type이 A이면 실행하세요.<span class="tag">&lt;/<span class="name">div</span>&gt;</span>   </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else-if</span>=<span class="string">"type === 'B'"</span>&gt;</span>type이 B이면 실행하세요.<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>조건에 따라서 화면에 보이거나 숨겨야 하는 경우 v-if를 사용하면 좋습니다. 하지만 토글기능을 사용해야 할 경우에는 렌더링을 다시 해주어야 하기 때문에 v-if 보다는 v-show가 좋을수있습니다. template 태그에서도 사용가능합니다.(template 태그 그 자체는 사용해도 화면에 렌더링 되지 않고 내부 자식 태그들만 렌더링 해줍니다.)</p>
+<h2 id="2-v-show"><a href="#2-v-show" class="headerlink" title="2. v-show"></a>2. v-show</h2><p>v-show는 v-if랑 비슷한 역할을 합니다. v-if랑 다른 건 렌더링은 모두 하지만 숨기고 보이는 건 css의 display none 속성을 사용합니다. v-if와 마찬가지로 조건을 만족하면 화면에 보이고 만족하지 않으면 보이지 않습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-show&#x3D;&quot;true&quot;&gt;v-if를 사용해보겠습니다.&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>잦은 보이거나 숨기는 기능을 사용하게 된다면 v-show를 사용하면 좋습니다(렌더링을 다시 하는 것보단 css로 none또는 block하는게 더 효율적). v-show는 초기 렌더링 비용이 높기 때문에 유의 해야 합니다.</p>
+<h2 id="3-v-for"><a href="#3-v-for" class="headerlink" title="3. v-for"></a>3. v-for</h2><p>v-for는 지정한 뷰 데이터의 개수만큼 해당 HTML 태그를 반복해서 출력 합니다. 대상은 Array뿐아니라 Object도 가능합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"item in list"</span>&gt;</span>&#123;&#123;item&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>for문에 대한 index도 사용 가능합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"(item, index) in list"</span>&gt;</span>&#123;&#123;index + ' : ' + item&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h4><ol>
+<li>하나의 태그에 두개 이상의 다중 for문은 작성이 불가능합니다.</li>
+<li>v-if랑 함께 사용은 가능 하나 공식가이드에서는 권고하지 않습니다.</li>
+<li>for문을 사용할때는 :key 속성을 부여하는게 좋습니다(값은 유일값으로).</li>
+<li>컴포넌트에도 v-for를 사용 가능합니다.</li>
+<li>2.2 버전 이상부터는 :key 속성을 사용하여야 합니다(유일 값).</li>
+<li>template 태그에서도 사용 가능합니다.</li>
+<li>리스트뿐 아니라 객체도 사용가능 =&gt; Collection에서 사용가능</li>
+</ol>
+<h2 id="4-v-bind"><a href="#4-v-bind" class="headerlink" title="4. v-bind"></a>4. v-bind</h2><p>v-bind는 HTML 속성 값에 데이터를 바인딩하거나 하위 컴포넌트의 props 속성에 값을 바인딩 할때 사용합니다. 사용방법은 <code>v-bind:속성명=&quot;데이터&quot;</code> 또는 축약으로 <code>:속성명=&quot;데이터&quot;</code>으로도 사용가능합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">"type"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>    <span class="comment">&lt;!-- 데이터 type의 값이 바인딩 됩니다. --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">"'type'"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>  <span class="comment">&lt;!-- type이라는 문자열으로 설정합니다. --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>class 속성에 객체를 전달할 수도 있습니다. 객체를 활용하면 여러개의 class를 쉽게 바인딩 할수 있습니다. 객체의 값이 true면 해당 객체의 key명이 class로 지정됩니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:class</span>=<span class="string">"&#123;active: true&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:class</span>=<span class="string">"&#123;active: true, on: true&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-v-model"><a href="#5-v-model" class="headerlink" title="5. v-model"></a>5. v-model</h2><p>v-model은 form에서 주로 사용되는 속성입니다. 폼에 입력한 값을 뷰의 데이터와 바인딩하는 역할을 합니다. 다른 디렉티브와는 다르게 양방향으로 바인딩 되기 때문에 input에 값을 입력하면 뷰의 데이터도 변경이<br>됩니다. v-model에서 사용하는 태그는 input, select, textarea 등이 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model</span>=<span class="string">"value"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>여러 체크박스를 하나의 배열로 바인딩 할수 있습니다. 체크를 하게 되면 배열에 하나씩 추가 됩니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"김씨"</span> <span class="attr">v-model</span>=<span class="string">"checkboxNames"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"이씨"</span> <span class="attr">v-model</span>=<span class="string">"checkboxNames"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"박씨"</span> <span class="attr">v-model</span>=<span class="string">"checkboxNames"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>.number 수식어를 사용하면 자동으로 숫자로 형변환은 해줍니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model.number</span>=<span class="string">"num"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>.trim 수식어를 사용하면 자동으로 trim을 해줍니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model.trim</span>=<span class="string">"value"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="6-v-on"><a href="#6-v-on" class="headerlink" title="6. v-on"></a>6. v-on</h1><p>v-on은 이벤트를 감지하는 기능입니다. 사용하는 방법은 <code>v-on:이벤트명=&quot;실행부&quot;</code>이고 축약은 <code>@이벤트명=&quot;실행부&quot;</code> 입니다. 이벤트가 발생해서 메서드를 호출하면 파라미터로 아무것도 넘기지 않았다면 event가 넘어옵니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"onClick"</span>&gt;</span>클릭<span class="tag">&lt;/<span class="name">button</span>&gt;</span>  <span class="comment">&lt;!-- onClick은 메서드로써 괄호()는 넣지 않아도 됨 --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>이벤트를 실행시킬때 파라미터를 넘겨줄수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"onClick('type')"</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span>   <span class="comment">&lt;!-- 해당 버튼을 눌렀을 때 onClick 메서드를 호출하면서 type이라는 문자열을 파라미터로 전달 --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>사용자 파라미터를 넘겨주면서 이벤트 객체도 넘겨 줄때는 $event를 사용합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"onClick('type', $event)"</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>.stop 수식어를 통해서 버블링을 막을수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click.stop</span>=<span class="string">"onClick"</span>&gt;</span>버튼<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>.prevent 수식어를 통해서 <code>event.preventDefault()</code> 역할을 대신 할수있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>=<span class="string">"onSubmit"</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>.once 수식어는 최대 한번만 실행 가능하도록 설정합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.once</span>=<span class="string">"onSubmit"</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>키에 대한 수식어를 사용 가능합니다. 종류에는 .enter, .tab, .delete(Delete와 Backspace 모두), .esc, .up, .down, .left, .right가 존재하며 config.keyCodes를 통해서 사용자 정의 키 수식어를 만들수도 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-on:keyup.enter</span>=<span class="string">"onSubmit"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>수식어는 체이닝이 됩니다.<br>이벤트는 기본이벤트 뿐 아니라 사용자 정의 이벤트도 사용가능합니다.</p>
+</blockquote>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/vue/" rel="tag">vue</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/19/vue-cli-project-create/"
+                    data-tooltip="CLI를 통한 프로젝트 생성(6)"
+                    aria-label="PREVIOUS: CLI를 통한 프로젝트 생성(6)"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/18/vue-option/"
+                    data-tooltip="뷰 옵션(4)"
+                    aria-label="NEXT: 뷰 옵션(4)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2019 Moon Star. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/19/vue-cli-project-create/"
+                    data-tooltip="CLI를 통한 프로젝트 생성(6)"
+                    aria-label="PREVIOUS: CLI를 통한 프로젝트 생성(6)"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/18/vue-option/"
+                    data-tooltip="뷰 옵션(4)"
+                    aria-label="NEXT: 뷰 옵션(4)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/18/vue-directive/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Moon Star</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/code_repository/assets/js/jquery.js"></script>
+
+
+<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/code_repository/assets/js/thumbs.js"></script>
+
+
+<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
