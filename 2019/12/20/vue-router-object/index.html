@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="">
+    <title>라우터 객체 - null</title>
+    <meta name="author" content="Moon Star">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"라우터 객체router 객체라우터 객체를 이용한 주소변경앞서서 &lt;view-link to=&quot;&quot;&gt;를 활용한 주소변경에 대해서는 알아보았습니다. 하지만 때론 자바스크립트로 주소변경을 해야 하는 경우가 발생할수 있습니다.이런 경우에는 this.$router.push(&#39;주소&#39;)을 이용하여 주소를 이동할수 있습니다.\n1234567891011121314&lt;button @click=\"onClik\"&gt;클릭&lt;/button&gt;&lt;script&gt;export default &#123;    methods: &#123;        onClick() &#123;            this.$router.push('주소');            this.$router.push(&#123;path : '주소'&#125;);            this.$router.push(&#123;path : '주소', params: &#123;id: 123&#125;&#125;);            this.$router.push(&#123;path : '주소', query: &#123;id: 123&#125;&#125;);   // query를 사용하는 경우 주소창에 /주소?id=123으로 출력        &#125;    &#125;&#125;&lt;/script&gt;\n\n히스토리 목록에 추가하지 않고 주소 변경push를 이용하면 히스토리 목록에 추가가 됩니다. 하지만 replace를 이용하면 목록에 추가 되지 않습니다.($router.go 메서드를 이용해서 이전 주소로 이동이 불가능합니다.)\n1234567891011121314&lt;router-link to=\"주소\" replace&gt;&lt;/router-link&gt;   &lt;!-- 선언적 방식은 속성으로 replace를 추가 --&gt;&lt;script&gt;export default &#123;    methods: &#123;        onClick() &#123;            this.$router.replace('주소');            this.$router.replace(&#123;path : '주소'&#125;);            this.$router.replace(&#123;path : '주소', params: &#123;id: 123&#125;&#125;);            this.$router.replace(&#123;path : '주소', query: &#123;id: 123&#125;&#125;);   // query를 사용하는 경우 주소창에 /주소?id=123으로 출력        &#125;    &#125;&#125;&lt;/script&gt;\n\n\n$router는 VueRouter인스턴스 입니다.\n\nroute 객체$route.params동적라우팅으로 데이터를 받거나 push등을 통해서 params에 데이터를 저장한 경우에 this.$route.params.데이터를 통해서 데이터를 얻어 올수 있습니다.\n1234567&lt;script&gt;export default &#123;    created() &#123;        this.$route.params.데이터    &#125;&#125;&lt;/script&gt;\n\n$route.querypush등을 통해서 query에 데이터를 저장한 경우에 this.$route.query.데이터를 통해서 데이터를 얻어 올수 있습니다.\n1234567&lt;script&gt;export default &#123;    created() &#123;        this.$route.query.데이터    &#125;&#125;&lt;/script&gt;","dateCreated":"2019-12-20T09:15:24+09:00","dateModified":"2019-12-21T15:55:53+09:00","datePublished":"2019-12-20T09:15:24+09:00","description":"","headline":"라우터 객체","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/","keywords":"vue, $router, $route"}</script>
+    <meta name="description" content="라우터 객체router 객체라우터 객체를 이용한 주소변경앞서서 &lt;view-link to&#x3D;&quot;&quot;&gt;를 활용한 주소변경에 대해서는 알아보았습니다. 하지만 때론 자바스크립트로 주소변경을 해야 하는 경우가 발생할수 있습니다.이런 경우에는 this.$router.push(&#39;주소&#39;)을 이용하여 주소를 이동할수 있습니다. 1234">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라우터 객체">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;20&#x2F;vue-router-object&#x2F;index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="라우터 객체router 객체라우터 객체를 이용한 주소변경앞서서 &lt;view-link to&#x3D;&quot;&quot;&gt;를 활용한 주소변경에 대해서는 알아보았습니다. 하지만 때론 자바스크립트로 주소변경을 해야 하는 경우가 발생할수 있습니다.이런 경우에는 this.$router.push(&#39;주소&#39;)을 이용하여 주소를 이동할수 있습니다. 1234">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-20T00:15:24.000Z">
+<meta property="article:modified_time" content="2019-12-21T06:55:53.974Z">
+<meta property="article:author" content="Moon Star">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="$router">
+<meta property="article:tag" content="$route">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/code_repository/%20"
+            aria-label=""
+        >
+            
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /code_repository/#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/%20"
+                            
+                            title="홈"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/all-categories"
+                            
+                            title="카테고리"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/all-tags"
+                            
+                            title="태그"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/all-archives"
+                            
+                            title="아카이브"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="검색"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/code_repository/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            라우터 객체
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-12-20T09:15:24+09:00">
+	
+		    Dec 20, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/code_repository/categories/vue/">vue</a>, <a class="category-link" href="/code_repository/categories/vue/vue-%EB%9D%BC%EC%9A%B0%ED%84%B0/">vue 라우터</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="라우터-객체"><a href="#라우터-객체" class="headerlink" title="라우터 객체"></a>라우터 객체</h1><h3 id="router-객체"><a href="#router-객체" class="headerlink" title="router 객체"></a>router 객체</h3><h4 id="라우터-객체를-이용한-주소변경"><a href="#라우터-객체를-이용한-주소변경" class="headerlink" title="라우터 객체를 이용한 주소변경"></a>라우터 객체를 이용한 주소변경</h4><p>앞서서 <code>&lt;view-link to=&quot;&quot;&gt;</code>를 활용한 주소변경에 대해서는 알아보았습니다. 하지만 때론 자바스크립트로 주소변경을 해야 하는 경우가 발생할수 있습니다.<br>이런 경우에는 <code>this.$router.push(&#39;주소&#39;)</code>을 이용하여 주소를 이동할수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"onClik"</span>&gt;</span>클릭<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    methods: &#123;</span><br><span class="line">        onClick() &#123;</span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.push(<span class="string">'주소'</span>);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.push(&#123;path : <span class="string">'주소'</span>&#125;);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.push(&#123;path : <span class="string">'주소'</span>, params: &#123;id: <span class="number">123</span>&#125;&#125;);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.push(&#123;path : <span class="string">'주소'</span>, query: &#123;id: <span class="number">123</span>&#125;&#125;);   <span class="comment">// query를 사용하는 경우 주소창에 /주소?id=123으로 출력</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="히스토리-목록에-추가하지-않고-주소-변경"><a href="#히스토리-목록에-추가하지-않고-주소-변경" class="headerlink" title="히스토리 목록에 추가하지 않고 주소 변경"></a>히스토리 목록에 추가하지 않고 주소 변경</h4><p>push를 이용하면 히스토리 목록에 추가가 됩니다. 하지만 replace를 이용하면 목록에 추가 되지 않습니다.($router.go 메서드를 이용해서 이전 주소로 이동이 불가능합니다.)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"주소"</span> <span class="attr">replace</span>&gt;</span><span class="tag">&lt;/<span class="name">router-link</span>&gt;</span>   <span class="comment">&lt;!-- 선언적 방식은 속성으로 replace를 추가 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    methods: &#123;</span><br><span class="line">        onClick() &#123;</span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.replace(<span class="string">'주소'</span>);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.replace(&#123;path : <span class="string">'주소'</span>&#125;);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.replace(&#123;path : <span class="string">'주소'</span>, params: &#123;id: <span class="number">123</span>&#125;&#125;);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.replace(&#123;path : <span class="string">'주소'</span>, query: &#123;id: <span class="number">123</span>&#125;&#125;);   <span class="comment">// query를 사용하는 경우 주소창에 /주소?id=123으로 출력</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>$router는 VueRouter인스턴스 입니다.</p>
+</blockquote>
+<h3 id="route-객체"><a href="#route-객체" class="headerlink" title="route 객체"></a>route 객체</h3><h4 id="route-params"><a href="#route-params" class="headerlink" title="$route.params"></a>$route.params</h4><p>동적라우팅으로 데이터를 받거나 push등을 통해서 params에 데이터를 저장한 경우에 <code>this.$route.params.데이터</code>를 통해서 데이터를 얻어 올수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    created() &#123;</span><br><span class="line"><span class="actionscript">        <span class="keyword">this</span>.$route.params.데이터</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="route-query"><a href="#route-query" class="headerlink" title="$route.query"></a>$route.query</h4><p>push등을 통해서 query에 데이터를 저장한 경우에 <code>this.$route.query.데이터</code>를 통해서 데이터를 얻어 올수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    created() &#123;</span><br><span class="line"><span class="actionscript">        <span class="keyword">this</span>.$route.query.데이터</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/route/" rel="tag">$route</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/router/" rel="tag">$router</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/vue/" rel="tag">vue</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/20/vue-router-transition/"
+                    data-tooltip="라우터 트랜지션"
+                    aria-label="PREVIOUS: 라우터 트랜지션"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/20/vue-dynamic-routing/"
+                    data-tooltip="동적 라우팅"
+                    aria-label="NEXT: 동적 라우팅"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2019 Moon Star. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/20/vue-router-transition/"
+                    data-tooltip="라우터 트랜지션"
+                    aria-label="PREVIOUS: 라우터 트랜지션"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/20/vue-dynamic-routing/"
+                    data-tooltip="동적 라우팅"
+                    aria-label="NEXT: 동적 라우팅"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/vue-router-object/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Moon Star</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/code_repository/assets/js/jquery.js"></script>
+
+
+<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/code_repository/assets/js/thumbs.js"></script>
+
+
+<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

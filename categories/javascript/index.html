@@ -216,6 +216,138 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/code_repository/2019/12/20/vue-webpack-config/"
+                            aria-label=": 웹팩"
+                        >
+                            웹팩
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-20T10:26:25+09:00">
+	
+		    Dec 20, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/code_repository/categories/javascript/">javascript</a>, <a class="category-link" href="/code_repository/categories/javascript/webpack/">webpack</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><p>webpack.config.js 파일은 웹팩에 대한 기본적인 설정을 하는 파일입니다.</p>
+<h2 id="심플한-실제-파일-구성"><a href="#심플한-실제-파일-구성" class="headerlink" title="심플한 실제 파일 구성"></a>심플한 실제 파일 구성</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)	<span class="comment">// output 속성에서 사용할 노드 path 라이브러리 저장</span></span><br><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)	<span class="comment">// 웹팩 플러그인에서 사용할 웹팩 라이브러리를 저장</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 아래부터가 실질적인 웹팩의 설정 내용</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/main.js'</span>,	<span class="comment">// 웹팩으로 빌드할 파일 지정(해당 파일의 앱의 첫 시작 파일이 되는 것)</span></span><br><span class="line">    output: &#123;   <span class="comment">// output은 build 후에 생성 될 파일들에 대한 설정</span></span><br><span class="line">        path: path.resolve(__dirname, <span class="string">'./dist'</span>),	<span class="comment">// 빌드후에 결과 파일 저장 될 디렉토리</span></span><br><span class="line">        publicPath: <span class="string">'/dist/'</span>,		<span class="comment">// 이미지 파일 같이 주소의 앞에 prefix로 붙여주어 주소에 접근 하도록 해주는 것</span></span><br><span class="line">        filename : <span class="string">'build.js'</span>		<span class="comment">// 빌드하고 난 후 결과 파일</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">module</span>: &#123;   <span class="comment">// 지금까지는 loader를 사용하는 것 정도만 확인 했음</span></span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.vue$/</span>,	<span class="comment">// 로더가 적용 될 대상 파일 지정(정규식)</span></span><br><span class="line">                loader: <span class="string">'vue-loader'</span> 	<span class="comment">// loader는 사용할 로더 지정</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span></span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_moules/</span>  <span class="comment">// 해당 디렉토리에서의 탐색은 제외하겠다</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    resolve: &#123;</span><br><span class="line">        alias: &#123;	<span class="comment">// 해당 하는 경로를 @로 대신 사용 가능하다, 여러개 편의성있게 등록 가능하다</span></span><br><span class="line">            <span class="string">'@'</span>: path.resolve(__dirname, <span class="string">'src/'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        extensions: [<span class="string">'*'</span>, <span class="string">'.js'</span>, <span class="string">'.vue'</span>, <span class="string">'.json'</span>]	<span class="comment">// 해당하는 확장자들을 import하게 도와주는 역할</span></span><br><span class="line">    &#125;,</span><br><span class="line">    devtool: <span class="string">'#eval-source-map'</span>	<span class="comment">// 웹팩으로 빌드된 파일로 웹앱 구동시에 개발자 도구에서 사용할 디버깅 방식 지정</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="string">``</span><span class="string">`       </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## 웹팩 설정 구성에 사용 되는 용어 정리</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### 1. entry</span></span><br></pre></td></tr></table></figure>
+<p>entry : 웹팩을 통해서 build를 할 대상 파일을 지정하는 속성<br>    - 해당 파일에는 전체 애플리케이션 로직과 필요한 라이브러리를 로딩하는 로직이 들어가게 됩니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 2. output</span><br></pre></td></tr></table></figure>
+<p>output : 웹팩으로 빌드한 결과물의 위치와 파일이름 등 세부옵션을 설정하는 속성</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 3. loader</span><br></pre></td></tr></table></figure>
+<p>loader : 웹팩으로 빌드할때 html, css 파일등을 자바스크립트로 변환하기 위해 필요한 설정을 정의</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 4. plugin</span><br></pre></td></tr></table></figure>
+<p>plugin : 웹팩으로 빌드 하고 나온 결과물에 대해 추가기능을 제공하는 속성<br>    - 한마디로 필수옵션은 아니지만 빌드할때 혹은 결과물에 추가적인 기능을 적용하고 싶을 때 사용</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 5. resolve</span><br></pre></td></tr></table></figure>
+<p>resolve : 웹팩으로 빌드할때 해당 파일이 어떻게 해석되는지 정의하는 속성<br>    - 예) 라이브러리 로딩시 버전은 어떤걸로 하고, 경로는 어디로 하고 등에 관한 것</p>
+<pre><code></code></pre>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/code_repository/2019/12/20/vue-webpack-config/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/code_repository/2019/12/20/axios/"
+                            aria-label=": axios"
+                        >
+                            axios
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-20T10:12:19+09:00">
+	
+		    Dec 20, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/code_repository/categories/javascript/">javascript</a>, <a class="category-link" href="/code_repository/categories/javascript/%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/">라이브러리</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="axios-정의"><a href="#axios-정의" class="headerlink" title="axios 정의"></a>axios 정의</h1><p>axios는 HTTP 클라이언트 라이브러리로써, 비동기 방식으로 HTTP 데이터 요청을 실행한다. 내부적으로 직접 XMLHttpRequest를 사용하지 않고 AJAX 호출을 할수있다.<br>그리고 axios는 Promise 기반 api이다.</p>
+<h2 id="api는-따로-관리한다"><a href="#api는-따로-관리한다" class="headerlink" title="api는 따로 관리한다."></a>api는 따로 관리한다.</h2><p>axios를 사용할 vue 페이지에서 직접 <code>import axios</code>를 통해서 사용하지 않고 api 파일을 따로 작성하여 해당 메소드를 호출 하는 방식으로 설계를 한다.</p>
+<h2 id="api에서는-직접-then-및-catch-작업을-하지-않는다"><a href="#api에서는-직접-then-및-catch-작업을-하지-않는다" class="headerlink" title="api에서는 직접 then 및 catch 작업을 하지 않는다."></a>api에서는 직접 then 및 catch 작업을 하지 않는다.</h2><p>아래와 같이 호출만 하고 Promise를 return 하는 방식으로 작성한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> axios.get(...);    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="API-작성-방법"><a href="#API-작성-방법" class="headerlink" title="API 작성 방법"></a>API 작성 방법</h2><h6 id="1-기본-HTTP-Request-amp-Response와-관련된-기본설정을-한다"><a href="#1-기본-HTTP-Request-amp-Response와-관련된-기본설정을-한다" class="headerlink" title="1. 기본 HTTP Request &amp; Response와 관련된 기본설정을 한다."></a>1. 기본 HTTP Request &amp; Response와 관련된 기본설정을 한다.</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    baseUrl: <span class="string">'http://127.0.0.1/test/'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="2-API-함수들을-정리한다"><a href="#2-API-함수들을-정리한다" class="headerlink" title="2. API 함수들을 정리한다."></a>2. API 함수들을 정리한다.</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getRoleList = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> axios.get(...);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getUserList = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> axios.get(...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/code_repository/2019/12/20/axios/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/code_repository/2019/12/19/javascript-number/"
                             aria-label=": 숫자와 관련된 팁"
                         >
