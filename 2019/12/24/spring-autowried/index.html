@@ -6,20 +6,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="">
-    <title>Tag: autowired - null</title>
+    <title>Autowried 어노테이션 사용 - null</title>
     <meta name="author" content="Moon Star">
     
     
     
-    <script type="application/ld+json">{}</script>
-    <meta name="description" content="개발 정리 블로그">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"@Autowried는 Bean으로 등록된 객체를 자동으로 삽입해주는 역할을 합니다. 생성자, 필드, set메소드를 활용 하여 적용이 가능합니다.\n예제 Class 등록해당 포스팅 시에 사용 할 Book 클래스입니다. 아래에서 사용 될 Book 클래스는 아래 소스 코드를 사용하게 됩니다.\n12345678package kr.co.spring;import org.springframework.stereotype.Component;@Componentpublic class Book &#123;&#125;\n\n\n\n생성자를 이용한 방법생성자 메소드 위에 @Autowired만 등록 해서 사용 하면 됩니다.\n123456789@Componentclass BookStore &#123;    private Book book;    @Autowired    public BookStore(Book book) &#123;        this.book = book;    &#125;&#125;\n\n생성자에서 @Autowired는 생략이 가능합니다.\n\n\n\n\n\nsetter를 이용한 방법setter 메소드 위에 @Autowired만 등록 해서 사용 하면 됩니다. 생성자와는 달리 @Autowired를 붙여주지 않으면 의존주입이 되지 않습니다.\n123456789@Componentclass BookStore &#123;    private Book book;    @Autowired    public setBook(Book book) &#123;        this.book = book;    &#125;&#125;\n\nsetter를 활용하면 Bean을 필수적으로 의존주입 받을지 여부를 선택할수 있습니다. 옵션을 주지 않는 경우 의존주입 받을 Bean이 없는 경우 에러가 발생합니다. 이때 @Autowired(required = false)를 사용해서 만약 Bean이 존재하지 않는 경우 의존주입을 받지 않도록 설정이 가능합니다.\nsetter 메소드 이름은 상관이 없습니다.\n\n\n\n\n필드에 직접 사용필드 위에 @Autowired를 등록해서 사용이 가능합니다. 가장 심플하게 코드를 작성할수 있습니다. setter와 마찬가지로 required 옵션을 사용가능합니다.\n12345@Componentclass BookStore &#123;    @Autowired    private Book book;&#125;\n\n외부 라이브러리를 Bean 등록하고 의존주입수정이 불가능한 외부라이브러리를 Bean으로 등록하고 해당 Bean에 의존주입까지 해주어야 하는 경우가 있습니다.\n1234&lt;bean id=\"library\" class=\"kr.co.spring.Library\"&gt;    &lt;constructor-arg value=\"라이브러리\"/&gt;    &lt;property name=\"location\" value=\"서울\"/&gt;&lt;/bean&gt;\n\n\n1234567891011121314151617181920public class Library &#123;    private String name;    private String location;    public Library(String name) &#123;        this.name = name;    &#125;    public void setLocation(String location) &#123;        this.location = location;    &#125;    @Override    public String toString() &#123;        return \"Library&#123;\" +                \"name='\" + name + '\\'' +                \", location='\" + location + '\\'' +                '&#125;';    &#125;&#125;\n\n123456789public class TestControllerTest &#123;    @Test    public void test() &#123;        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(\"spring/spring-bean.xml\");        Library library = (Library) applicationContext.getBean(\"library\");        System.out.println(library.toString());    &#125;&#125;\n\n1Library&#123;name&#x3D;&#39;라이브러리&#39;, location&#x3D;&#39;서울&#39;&#125;\n\n만약 생성자에서 파라미터를 여러개 받는 경우에는 index를 이용하면 됩니다.\n1234567&lt;bean id=\"library\" class=\"kr.co.spring.Library\"&gt;    &lt;constructor-arg index=\"0\" value=\"1\"/&gt;    &lt;constructor-arg index=\"1\" value=\"라이브러리\"/&gt;    &lt;property name=\"location\" value=\"서울\"/&gt;&lt;/bean&gt;\n\ntype 속성을 이용해서도 사용 가능합니다.\n123456&lt;bean id=\"library\" class=\"kr.co.spring.Library\"&gt;    &lt;constructor-arg value=\"1\" type=\"int\"/&gt;    &lt;constructor-arg value=\"라이브러리\" type=\"java.lang.String\"/&gt;    &lt;property name=\"location\" value=\"서울\"/&gt;&lt;/bean&gt;\n\n예제에서는 value를 사용하였지만 bean을 의존주입 받을 때는 ref를 사용하면 됩니다.\n","dateCreated":"2019-12-24T10:44:43+09:00","dateModified":"2019-12-24T12:51:21+09:00","datePublished":"2019-12-24T10:44:43+09:00","description":"","headline":"Autowried 어노테이션 사용","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/","keywords":"bean, autowired"}</script>
+    <meta name="description" content="@Autowried는 Bean으로 등록된 객체를 자동으로 삽입해주는 역할을 합니다. 생성자, 필드, set메소드를 활용 하여 적용이 가능합니다. 예제 Class 등록해당 포스팅 시에 사용 할 Book 클래스입니다. 아래에서 사용 될 Book 클래스는 아래 소스 코드를 사용하게 됩니다. 12345678package kr.co.spring;import org.">
 <meta property="og:type" content="blog">
-<meta property="og:title">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;tags&#x2F;autowired&#x2F;index.html">
+<meta property="og:title" content="Autowried 어노테이션 사용">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;24&#x2F;spring-autowried&#x2F;index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="개발 정리 블로그">
+<meta property="og:description" content="@Autowried는 Bean으로 등록된 객체를 자동으로 삽입해주는 역할을 합니다. 생성자, 필드, set메소드를 활용 하여 적용이 가능합니다. 예제 Class 등록해당 포스팅 시에 사용 할 Book 클래스입니다. 아래에서 사용 될 Book 클래스는 아래 소스 코드를 사용하게 됩니다. 12345678package kr.co.spring;import org.">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-24T01:44:43.000Z">
+<meta property="article:modified_time" content="2019-12-24T03:51:21.766Z">
 <meta property="article:author" content="Moon Star">
+<meta property="article:tag" content="bean">
+<meta property="article:tag" content="autowired">
 <meta name="twitter:card" content="summary">
     
     
@@ -48,6 +52,8 @@
     
 
     
+        
+    
 </head>
 
     <body>
@@ -57,7 +63,7 @@
 
     
 
-<header id="header" data-behavior="2">
+<header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a
@@ -84,7 +90,7 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="2">
+<nav id="sidebar" data-behavior="5">
     <div class="sidebar-container">
         
         
@@ -200,118 +206,22 @@
 </nav>
 
             
-            <div id="main" data-behavior="2"
+            <div id="main" data-behavior="5"
                  class="
                         hasCoverMetaIn
                         ">
                 
-    <section class="postShorten-group main-content-wrap">
+<article class="post">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/code_repository/2019/12/24/spring-primary-qualifier/"
-                            aria-label=": Primary, Qualifier 어노테이션"
-                        >
-                            Primary, Qualifier 어노테이션
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-24T11:30:54+09:00">
-	
-		    Dec 24, 2019
-    	
-    </time>
+        <div class="post-header main-content-wrap text-left">
     
-        <span>in </span>
-        
-    <a class="category-link" href="/code_repository/categories/spring/">spring</a>, <a class="category-link" href="/code_repository/categories/spring/IoC-Container/">IoC Container</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h5 id="예제-소스-코드"><a href="#예제-소스-코드" class="headerlink" title="예제 소스 코드"></a>예제 소스 코드</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- BookStore<span class="class">.<span class="keyword">class</span> --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">interface</span> <span class="title">BookStore</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- NobleBookStore<span class="class">.<span class="keyword">class</span> --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">@<span class="title">Service</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">NobleBookStore</span> <span class="keyword">implements</span> <span class="title">BookStore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- EssayBookStore<span class="class">.<span class="keyword">class</span> --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">@<span class="title">Service</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">EssayBookStore</span> <span class="keyword">implements</span> <span class="title">BookStore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="중복된-의존주입"><a href="#중복된-의존주입" class="headerlink" title="중복된 의존주입"></a>중복된 의존주입</h2><p>동일한 타입의 Bean을 의존 주입 받으려고 하면 문제가 발생합니다(동일한 타입의 Bean 등록에는 문제가 없다).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">City</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    BookStore bookStore;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BookStore <span class="title">getBookStore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookStore;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error creating bean with name &#39;city&#39;: Unsatisfied dependency expressed through field &#39;bookStore&#39;</span><br></pre></td></tr></table></figure>
-
-<p>동일한 타입의 Bean이 2개가 존재하기 때문에 위와 같은 에러가 발생합니다.</p>
-<br>
-
-<h2 id="해결방법"><a href="#해결방법" class="headerlink" title="해결방법"></a>해결방법</h2><h5 id="Primary-어노테이션-사용"><a href="#Primary-어노테이션-사용" class="headerlink" title="@Primary 어노테이션 사용"></a>@Primary 어노테이션 사용</h5><p>우선적으로 의존 주입하고 싶은 class에 @Primary 어노테이션을 사용합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NobleBookStore</span> <span class="keyword">implements</span> <span class="title">BookStore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestControllerTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ApplicationContext applicationContext = <span class="keyword">new</span> AnnotationConfigApplicationContext(BeanConfig<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        System.out.println(((City)applicationContext.getBean(<span class="string">"city"</span>)).getBookStore());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kr.co.spring.NobleBookStore@16e7dcfd</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="Qulifier-어노테이션-사용"><a href="#Qulifier-어노테이션-사용" class="headerlink" title="@Qulifier 어노테이션 사용"></a>@Qulifier 어노테이션 사용</h5><p>@Autowired와 함께 사용하며 사용하고자 하는 빈의 아이디를 적어주면 됩니다(빈의 아이디를 따로 설정하지 않으면 default로 class 명에 첫글자가 소문자인 아이디로 설정된다).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">City</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="meta">@Qualifier</span>(<span class="string">"nobleBookStore"</span>)</span><br><span class="line">    BookStore bookStore;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="Qulifier-어노테이션-사용하지-않기"><a href="#Qulifier-어노테이션-사용하지-않기" class="headerlink" title="@Qulifier 어노테이션 사용하지 않기"></a>@Qulifier 어노테이션 사용하지 않기</h5><p>기본적으로 @Autowried는 타입으로 의존주입을 해주지만 타입이 존재하지 않으면 Bean Name으로도 의존주입이 가능합니다. 그래서 굳이 @Qulifier를 사용하지 않아도 사용이 가능합니다. </p>
-<p>아래의 코드를 보면 이해가 가능합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">City</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    BookStore nobleBookStore;   <span class="comment">// 기존에 bookStore 대신 nobleBookStore를 사용하과 있다.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="동일한-타입의-Bean-모두-의존주입-받기"><a href="#동일한-타입의-Bean-모두-의존주입-받기" class="headerlink" title="동일한 타입의 Bean 모두 의존주입 받기"></a>동일한 타입의 Bean 모두 의존주입 받기</h5><p>동일한 타입의 Bean들을 모두 의존주입을 받을수가 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">City</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    List&lt;BookStore&gt; bookRepoitories;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/code_repository/2019/12/24/spring-primary-qualifier/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
+        <h1 class="post-title">
+            Autowried 어노테이션 사용
+        </h1>
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/code_repository/2019/12/24/spring-autowried/"
-                            aria-label=": Autowried 어노테이션 사용"
-                        >
-                            Autowried 어노테이션 사용
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
+        <div class="post-meta">
     <time datetime="2019-12-24T10:44:43+09:00">
 	
 		    Dec 24, 2019
@@ -326,10 +236,13 @@
     
 </div>
 
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>@Autowried는 Bean으로 등록된 객체를 자동으로 삽입해주는 역할을 합니다. 생성자, 필드, set메소드를 활용 하여 적용이 가능합니다.</p>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>@Autowried는 Bean으로 등록된 객체를 자동으로 삽입해주는 역할을 합니다. 생성자, 필드, set메소드를 활용 하여 적용이 가능합니다.</p>
 <h5 id="예제-Class-등록"><a href="#예제-Class-등록" class="headerlink" title="예제 Class 등록"></a>예제 Class 등록</h5><p>해당 포스팅 시에 사용 할 Book 클래스입니다. 아래에서 사용 될 Book 클래스는 아래 소스 코드를 사용하게 됩니다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> kr.co.spring;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -374,37 +287,125 @@
 
 <div class="alert info"><p>예제에서는 value를 사용하였지만 bean을 의존주입 받을 때는 <code>ref</code>를 사용하면 됩니다.</p>
 </div>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/code_repository/2019/12/24/spring-autowried/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
             
+
+
         </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-    </article>
-    
-    <div class="pagination-bar">
-    <ul class="pagination">
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/autowired/" rel="tag">autowired</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/bean/" rel="tag">bean</a>
+
+            </div>
         
         
-        <li class="pagination-number">page 1 of 1</li>
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/24/spring-primary-qualifier/"
+                    data-tooltip="Primary, Qualifier 어노테이션"
+                    aria-label="PREVIOUS: Primary, Qualifier 어노테이션"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/21/spring-ioccontainer/"
+                    data-tooltip="IoC 컨테이너와 빈"
+                    aria-label="NEXT: IoC 컨테이너와 빈"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
     </ul>
 </div>
 
-</section>
+
+        
+        
+            
+        
+    </div>
+</article>
+
 
 
                 <footer id="footer" class="main-content-wrap">
@@ -414,6 +415,154 @@
 </footer>
 
             </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/24/spring-primary-qualifier/"
+                    data-tooltip="Primary, Qualifier 어노테이션"
+                    aria-label="PREVIOUS: Primary, Qualifier 어노테이션"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/code_repository/2019/12/21/spring-ioccontainer/"
+                    data-tooltip="IoC 컨테이너와 빈"
+                    aria-label="NEXT: IoC 컨테이너와 빈"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
             
         </div>
         
@@ -460,6 +609,8 @@
 
 <!--SCRIPTS END-->
 
+
+    
 
 
 

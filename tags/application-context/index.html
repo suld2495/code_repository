@@ -6,24 +6,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="">
-    <title>IoC 컨테이너와 빈 - null</title>
+    <title>Tag: application-context - null</title>
     <meta name="author" content="Moon Star">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"IoC란Ioc란 Inversion of Control의 약자로써, 어떤 객체가 사용하는 의존 객체를 직접 만들어 사용하는게 아니라 주입받아서 사용하는 방법을 일컫는 말입니다.\n스프링 IoC 컨테이너컨테이너는 보통 인스턴스의 생명주기를 관리하며, 생성된 인스턴스에게 추가적인 기능을 제공하는 것입니다. 스프링 컨테이너는 어플리케이션 컴포넌트의 중앙 저장소와 같은 역할을 하며 빈 설정 소스로부터 빈 정의를 읽어 들여 빈을 구성 하고 제공하는 역할을 합니다. \n\nIoC 컨테이너의 핵심적인 역할을 하는 인터페이스가 BeanFactory이다.\n\nIoC 컨테이너의 장점\n의존주입을 통한 빈 관리가 용이하다.\n싱글톤 사용을 할수 있다.\n라이프사이클 인터페이스를 제공해준다.\n@PostConstruct : 메소드 위에 사용하면 빈이 생성될때 실행된다(ApplicationContext에서 제공).  \n\n\n의존주입 방법을 통해서 테스트 하기 쉬운 코드를 작성할수 있다.\nMock 객체를 생성해서 의존성 주입을 할수 있어 테스트 하기에 용의하다.\n\n\n\nBean스프링 IoC 컨테이너가 관리하는 객치입니다.\nBean 등록방법1. XML을 이용한 방법bean이라는 태그를 이용해서 Bean 등록을 할수 있다.\n1&lt;bean id=\"인스턴스명\" class=\"클래스경로\"/&gt;\n\n\n\n옵션\nid : 보통 카멜케이스로 작성을 하며 사용할 인스턴스명을 입력해주면 된다.\nclass : Bean 등록 하려는 클래스의 경로를 입력해주면 된다.\nscope : 말그대로 스코프를 설정\n기본값은 싱글톤\n매번 다른 값을 사용하려면 prototype으로 설정\n이외에도 request, session 등이 존재\n\n\nautowire\n\n\n\n의존주입property 태그를 이용해서 의존주입 관계를 형성 할수 있습니다. name은 의존주입할 set메소드 이름이고, ref는 Bean의 id입니다. 인스턴스가 아닌 경우 ref 대신 value를 사용합니다.\n1234&lt;bean id=\"book\" class=\"kr.co.Book\"/&gt;&lt;bean id=\"store\" class=\"kr.co.Store\"&gt;    &lt;property name=\"set메소드이름\" ref=\"의존주입할 Bean의 id\"/&gt;&lt;/bean&gt;\n\n1234567class Store &#123;    private Book book;    public void setBookTest(Book book) &#123;    // property의 name으로 bookTest를 입력해주어야 함        this.book = book;    &#125;&#125;\n\nproperty의 name의 값으로 입력해야 하는 것은 set메소드의 이름이다. set메소드의 인자의 이름이 아니다. 위의 코드로 예를 들면 bookTest를 입력해주어야 한다.\n\n\n\n\n예제 코드javaxml1234567891011121314151617181920212223&lt;!-- Test.class --&gt;public class Test {    public void test() {        System.out.println(\"너는 안녕?\");    }}&lt;!-- TestController.class --&gt;public class TestController {    private Test test;    public void test() {        System.out.println(\"안녕하세요\");        test.test();    }    public void setTest(Test test) {        this.test = test;    }}12345678910111213141516&lt;!-- spring-bean.xml --&gt;&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;&lt;beans xmlns=\"http://www.springframework.org/schema/beans\"    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"    xsi:schemaLocation=\"    http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans.xsd\"&gt;    &lt;bean id=\"test\" class=\"kr.co.spring.Test\"&gt;&lt;/bean&gt;    &lt;bean id=\"testController\" class=\"kr.co.spring.TestController\"&gt;        &lt;property name=\"test\" ref=\"test\"/&gt;    &lt;/bean&gt;&lt;/beans&gt;\n\n테스트 코드를 통해서 XML 빈 등록이 잘 되고 있음을 확인할수 있습니다.\n1234567891011121314public class TestControllerTest &#123;    @Test    public void test() &#123;        ApplicationContext applicationContext =                 new ClassPathXmlApplicationContext(\"spring/spring-bean.xml\");        TestController testController =                 (TestController) applicationContext.getBean(\"testController\");        testController.test();        System.out.println(\"등록 된 Bean\" + Arrays.toString(applicationContext.getBeanDefinitionNames()));    &#125;&#125;\n\n1등록 된 Bean[test, testController]\n\n// 클래스 패스로 ApplicationContext 생성 (다른 방법도 존재)ApplicationContext context = new ClassPathXmlApplicationContext(“클래스패스경로”);context.getBeanDefinitionNames();   // 등록된 모든 Bean Name확인context.getBean(“빈Name”);  // Bean 가져오기\n\n\n\n\n단점XML로 작성하는 경우에는 문자열로 작성을 하기 때문에 자동완성기능 등 IDE의 도움을 받는 것에 제한이 되기 때문에 작성하는데에 어려움이 존재 합니다(지원 되는 것도 존재하지만 그래도 자바소스 작성시보다는 불편하다).\n\n\ncomponent-scan지금까지는 수동으로 Bean을 등록을 하였었는데 이 방법으로는 수많은 Bean들을 직접 등록하기가 힘듭니다. 그래서 어노테이션을 통해서 좀더 간편하게 Bean등록하는 방법인 component-scan이 등장하게 되었습니다. package를 설정하여 해당 package내에서 @Component 어느테이션이 등록 된 객체를 Bean에 등록해 줍니다. \n@Controller, @Service, @Repository 등 @Component 어노테이션을 상속한 어노테이션 또한 자동으로 등록 됩니다.\n\n\n\n\n예제 코드javaxml12345678package kr.co.spring;import org.springframework.stereotype.Component;@Componentpublic class ComponentScanTest {    }1234567891011&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;&lt;beans xmlns=\"http://www.springframework.org/schema/beans\"   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"   xmlns:context=\"http://www.springframework.org/schema/context\"   xsi:schemaLocation=\"http://www.springframework.org/schema/beans    http://www.springframework.org/schema/beans/spring-beans.xsd    http://www.springframework.org/schema/context    http://www.springframework.org/schema/context/spring-context.xsd\"&gt;    &lt;cotext:component-scan base-package=\"kr.co.spring\"/&gt;&lt;/beans&gt;\n\n\n12345678910public class TestControllerTest &#123;    @Test    public void test() &#123;        ApplicationContext applicationContext =                 new ClassPathXmlApplicationContext(\"spring/spring-bean.xml\");        System.out.println(\"등록 된 Bean\" + Arrays.toString(applicationContext.getBeanDefinitionNames()));    &#125;&#125;\n\n1등록 된 Bean[componentScanTest, ...]\n\n\n\n클래스 설정파일로 Bean 등록Spring 3.0 이후 보전부터 자바 소스 코드로도 Bean을 등록 할수 있는 방법이 추가 되었습니다. 자바 소스 코드로 작성하게 되면 IED의 기능을 활용할수 있기 때문에 XML보다 작성이 용이하다는 장점이 있습니다.\n자바소스로 Bean 구성방법은 @Configuration과 @Bean으로 쉽게 구성이 가능합니다. @Configuration은 해당 클래스가 설정파일임을 명시해 줍니다. @Bean은 메소드 정의시에 사용하며 해당 메소드가 반환한 객체를 Bean으로 등록해줍니다. default로 메소드이름이 Bean Name이 됩니다.\n123456789101112131415@Configurationpublic class BeanConfig &#123;    @Bean    public Test test() &#123;        return new Test();    &#125;    @Bean    public TestController testController(Test test) &#123;        TestController testController = new TestController();        testController.setTest(test);        return testController;    &#125;&#125;\n\n12345678910public class TestControllerTest &#123;    @Test    public void test() &#123;        ApplicationContext applicationContext &#x3D;             new AnnotationConfigApplicationContext(BeanConfig.class);   &#x2F;&#x2F; 클래스설정파일로 Bean등록할때 사용하는 ApplicationContext        System.out.println(&quot;등록 된 Bean&quot; + Arrays.toString(applicationContext.getBeanDefinitionNames()));    &#125;&#125;\n\n1등록 된 Bean[..., test, testController]\n\n@Bean을 활용한 DI에는 2가지 방법이 존재 합니다.\n\n파라미터로 Bean 등록 된 객체를 작성하면 자동으로 주입해 줍니다(위의 방법).\n@Bean을 사용하는 메소드를 호출합니다(이 방법은 같은 클래스 내부에 존재할때만 가능).\n\n\n\n\n\n클래스 설정파일로 component-scan@Bean을 이용하는 방법 또한 직접 작성을 해야하기 때문에 등록하기가 힘듭니다. XML에서 compoennt-scan을 사용하였듯이 클래스 설정파일에서도 마찬가지로 component-scan을 사용할수 있습니다.\n@ComponentScan(“base 패키지명”)으로 설정파일에 작성해주면 사용이 가능합니다.\n12345@Configuration@ComponentScan(&quot;kr.co.spring&quot;)public class BeanConfig &#123;&#125;\n\n123456789101112131415@Componentpublic class ComponentScanTest &#123;&#125;public class TestControllerTest &#123;    @Test    public void test() &#123;        ApplicationContext applicationContext &#x3D; new AnnotationConfigApplicationContext(BeanConfig.class);        System.out.println(&quot;등록 된 Bean&quot; + Arrays.toString(applicationContext.getBeanDefinitionNames()));    &#125;&#125;\n\n1등록 된 Bean[..., componentScanTest]\n\n\n\n@ComponentScan 옵션\n@ComponentScan : 아무런 옵션도 주지 않는 경우로 해당 클래스가 위치한 패키지 내부를 basePackage로 설정합니다. \n@ComponentScan(basePackages = “패키지명”) : 위의 예제와 같은 경우로 직접 basePackage를 설정합니다.\n@ComponentScan(basePackageClasses = 클래스명.class) : 특정 클래스가 위치한 패키지를 basePackage로 설정할때 사용합니다.\n\n\n\n스프링부트에서의 Bean 등록스프링부트에서 제공하는 SpringBootApplication 어노테이션을 사용하면 위에서 작업했었던 component-scan, ApplicationContext 생성과 같은 소스코드를 작성할 필요가 없습니다. 해당 어노테이션이 자동으로 생성을 해 줍니다.\n\n\n\n공부하면서 느낀점XML로 Bean을 등록 하는 것보다는 IDE의 도움을 받을수 있는 자바소스로 설정하는게 좀더 편하다고 생각한다. 그리고 Bean을 직접 등록해서 사용하는 것보다는 component-scan을 이용하것이 좋을것 같다. \n결론직접 작성 한 클래스는 component-scan을 활용하고, 외부 라이브러리를 사용할시에는 @Bean을 직접 등록 해서 사용하자!\n","dateCreated":"2019-12-21T15:57:18+09:00","dateModified":"2019-12-24T12:47:42+09:00","datePublished":"2019-12-21T15:57:18+09:00","description":"","headline":"IoC 컨테이너와 빈","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/","keywords":"bean, application-context"}</script>
-    <meta name="description" content="IoC란Ioc란 Inversion of Control의 약자로써, 어떤 객체가 사용하는 의존 객체를 직접 만들어 사용하는게 아니라 주입받아서 사용하는 방법을 일컫는 말입니다. 스프링 IoC 컨테이너컨테이너는 보통 인스턴스의 생명주기를 관리하며, 생성된 인스턴스에게 추가적인 기능을 제공하는 것입니다. 스프링 컨테이너는 어플리케이션 컴포넌트의 중앙 저장소와 같">
+    <script type="application/ld+json">{}</script>
+    <meta name="description" content="개발 정리 블로그">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="IoC 컨테이너와 빈">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;21&#x2F;spring-ioccontainer&#x2F;index.html">
+<meta property="og:title">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;tags&#x2F;application-context&#x2F;index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="IoC란Ioc란 Inversion of Control의 약자로써, 어떤 객체가 사용하는 의존 객체를 직접 만들어 사용하는게 아니라 주입받아서 사용하는 방법을 일컫는 말입니다. 스프링 IoC 컨테이너컨테이너는 보통 인스턴스의 생명주기를 관리하며, 생성된 인스턴스에게 추가적인 기능을 제공하는 것입니다. 스프링 컨테이너는 어플리케이션 컴포넌트의 중앙 저장소와 같">
+<meta property="og:description" content="개발 정리 블로그">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-12-21T06:57:18.000Z">
-<meta property="article:modified_time" content="2019-12-24T03:47:42.038Z">
 <meta property="article:author" content="Moon Star">
-<meta property="article:tag" content="bean">
-<meta property="article:tag" content="application-context">
 <meta name="twitter:card" content="summary">
     
     
@@ -52,8 +48,6 @@
     
 
     
-        
-    
 </head>
 
     <body>
@@ -63,7 +57,7 @@
 
     
 
-<header id="header" data-behavior="5">
+<header id="header" data-behavior="2">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a
@@ -90,7 +84,7 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="5">
+<nav id="sidebar" data-behavior="2">
     <div class="sidebar-container">
         
         
@@ -206,22 +200,30 @@
 </nav>
 
             
-            <div id="main" data-behavior="5"
+            <div id="main" data-behavior="2"
                  class="
                         hasCoverMetaIn
                         ">
                 
-<article class="post">
+    <section class="postShorten-group main-content-wrap">
     
     
-        <div class="post-header main-content-wrap text-left">
-    
-        <h1 class="post-title">
-            IoC 컨테이너와 빈
-        </h1>
-    
-    
-        <div class="post-meta">
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/code_repository/2019/12/21/spring-ioccontainer/"
+                            aria-label=": IoC 컨테이너와 빈"
+                        >
+                            IoC 컨테이너와 빈
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
     <time datetime="2019-12-21T15:57:18+09:00">
 	
 		    Dec 21, 2019
@@ -236,13 +238,10 @@
     
 </div>
 
-    
-</div>
-
-    
-    <div class="post-content markdown">
-        <div class="main-content-wrap">
-            <h2 id="IoC란"><a href="#IoC란" class="headerlink" title="IoC란"></a>IoC란</h2><p>Ioc란 Inversion of Control의 약자로써, 어떤 객체가 사용하는 의존 객체를 직접 만들어 사용하는게 아니라 주입받아서 사용하는 방법을 일컫는 말입니다.</p>
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="IoC란"><a href="#IoC란" class="headerlink" title="IoC란"></a>IoC란</h2><p>Ioc란 Inversion of Control의 약자로써, 어떤 객체가 사용하는 의존 객체를 직접 만들어 사용하는게 아니라 주입받아서 사용하는 방법을 일컫는 말입니다.</p>
 <h2 id="스프링-IoC-컨테이너"><a href="#스프링-IoC-컨테이너" class="headerlink" title="스프링 IoC 컨테이너"></a>스프링 IoC 컨테이너</h2><p>컨테이너는 보통 인스턴스의 생명주기를 관리하며, 생성된 인스턴스에게 추가적인 기능을 제공하는 것입니다. 스프링 컨테이너는 어플리케이션 컴포넌트의 중앙 저장소와 같은 역할을 하며 빈 설정 소스로부터 빈 정의를 읽어 들여 빈을 구성 하고 제공하는 역할을 합니다. </p>
 <blockquote>
 <p>IoC 컨테이너의 핵심적인 역할을 하는 인터페이스가 BeanFactory이다.</p>
@@ -359,125 +358,37 @@
 <h5 id="공부하면서-느낀점"><a href="#공부하면서-느낀점" class="headerlink" title="공부하면서 느낀점"></a>공부하면서 느낀점</h5><p>XML로 Bean을 등록 하는 것보다는 IDE의 도움을 받을수 있는 자바소스로 설정하는게 좀더 편하다고 생각한다. 그리고 Bean을 직접 등록해서 사용하는 것보다는 component-scan을 이용하것이 좋을것 같다. </p>
 <h3 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h3><p>직접 작성 한 클래스는 component-scan을 활용하고, 외부 라이브러리를 사용할시에는 @Bean을 직접 등록 해서 사용하자!</p>
 
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/code_repository/2019/12/21/spring-ioccontainer/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
             
-
-
         </div>
-    </div>
-    <div id="post-footer" class="post-footer main-content-wrap">
         
-            <div class="post-footer-tags">
-                <span class="text-color-light text-small">TAGGED IN</span><br/>
-                
-    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/application-context/" rel="tag">application-context</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/bean/" rel="tag">bean</a>
-
-            </div>
+    </article>
+    
+    <div class="pagination-bar">
+    <ul class="pagination">
         
         
-            <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/24/spring-autowried/"
-                    data-tooltip="Autowried 어노테이션 사용"
-                    aria-label="PREVIOUS: Autowried 어노테이션 사용"
-                >
-                    
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/java-junit5/"
-                    data-tooltip="스프링 테스트"
-                    aria-label="NEXT: 스프링 테스트"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Share this post"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"
-                    title="Share on Facebook"
-                    aria-label="Share on Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"
-                    title="Share on Twitter"
-                    aria-label="Share on Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"
-                    title="Share on Google+"
-                    aria-label="Share on Google+"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
+        <li class="pagination-number">page 1 of 1</li>
     </ul>
 </div>
 
-
-        
-        
-            
-        
-    </div>
-</article>
-
+</section>
 
 
                 <footer id="footer" class="main-content-wrap">
@@ -487,154 +398,6 @@
 </footer>
 
             </div>
-            
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-                    <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/24/spring-autowried/"
-                    data-tooltip="Autowried 어노테이션 사용"
-                    aria-label="PREVIOUS: Autowried 어노테이션 사용"
-                >
-                    
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/java-junit5/"
-                    data-tooltip="스프링 테스트"
-                    aria-label="NEXT: 스프링 테스트"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Share this post"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"
-                    title="Share on Facebook"
-                    aria-label="Share on Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"
-                    title="Share on Twitter"
-                    aria-label="Share on Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"
-                    title="Share on Google+"
-                    aria-label="Share on Google+"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
-    </ul>
-</div>
-
-
-                </div>
-                
-    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-        <i id="btn-close-shareoptions" class="fa fa-times"></i>
-        <ul class="share-options">
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"
-                        aria-label="Share on Facebook"
-                    >
-                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"
-                        aria-label="Share on Twitter"
-                    >
-                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/21/spring-ioccontainer/"
-                        aria-label="Share on Google+"
-                    >
-                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
-                    </a>
-                </li>
-            
-        </ul>
-    </div>
-
-
             
         </div>
         
@@ -681,8 +444,6 @@
 
 <!--SCRIPTS END-->
 
-
-    
 
 
 
