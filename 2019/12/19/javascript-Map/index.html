@@ -11,11 +11,11 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"1. Map 생성하기1234567let map = new Map();let map = new Map([    [\"key1\", \"value1\"],    [\"key2\", \"value2\"],    [\"key3\", \"value3\"],    [\"key4\", \"value4\"],])\n\n\nnew Map([{id: 1},{id: 2},{id: 3},{id: 4}])이런식으로 작성하려고 하니까 안됨. Map생성시 파라미터는 이차원배열로 넣어야 할듯\n\n2. Map에 값 추가하기12let map = new Map();map.set('key', 'value')\n\n\n값을 추가하는 부분에서 Map와 Object의 차이점이 나타남. Map의 경우에는 Key로 문자열이외에도 모든걸 Key로 가능\n\n3. Map의 값 호출하기1234let key = &#123;name: 'name'&#125;let map = new Map();map.set(key, 'value')map.get(key)\n\n4. Map의 사이즈 확인12345let key = &#123;name: 'name'&#125;let map = new Map();map.set(key, 'value')console.log(map.size)\n\n5. 배열로 만들기123456let map = new Map();map.set('key1', 'value1')map.set('key2', 'value2')let array = [...map]console.log(map)    // map: [['key1', 'value1'], ['key2', 'value2']]\n\n\nObject와는 다르게 Map은 [...map]을 통해서 Array로 만들수 있습니다. 결과값은 [[key, value], [key, value]]의 형태로 만들어 진다.\n\n6. 순회하기123456789let map = Map()for (let [key, value] of map) &#123;&#125;map.forEach((key, value) =&gt; &#123;    &#125;)\n\n\nObject와는 다르게 forof와 forEach를 사용할수 있다.Array에서 제공하는 map, filter등에 대한 메서드는 제공하지 않는 것으로 판단된다.\n\n7. Iterator 사용하기12345let map = new Map()map.keys()      // key모음map.values()    // value모음map.entries()   // key와 value 한쌍의 모음\n\n\nIterator이다 보니 for문과 함께 사용하면 좋을 듯\n\n기타 메서드has : 해당 Key 존재 여부1234let map = new Map()map.set('key', 'value')console.log(map.has('key')) // true\n\ndelete : 해당 Key의 값 삭제12345let map = new Map()map.set('key', 'value')console.log(map.delete('key'))  // true =&gt; 존재했으면 true 없었으면 falseconsole.log(map.has('key')) // false\n\nclear : 모든 데이터 삭제12let map = new Map()map.clear()","dateCreated":"2019-12-19T01:05:48+09:00","dateModified":"2019-12-19T01:07:19+09:00","datePublished":"2019-12-19T01:05:48+09:00","description":"","headline":"Map 타입","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/","keywords":"javascript, Map"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"1. Map 생성하기1234567let map = new Map();let map = new Map([    [\"key1\", \"value1\"],    [\"key2\", \"value2\"],    [\"key3\", \"value3\"],    [\"key4\", \"value4\"],])\n\n\nnew Map([{id: 1},{id: 2},{id: 3},{id: 4}])이런식으로 작성하려고 하니까 안됨. Map생성시 파라미터는 이차원배열로 넣어야 할듯\n\n2. Map에 값 추가하기12let map = new Map();map.set('key', 'value')\n\n\n값을 추가하는 부분에서 Map와 Object의 차이점이 나타남. Map의 경우에는 Key로 문자열이외에도 모든걸 Key로 가능\n\n3. Map의 값 호출하기1234let key = &#123;name: 'name'&#125;let map = new Map();map.set(key, 'value')map.get(key)\n\n4. Map의 사이즈 확인12345let key = &#123;name: 'name'&#125;let map = new Map();map.set(key, 'value')console.log(map.size)\n\n5. 배열로 만들기123456let map = new Map();map.set('key1', 'value1')map.set('key2', 'value2')let array = [...map]console.log(map)    // map: [['key1', 'value1'], ['key2', 'value2']]\n\n\nObject와는 다르게 Map은 [...map]을 통해서 Array로 만들수 있습니다. 결과값은 [[key, value], [key, value]]의 형태로 만들어 진다.\n\n6. 순회하기123456789let map = Map()for (let [key, value] of map) &#123;&#125;map.forEach((key, value) =&gt; &#123;    &#125;)\n\n\nObject와는 다르게 forof와 forEach를 사용할수 있다.Array에서 제공하는 map, filter등에 대한 메서드는 제공하지 않는 것으로 판단된다.\n\n7. Iterator 사용하기12345let map = new Map()map.keys()      // key모음map.values()    // value모음map.entries()   // key와 value 한쌍의 모음\n\n\nIterator이다 보니 for문과 함께 사용하면 좋을 듯\n\n기타 메서드has : 해당 Key 존재 여부1234let map = new Map()map.set('key', 'value')console.log(map.has('key')) // true\n\ndelete : 해당 Key의 값 삭제12345let map = new Map()map.set('key', 'value')console.log(map.delete('key'))  // true =&gt; 존재했으면 true 없었으면 falseconsole.log(map.has('key')) // false\n\nclear : 모든 데이터 삭제12let map = new Map()map.clear()","dateCreated":"2019-12-19T01:05:48+09:00","dateModified":"2019-12-19T01:07:19+09:00","datePublished":"2019-12-19T01:05:48+09:00","description":"","headline":"Map 타입","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2019/12/19/javascript-Map/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2019/12/19/javascript-Map/","keywords":"javascript, Map"}</script>
     <meta name="description" content="1. Map 생성하기1234567let map &#x3D; new Map();let map &#x3D; new Map([    [&quot;key1&quot;, &quot;value1&quot;],    [&quot;key2&quot;, &quot;value2&quot;],    [&quot;key3&quot;, &quot;value3&quot;],    [&quot;key4&quot;, &quot;value4&quot;],])   new Map([{id: 1},{id: 2},{id: 3},{id: 4}])이런식으">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Map 타입">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;19&#x2F;javascript-Map&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2019&#x2F;12&#x2F;19&#x2F;javascript-Map&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="1. Map 생성하기1234567let map &#x3D; new Map();let map &#x3D; new Map([    [&quot;key1&quot;, &quot;value1&quot;],    [&quot;key2&quot;, &quot;value2&quot;],    [&quot;key3&quot;, &quot;value3&quot;],    [&quot;key4&quot;, &quot;value4&quot;],])   new Map([{id: 1},{id: 2},{id: 3},{id: 4}])이런식으">
 <meta property="og:locale" content="en_US">
@@ -35,16 +35,16 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+<link rel="stylesheet" href="/assets/css/all.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+<link rel="stylesheet" href="/assets/css/thumbs.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
 
     <!--STYLES END-->
     
@@ -68,7 +68,7 @@
     <div class="header-title">
         <a
             class="header-title-link"
-            href="/code_repository/%20"
+            href="/%20"
             aria-label=""
         >
             
@@ -79,7 +79,7 @@
             <a
                 class="header-right-picture "
                 href="#about"
-                aria-label="Open the link: /code_repository/#about"
+                aria-label="Open the link: /#about"
             >
         
         
@@ -99,7 +99,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/%20"
+                             href="/%20"
                             
                             title="홈"
                         >
@@ -112,7 +112,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-categories"
+                             href="/all-categories"
                             
                             title="카테고리"
                         >
@@ -125,7 +125,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-tags"
+                             href="/all-tags"
                             
                             title="태그"
                         >
@@ -138,7 +138,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-archives"
+                             href="/all-archives"
                             
                             title="아카이브"
                         >
@@ -190,7 +190,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/atom.xml"
+                             href="/atom.xml"
                             
                             title="RSS"
                         >
@@ -230,7 +230,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/code_repository/categories/javascript/">javascript</a>, <a class="category-link" href="/code_repository/categories/javascript/es6/">es6</a>
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/es6/">es6</a>
 
 
     
@@ -286,7 +286,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/Map/" rel="tag">Map</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/javascript/" rel="tag">javascript</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/Map/" rel="tag">Map</a> <a class="tag tag--primary tag--small t-link" href="/tags/javascript/" rel="tag">javascript</a>
 
             </div>
         
@@ -299,7 +299,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/javascript-number/"
+                    href="/2019/12/19/javascript-number/"
                     data-tooltip="숫자와 관련된 팁"
                     aria-label="PREVIOUS: 숫자와 관련된 팁"
                 >
@@ -313,7 +313,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/java-json/"
+                    href="/2019/12/19/java-json/"
                     data-tooltip="json 파일 입출력"
                     aria-label="NEXT: json 파일 입출력"
                 >
@@ -340,7 +340,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/19/javascript-Map/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -353,7 +353,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/19/javascript-Map/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -366,7 +366,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/19/javascript-Map/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -414,7 +414,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/javascript-number/"
+                    href="/2019/12/19/javascript-number/"
                     data-tooltip="숫자와 관련된 팁"
                     aria-label="PREVIOUS: 숫자와 관련된 팁"
                 >
@@ -428,7 +428,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/java-json/"
+                    href="/2019/12/19/java-json/"
                     data-tooltip="json 파일 입출력"
                     aria-label="NEXT: json 파일 입출력"
                 >
@@ -455,7 +455,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/19/javascript-Map/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -468,7 +468,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/19/javascript-Map/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -481,7 +481,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/19/javascript-Map/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -515,7 +515,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/19/javascript-Map/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -528,7 +528,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/19/javascript-Map/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -541,7 +541,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/19/javascript-Map/"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/19/javascript-Map/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -582,19 +582,19 @@
 
         
         
-<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/code_repository/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.js"></script>
 
 
-<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
 
 
-<script src="/code_repository/assets/js/thumbs.js"></script>
+<script src="/assets/js/thumbs.js"></script>
 
 
-<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
 
 <!--SCRIPTS END-->
 

@@ -11,11 +11,11 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"데이터 흐름의 처리1. vuex를 최대한 활용1흐름 : 부모 &#x3D;&gt; actions &#x3D;&gt; API &#x3D;&gt; mutations &#x3D;&gt; state &#x3D;&gt; 자식에서 state 접근\n\n이 방법은 vuex를 최대한 활용 하는 방법으로 데이터를 표현하는 곳에서 직접 state에 접근 하는 방법이다. 이때 데이터를 표현하는 곳에서는 actions를 호출하지 않는다.내 생각에 actions에 대한 결합도가 높아지기 때문인듯하다(해당 컴포넌트의 범용성이 낮아진다).\n2. props 활용1흐름 : 부모 &#x3D;&gt; actions &#x3D;&gt; API &#x3D;&gt; mutations &#x3D;&gt; state &#x3D;&gt; 부모에서 state에 접근 후 props로 전달 &#x3D;&gt; 자식\n\n부모에서 API 호출 및 값을 가져와서 자식에게 props로 넘겨준다.\n\n컴포넌트 태그처럼 명시적으로 표현하려면 이걸 쓰자.\n\n","dateCreated":"2019-12-20T10:22:21+09:00","dateModified":"2019-12-21T15:55:53+09:00","datePublished":"2019-12-20T10:22:21+09:00","description":"","headline":"데이터 흐름 처리","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/","keywords":"vue, vuex"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"데이터 흐름의 처리1. vuex를 최대한 활용1흐름 : 부모 &#x3D;&gt; actions &#x3D;&gt; API &#x3D;&gt; mutations &#x3D;&gt; state &#x3D;&gt; 자식에서 state 접근\n\n이 방법은 vuex를 최대한 활용 하는 방법으로 데이터를 표현하는 곳에서 직접 state에 접근 하는 방법이다. 이때 데이터를 표현하는 곳에서는 actions를 호출하지 않는다.내 생각에 actions에 대한 결합도가 높아지기 때문인듯하다(해당 컴포넌트의 범용성이 낮아진다).\n2. props 활용1흐름 : 부모 &#x3D;&gt; actions &#x3D;&gt; API &#x3D;&gt; mutations &#x3D;&gt; state &#x3D;&gt; 부모에서 state에 접근 후 props로 전달 &#x3D;&gt; 자식\n\n부모에서 API 호출 및 값을 가져와서 자식에게 props로 넘겨준다.\n\n컴포넌트 태그처럼 명시적으로 표현하려면 이걸 쓰자.\n\n","dateCreated":"2019-12-20T10:22:21+09:00","dateModified":"2019-12-21T15:55:53+09:00","datePublished":"2019-12-20T10:22:21+09:00","description":"","headline":"데이터 흐름 처리","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2019/12/20/vue-data-transfer-1/","keywords":"vue, vuex"}</script>
     <meta name="description" content="데이터 흐름의 처리1. vuex를 최대한 활용1흐름 : 부모 &#x3D;&gt; actions &#x3D;&gt; API &#x3D;&gt; mutations &#x3D;&gt; state &#x3D;&gt; 자식에서 state 접근  이 방법은 vuex를 최대한 활용 하는 방법으로 데이터를 표현하는 곳에서 직접 state에 접근 하는 방법이다. 이때 데이">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="데이터 흐름 처리">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;20&#x2F;vue-data-transfer-1&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2019&#x2F;12&#x2F;20&#x2F;vue-data-transfer-1&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="데이터 흐름의 처리1. vuex를 최대한 활용1흐름 : 부모 &#x3D;&gt; actions &#x3D;&gt; API &#x3D;&gt; mutations &#x3D;&gt; state &#x3D;&gt; 자식에서 state 접근  이 방법은 vuex를 최대한 활용 하는 방법으로 데이터를 표현하는 곳에서 직접 state에 접근 하는 방법이다. 이때 데이">
 <meta property="og:locale" content="en_US">
@@ -35,16 +35,16 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+<link rel="stylesheet" href="/assets/css/all.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+<link rel="stylesheet" href="/assets/css/thumbs.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
 
     <!--STYLES END-->
     
@@ -68,7 +68,7 @@
     <div class="header-title">
         <a
             class="header-title-link"
-            href="/code_repository/%20"
+            href="/%20"
             aria-label=""
         >
             
@@ -79,7 +79,7 @@
             <a
                 class="header-right-picture "
                 href="#about"
-                aria-label="Open the link: /code_repository/#about"
+                aria-label="Open the link: /#about"
             >
         
         
@@ -99,7 +99,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/%20"
+                             href="/%20"
                             
                             title="홈"
                         >
@@ -112,7 +112,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-categories"
+                             href="/all-categories"
                             
                             title="카테고리"
                         >
@@ -125,7 +125,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-tags"
+                             href="/all-tags"
                             
                             title="태그"
                         >
@@ -138,7 +138,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-archives"
+                             href="/all-archives"
                             
                             title="아카이브"
                         >
@@ -190,7 +190,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/atom.xml"
+                             href="/atom.xml"
                             
                             title="RSS"
                         >
@@ -230,7 +230,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/code_repository/categories/vue/">vue</a>, <a class="category-link" href="/code_repository/categories/vue/vuex/">vuex</a>
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vuex/">vuex</a>
 
 
     
@@ -262,7 +262,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/vue/" rel="tag">vue</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/vuex/" rel="tag">vuex</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/vue/" rel="tag">vue</a> <a class="tag tag--primary tag--small t-link" href="/tags/vuex/" rel="tag">vuex</a>
 
             </div>
         
@@ -275,7 +275,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-webpack-config/"
+                    href="/2019/12/20/vue-webpack-config/"
                     data-tooltip="웹팩"
                     aria-label="PREVIOUS: 웹팩"
                 >
@@ -289,7 +289,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-vuex/"
+                    href="/2019/12/20/vue-vuex/"
                     data-tooltip="vuex의 기본"
                     aria-label="NEXT: vuex의 기본"
                 >
@@ -316,7 +316,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -329,7 +329,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -342,7 +342,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -390,7 +390,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-webpack-config/"
+                    href="/2019/12/20/vue-webpack-config/"
                     data-tooltip="웹팩"
                     aria-label="PREVIOUS: 웹팩"
                 >
@@ -404,7 +404,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-vuex/"
+                    href="/2019/12/20/vue-vuex/"
                     data-tooltip="vuex의 기본"
                     aria-label="NEXT: vuex의 기본"
                 >
@@ -431,7 +431,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -444,7 +444,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -457,7 +457,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -491,7 +491,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -504,7 +504,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -517,7 +517,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/vue-data-transfer-1/"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/vue-data-transfer-1/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -558,19 +558,19 @@
 
         
         
-<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/code_repository/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.js"></script>
 
 
-<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
 
 
-<script src="/code_repository/assets/js/thumbs.js"></script>
+<script src="/assets/js/thumbs.js"></script>
 
 
-<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
 
 <!--SCRIPTS END-->
 

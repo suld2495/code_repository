@@ -11,11 +11,11 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"@Autowried는 Bean으로 등록된 객체를 자동으로 삽입해주는 역할을 합니다. 생성자, 필드, set메소드를 활용 하여 적용이 가능합니다.\n예제 Class 등록해당 포스팅 시에 사용 할 Book 클래스입니다. 아래에서 사용 될 Book 클래스는 아래 소스 코드를 사용하게 됩니다.\n12345678package kr.co.spring;import org.springframework.stereotype.Component;@Componentpublic class Book &#123;&#125;\n\n\n\n생성자를 이용한 방법생성자 메소드 위에 @Autowired만 등록 해서 사용 하면 됩니다.\n123456789@Componentclass BookStore &#123;    private Book book;    @Autowired    public BookStore(Book book) &#123;        this.book = book;    &#125;&#125;\n\n생성자에서 @Autowired는 생략이 가능합니다.\n\n\n\n\n\nsetter를 이용한 방법setter 메소드 위에 @Autowired만 등록 해서 사용 하면 됩니다. 생성자와는 달리 @Autowired를 붙여주지 않으면 의존주입이 되지 않습니다.\n123456789@Componentclass BookStore &#123;    private Book book;    @Autowired    public setBook(Book book) &#123;        this.book = book;    &#125;&#125;\n\nsetter를 활용하면 Bean을 필수적으로 의존주입 받을지 여부를 선택할수 있습니다. 옵션을 주지 않는 경우 의존주입 받을 Bean이 없는 경우 에러가 발생합니다. 이때 @Autowired(required = false)를 사용해서 만약 Bean이 존재하지 않는 경우 의존주입을 받지 않도록 설정이 가능합니다.\nsetter 메소드 이름은 상관이 없습니다.\n\n\n\n\n필드에 직접 사용필드 위에 @Autowired를 등록해서 사용이 가능합니다. 가장 심플하게 코드를 작성할수 있습니다. setter와 마찬가지로 required 옵션을 사용가능합니다.\n12345@Componentclass BookStore &#123;    @Autowired    private Book book;&#125;\n\n외부 라이브러리를 Bean 등록하고 의존주입수정이 불가능한 외부라이브러리를 Bean으로 등록하고 해당 Bean에 의존주입까지 해주어야 하는 경우가 있습니다.\n1234&lt;bean id=\"library\" class=\"kr.co.spring.Library\"&gt;    &lt;constructor-arg value=\"라이브러리\"/&gt;    &lt;property name=\"location\" value=\"서울\"/&gt;&lt;/bean&gt;\n\n\n1234567891011121314151617181920public class Library &#123;    private String name;    private String location;    public Library(String name) &#123;        this.name = name;    &#125;    public void setLocation(String location) &#123;        this.location = location;    &#125;    @Override    public String toString() &#123;        return \"Library&#123;\" +                \"name='\" + name + '\\'' +                \", location='\" + location + '\\'' +                '&#125;';    &#125;&#125;\n\n123456789public class TestControllerTest &#123;    @Test    public void test() &#123;        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(\"spring/spring-bean.xml\");        Library library = (Library) applicationContext.getBean(\"library\");        System.out.println(library.toString());    &#125;&#125;\n\n1Library&#123;name&#x3D;&#39;라이브러리&#39;, location&#x3D;&#39;서울&#39;&#125;\n\n만약 생성자에서 파라미터를 여러개 받는 경우에는 index를 이용하면 됩니다.\n1234567&lt;bean id=\"library\" class=\"kr.co.spring.Library\"&gt;    &lt;constructor-arg index=\"0\" value=\"1\"/&gt;    &lt;constructor-arg index=\"1\" value=\"라이브러리\"/&gt;    &lt;property name=\"location\" value=\"서울\"/&gt;&lt;/bean&gt;\n\ntype 속성을 이용해서도 사용 가능합니다.\n123456&lt;bean id=\"library\" class=\"kr.co.spring.Library\"&gt;    &lt;constructor-arg value=\"1\" type=\"int\"/&gt;    &lt;constructor-arg value=\"라이브러리\" type=\"java.lang.String\"/&gt;    &lt;property name=\"location\" value=\"서울\"/&gt;&lt;/bean&gt;\n\n예제에서는 value를 사용하였지만 bean을 의존주입 받을 때는 ref를 사용하면 됩니다.\n","dateCreated":"2019-12-24T10:44:43+09:00","dateModified":"2019-12-24T12:51:21+09:00","datePublished":"2019-12-24T10:44:43+09:00","description":"","headline":"Autowried 어노테이션 사용","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/","keywords":"bean, autowired"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"@Autowried는 Bean으로 등록된 객체를 자동으로 삽입해주는 역할을 합니다. 생성자, 필드, set메소드를 활용 하여 적용이 가능합니다.\n예제 Class 등록해당 포스팅 시에 사용 할 Book 클래스입니다. 아래에서 사용 될 Book 클래스는 아래 소스 코드를 사용하게 됩니다.\n12345678package kr.co.spring;import org.springframework.stereotype.Component;@Componentpublic class Book &#123;&#125;\n\n\n\n생성자를 이용한 방법생성자 메소드 위에 @Autowired만 등록 해서 사용 하면 됩니다.\n123456789@Componentclass BookStore &#123;    private Book book;    @Autowired    public BookStore(Book book) &#123;        this.book = book;    &#125;&#125;\n\n생성자에서 @Autowired는 생략이 가능합니다.\n\n\n\n\n\nsetter를 이용한 방법setter 메소드 위에 @Autowired만 등록 해서 사용 하면 됩니다. 생성자와는 달리 @Autowired를 붙여주지 않으면 의존주입이 되지 않습니다.\n123456789@Componentclass BookStore &#123;    private Book book;    @Autowired    public setBook(Book book) &#123;        this.book = book;    &#125;&#125;\n\nsetter를 활용하면 Bean을 필수적으로 의존주입 받을지 여부를 선택할수 있습니다. 옵션을 주지 않는 경우 의존주입 받을 Bean이 없는 경우 에러가 발생합니다. 이때 @Autowired(required = false)를 사용해서 만약 Bean이 존재하지 않는 경우 의존주입을 받지 않도록 설정이 가능합니다.\nsetter 메소드 이름은 상관이 없습니다.\n\n\n\n\n필드에 직접 사용필드 위에 @Autowired를 등록해서 사용이 가능합니다. 가장 심플하게 코드를 작성할수 있습니다. setter와 마찬가지로 required 옵션을 사용가능합니다.\n12345@Componentclass BookStore &#123;    @Autowired    private Book book;&#125;\n\n외부 라이브러리를 Bean 등록하고 의존주입수정이 불가능한 외부라이브러리를 Bean으로 등록하고 해당 Bean에 의존주입까지 해주어야 하는 경우가 있습니다.\n1234&lt;bean id=\"library\" class=\"kr.co.spring.Library\"&gt;    &lt;constructor-arg value=\"라이브러리\"/&gt;    &lt;property name=\"location\" value=\"서울\"/&gt;&lt;/bean&gt;\n\n\n1234567891011121314151617181920public class Library &#123;    private String name;    private String location;    public Library(String name) &#123;        this.name = name;    &#125;    public void setLocation(String location) &#123;        this.location = location;    &#125;    @Override    public String toString() &#123;        return \"Library&#123;\" +                \"name='\" + name + '\\'' +                \", location='\" + location + '\\'' +                '&#125;';    &#125;&#125;\n\n123456789public class TestControllerTest &#123;    @Test    public void test() &#123;        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(\"spring/spring-bean.xml\");        Library library = (Library) applicationContext.getBean(\"library\");        System.out.println(library.toString());    &#125;&#125;\n\n1Library&#123;name&#x3D;&#39;라이브러리&#39;, location&#x3D;&#39;서울&#39;&#125;\n\n만약 생성자에서 파라미터를 여러개 받는 경우에는 index를 이용하면 됩니다.\n1234567&lt;bean id=\"library\" class=\"kr.co.spring.Library\"&gt;    &lt;constructor-arg index=\"0\" value=\"1\"/&gt;    &lt;constructor-arg index=\"1\" value=\"라이브러리\"/&gt;    &lt;property name=\"location\" value=\"서울\"/&gt;&lt;/bean&gt;\n\ntype 속성을 이용해서도 사용 가능합니다.\n123456&lt;bean id=\"library\" class=\"kr.co.spring.Library\"&gt;    &lt;constructor-arg value=\"1\" type=\"int\"/&gt;    &lt;constructor-arg value=\"라이브러리\" type=\"java.lang.String\"/&gt;    &lt;property name=\"location\" value=\"서울\"/&gt;&lt;/bean&gt;\n\n예제에서는 value를 사용하였지만 bean을 의존주입 받을 때는 ref를 사용하면 됩니다.\n","dateCreated":"2019-12-24T10:44:43+09:00","dateModified":"2019-12-24T12:51:21+09:00","datePublished":"2019-12-24T10:44:43+09:00","description":"","headline":"Autowried 어노테이션 사용","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2019/12/24/spring-autowried/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2019/12/24/spring-autowried/","keywords":"bean, autowired"}</script>
     <meta name="description" content="@Autowried는 Bean으로 등록된 객체를 자동으로 삽입해주는 역할을 합니다. 생성자, 필드, set메소드를 활용 하여 적용이 가능합니다. 예제 Class 등록해당 포스팅 시에 사용 할 Book 클래스입니다. 아래에서 사용 될 Book 클래스는 아래 소스 코드를 사용하게 됩니다. 12345678package kr.co.spring;import org.">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Autowried 어노테이션 사용">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;24&#x2F;spring-autowried&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2019&#x2F;12&#x2F;24&#x2F;spring-autowried&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="@Autowried는 Bean으로 등록된 객체를 자동으로 삽입해주는 역할을 합니다. 생성자, 필드, set메소드를 활용 하여 적용이 가능합니다. 예제 Class 등록해당 포스팅 시에 사용 할 Book 클래스입니다. 아래에서 사용 될 Book 클래스는 아래 소스 코드를 사용하게 됩니다. 12345678package kr.co.spring;import org.">
 <meta property="og:locale" content="en_US">
@@ -35,16 +35,16 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+<link rel="stylesheet" href="/assets/css/all.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+<link rel="stylesheet" href="/assets/css/thumbs.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
 
     <!--STYLES END-->
     
@@ -68,7 +68,7 @@
     <div class="header-title">
         <a
             class="header-title-link"
-            href="/code_repository/%20"
+            href="/%20"
             aria-label=""
         >
             
@@ -79,7 +79,7 @@
             <a
                 class="header-right-picture "
                 href="#about"
-                aria-label="Open the link: /code_repository/#about"
+                aria-label="Open the link: /#about"
             >
         
         
@@ -99,7 +99,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/%20"
+                             href="/%20"
                             
                             title="홈"
                         >
@@ -112,7 +112,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-categories"
+                             href="/all-categories"
                             
                             title="카테고리"
                         >
@@ -125,7 +125,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-tags"
+                             href="/all-tags"
                             
                             title="태그"
                         >
@@ -138,7 +138,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-archives"
+                             href="/all-archives"
                             
                             title="아카이브"
                         >
@@ -190,7 +190,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/atom.xml"
+                             href="/atom.xml"
                             
                             title="RSS"
                         >
@@ -230,7 +230,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/code_repository/categories/spring/">spring</a>, <a class="category-link" href="/code_repository/categories/spring/IoC-Container/">IoC Container</a>
+    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
 
 
     
@@ -297,7 +297,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/autowired/" rel="tag">autowired</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/bean/" rel="tag">bean</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/autowired/" rel="tag">autowired</a> <a class="tag tag--primary tag--small t-link" href="/tags/bean/" rel="tag">bean</a>
 
             </div>
         
@@ -310,7 +310,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/24/spring-primary-qualifier/"
+                    href="/2019/12/24/spring-primary-qualifier/"
                     data-tooltip="Primary, Qualifier 어노테이션"
                     aria-label="PREVIOUS: Primary, Qualifier 어노테이션"
                 >
@@ -324,7 +324,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/21/spring-ioccontainer/"
+                    href="/2019/12/21/spring-ioccontainer/"
                     data-tooltip="IoC 컨테이너와 빈"
                     aria-label="NEXT: IoC 컨테이너와 빈"
                 >
@@ -351,7 +351,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/24/spring-autowried/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -364,7 +364,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/24/spring-autowried/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -377,7 +377,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/24/spring-autowried/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -425,7 +425,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/24/spring-primary-qualifier/"
+                    href="/2019/12/24/spring-primary-qualifier/"
                     data-tooltip="Primary, Qualifier 어노테이션"
                     aria-label="PREVIOUS: Primary, Qualifier 어노테이션"
                 >
@@ -439,7 +439,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/21/spring-ioccontainer/"
+                    href="/2019/12/21/spring-ioccontainer/"
                     data-tooltip="IoC 컨테이너와 빈"
                     aria-label="NEXT: IoC 컨테이너와 빈"
                 >
@@ -466,7 +466,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/24/spring-autowried/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -479,7 +479,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/24/spring-autowried/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -492,7 +492,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/24/spring-autowried/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -526,7 +526,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/24/spring-autowried/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -539,7 +539,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/24/spring-autowried/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -552,7 +552,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/24/spring-autowried/"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/24/spring-autowried/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -593,19 +593,19 @@
 
         
         
-<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/code_repository/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.js"></script>
 
 
-<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
 
 
-<script src="/code_repository/assets/js/thumbs.js"></script>
+<script src="/assets/js/thumbs.js"></script>
 
 
-<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
 
 <!--SCRIPTS END-->
 

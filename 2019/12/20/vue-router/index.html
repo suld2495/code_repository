@@ -11,11 +11,11 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"뷰 라우터싱글페이지앱에서는 화면의 새로고침이 없이 페이지가 전환이 되어야 합니다. 그럴때 사용하는 것이 뷰 라우터로써 라우트에 컴포넌트를 맵핑 시켜 놓고 특정주소에서 해당하는 컴포넌트를 렌더링하는 방식으로 싱글페이지앱에서 페이지의 전환을 대신합니다.\n1. vue-router 구성1-1. vue-router파일 작성참고사항vue-router의 실제 코드를 main.js에 작성하게 되면 vue-router 편향적인 파일이 되기 때문에 삼가한다. vue-router만을 위한 파일을 생성하여 작성하도록 하자.\nvue-router 설치1npm install vue-router\n\nimport1234import Vue from 'vue';import VueRouter from 'vue-router';Vue.use(VueRouter);\n\n컴포넌트 생성렌더링할 컴포넌트 생성\n12const Foo = &#123;template: '&lt;p&gt;foo&lt;/p&gt;'&#125;const Bar = &#123;template: '&lt;p&gt;bar&lt;/p&gt;'&#125;\n\nVueRouter 생성path는 주소, component는 해당 주소에서 렌더링할 컴포넌트를 맵핑\n12345678let routes = [    &#123;path: '/foo', component: Foo&#125;,    &#123;path: '/bar', component: Bar&#125;]export const router = new VueRouter(&#123;    routes&#125;);\n\n1-2. main.js 작성Vue 인스턴스 생성12345import &#123;router&#125; from '라우터작성 경로';new Vue(&#123;    router&#125;)\n\n뷰 라우터 태그 작성라우터 설정시에 맵핑했었던 컴포넌트가 router-view에 렌더링 됩니다.\n123&lt;div id=\"app\"&gt;    &lt;router-view&gt;&lt;/router-view&gt;&lt;/div&gt;\n\n라우터 이동path부분에 주소를 입력 해주면 해당 라우팅 경로로 이동할수 있습니다(실제론 해당 주소로 컴포넌트를 바꿔서 렌더링 작업을 처리해준다는 것).\n123&lt;div id=\"app\"&gt;    &lt;router-link to=\"path\"&gt;&lt;/router-link&gt;&lt;/div&gt;\n\nredirectpath 경로로 들어왔을 때 리다이렉트 할수 있다.\n123456var routes = [    &#123;        path: '/',        redirect: '/리다이렉트할 경로'    &#125;]\n\nurl에 # 제거하기mode에 history값을 주면 #을 제거 가능하다.\n123456new VueRouter(&#123;\tmode : history,\troutes : [\t\t]&#125;)\n\n2. 심화된 라우팅 구성중첩된 라우트중첩된 라우트를 사용하기 위해서는 children 속성을 이용하면 가능합니다.\n12345678910111213141516var routes = [    &#123;        path: '/mypage',        component: &#123;template: '&lt;p&gt;안녕하세요&lt;/p&gt;&lt;router-view&gt;&lt;/router-view&gt;'&#125;,                // 중첩된 라우트를 사용하기 위해서는 children 속성을 이용하면 가능합니다.        children: &#123;            path: 'myBoard',            component: &#123;template: '&lt;p&gt;내 게시물&lt;/p&gt;'&#125;        &#125;    &#125;]new VueRouter(&#123;    routes&#125;)\n\n중첩된 라우트는 화면 구성 컴포넌트의 수가 적으면 유용하지만 한번에 더 많은 컴포넌트를 표시하는데는 한계가 있습니다.\n다중 라우트하나의 주소에 여러개의 컴포넌트와 매핑을 합니다.\n12345678910111213141516&lt;view-router&gt;&lt;/view-router&gt;&lt;view-router name=\"header\"&gt;&lt;/view-router&gt;var routes = [    &#123;        path: '/mypage',        components: &#123;            default: &#123;template: '&lt;p&gt;기본 컴포넌트&lt;/p&gt;'&#125;,        // view-router에 name속성의 값을 설정하지 않으면 default            header: &#123;template: '&lt;header&gt;헤더 컴포넌트&lt;/header&gt;'&#125;    // view-router에 name속성의 값을 키로 하여 컴포넌트를 맵핑        &#125;    &#125;];new VueRouter(&#123;    routes&#125;);\n\n\n상하위 관계가 아닌 동등한 레벨의 여러개의 컴포넌트를 한번에 표시가 가능합니다.\n\n","dateCreated":"2019-12-20T09:08:19+09:00","dateModified":"2019-12-21T15:55:53+09:00","datePublished":"2019-12-20T09:08:19+09:00","description":"","headline":"뷰 라우터","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/20/vue-router/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/20/vue-router/","keywords":"vue, router"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"뷰 라우터싱글페이지앱에서는 화면의 새로고침이 없이 페이지가 전환이 되어야 합니다. 그럴때 사용하는 것이 뷰 라우터로써 라우트에 컴포넌트를 맵핑 시켜 놓고 특정주소에서 해당하는 컴포넌트를 렌더링하는 방식으로 싱글페이지앱에서 페이지의 전환을 대신합니다.\n1. vue-router 구성1-1. vue-router파일 작성참고사항vue-router의 실제 코드를 main.js에 작성하게 되면 vue-router 편향적인 파일이 되기 때문에 삼가한다. vue-router만을 위한 파일을 생성하여 작성하도록 하자.\nvue-router 설치1npm install vue-router\n\nimport1234import Vue from 'vue';import VueRouter from 'vue-router';Vue.use(VueRouter);\n\n컴포넌트 생성렌더링할 컴포넌트 생성\n12const Foo = &#123;template: '&lt;p&gt;foo&lt;/p&gt;'&#125;const Bar = &#123;template: '&lt;p&gt;bar&lt;/p&gt;'&#125;\n\nVueRouter 생성path는 주소, component는 해당 주소에서 렌더링할 컴포넌트를 맵핑\n12345678let routes = [    &#123;path: '/foo', component: Foo&#125;,    &#123;path: '/bar', component: Bar&#125;]export const router = new VueRouter(&#123;    routes&#125;);\n\n1-2. main.js 작성Vue 인스턴스 생성12345import &#123;router&#125; from '라우터작성 경로';new Vue(&#123;    router&#125;)\n\n뷰 라우터 태그 작성라우터 설정시에 맵핑했었던 컴포넌트가 router-view에 렌더링 됩니다.\n123&lt;div id=\"app\"&gt;    &lt;router-view&gt;&lt;/router-view&gt;&lt;/div&gt;\n\n라우터 이동path부분에 주소를 입력 해주면 해당 라우팅 경로로 이동할수 있습니다(실제론 해당 주소로 컴포넌트를 바꿔서 렌더링 작업을 처리해준다는 것).\n123&lt;div id=\"app\"&gt;    &lt;router-link to=\"path\"&gt;&lt;/router-link&gt;&lt;/div&gt;\n\nredirectpath 경로로 들어왔을 때 리다이렉트 할수 있다.\n123456var routes = [    &#123;        path: '/',        redirect: '/리다이렉트할 경로'    &#125;]\n\nurl에 # 제거하기mode에 history값을 주면 #을 제거 가능하다.\n123456new VueRouter(&#123;\tmode : history,\troutes : [\t\t]&#125;)\n\n2. 심화된 라우팅 구성중첩된 라우트중첩된 라우트를 사용하기 위해서는 children 속성을 이용하면 가능합니다.\n12345678910111213141516var routes = [    &#123;        path: '/mypage',        component: &#123;template: '&lt;p&gt;안녕하세요&lt;/p&gt;&lt;router-view&gt;&lt;/router-view&gt;'&#125;,                // 중첩된 라우트를 사용하기 위해서는 children 속성을 이용하면 가능합니다.        children: &#123;            path: 'myBoard',            component: &#123;template: '&lt;p&gt;내 게시물&lt;/p&gt;'&#125;        &#125;    &#125;]new VueRouter(&#123;    routes&#125;)\n\n중첩된 라우트는 화면 구성 컴포넌트의 수가 적으면 유용하지만 한번에 더 많은 컴포넌트를 표시하는데는 한계가 있습니다.\n다중 라우트하나의 주소에 여러개의 컴포넌트와 매핑을 합니다.\n12345678910111213141516&lt;view-router&gt;&lt;/view-router&gt;&lt;view-router name=\"header\"&gt;&lt;/view-router&gt;var routes = [    &#123;        path: '/mypage',        components: &#123;            default: &#123;template: '&lt;p&gt;기본 컴포넌트&lt;/p&gt;'&#125;,        // view-router에 name속성의 값을 설정하지 않으면 default            header: &#123;template: '&lt;header&gt;헤더 컴포넌트&lt;/header&gt;'&#125;    // view-router에 name속성의 값을 키로 하여 컴포넌트를 맵핑        &#125;    &#125;];new VueRouter(&#123;    routes&#125;);\n\n\n상하위 관계가 아닌 동등한 레벨의 여러개의 컴포넌트를 한번에 표시가 가능합니다.\n\n","dateCreated":"2019-12-20T09:08:19+09:00","dateModified":"2019-12-21T15:55:53+09:00","datePublished":"2019-12-20T09:08:19+09:00","description":"","headline":"뷰 라우터","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2019/12/20/vue-router/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2019/12/20/vue-router/","keywords":"vue, router"}</script>
     <meta name="description" content="뷰 라우터싱글페이지앱에서는 화면의 새로고침이 없이 페이지가 전환이 되어야 합니다. 그럴때 사용하는 것이 뷰 라우터로써 라우트에 컴포넌트를 맵핑 시켜 놓고 특정주소에서 해당하는 컴포넌트를 렌더링하는 방식으로 싱글페이지앱에서 페이지의 전환을 대신합니다. 1. vue-router 구성1-1. vue-router파일 작성참고사항vue-router의 실제 코드를 m">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="뷰 라우터">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;20&#x2F;vue-router&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2019&#x2F;12&#x2F;20&#x2F;vue-router&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="뷰 라우터싱글페이지앱에서는 화면의 새로고침이 없이 페이지가 전환이 되어야 합니다. 그럴때 사용하는 것이 뷰 라우터로써 라우트에 컴포넌트를 맵핑 시켜 놓고 특정주소에서 해당하는 컴포넌트를 렌더링하는 방식으로 싱글페이지앱에서 페이지의 전환을 대신합니다. 1. vue-router 구성1-1. vue-router파일 작성참고사항vue-router의 실제 코드를 m">
 <meta property="og:locale" content="en_US">
@@ -35,16 +35,16 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+<link rel="stylesheet" href="/assets/css/all.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+<link rel="stylesheet" href="/assets/css/thumbs.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
 
     <!--STYLES END-->
     
@@ -68,7 +68,7 @@
     <div class="header-title">
         <a
             class="header-title-link"
-            href="/code_repository/%20"
+            href="/%20"
             aria-label=""
         >
             
@@ -79,7 +79,7 @@
             <a
                 class="header-right-picture "
                 href="#about"
-                aria-label="Open the link: /code_repository/#about"
+                aria-label="Open the link: /#about"
             >
         
         
@@ -99,7 +99,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/%20"
+                             href="/%20"
                             
                             title="홈"
                         >
@@ -112,7 +112,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-categories"
+                             href="/all-categories"
                             
                             title="카테고리"
                         >
@@ -125,7 +125,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-tags"
+                             href="/all-tags"
                             
                             title="태그"
                         >
@@ -138,7 +138,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-archives"
+                             href="/all-archives"
                             
                             title="아카이브"
                         >
@@ -190,7 +190,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/atom.xml"
+                             href="/atom.xml"
                             
                             title="RSS"
                         >
@@ -230,7 +230,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/code_repository/categories/vue/">vue</a>, <a class="category-link" href="/code_repository/categories/vue/vue-%EB%9D%BC%EC%9A%B0%ED%84%B0/">vue 라우터</a>
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EB%9D%BC%EC%9A%B0%ED%84%B0/">vue 라우터</a>
 
 
     
@@ -289,7 +289,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/router/" rel="tag">router</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/vue/" rel="tag">vue</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/router/" rel="tag">router</a> <a class="tag tag--primary tag--small t-link" href="/tags/vue/" rel="tag">vue</a>
 
             </div>
         
@@ -302,7 +302,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-dynamic-routing/"
+                    href="/2019/12/20/vue-dynamic-routing/"
                     data-tooltip="동적 라우팅"
                     aria-label="PREVIOUS: 동적 라우팅"
                 >
@@ -316,7 +316,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/vue-extends/"
+                    href="/2019/12/19/vue-extends/"
                     data-tooltip="vue-extends"
                     aria-label="NEXT: vue-extends"
                 >
@@ -343,7 +343,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/vue-router/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/vue-router/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -356,7 +356,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/vue-router/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/vue-router/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -369,7 +369,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/vue-router/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/vue-router/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -417,7 +417,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-dynamic-routing/"
+                    href="/2019/12/20/vue-dynamic-routing/"
                     data-tooltip="동적 라우팅"
                     aria-label="PREVIOUS: 동적 라우팅"
                 >
@@ -431,7 +431,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/vue-extends/"
+                    href="/2019/12/19/vue-extends/"
                     data-tooltip="vue-extends"
                     aria-label="NEXT: vue-extends"
                 >
@@ -458,7 +458,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/vue-router/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/vue-router/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -471,7 +471,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/vue-router/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/vue-router/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -484,7 +484,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/vue-router/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/vue-router/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -518,7 +518,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/vue-router/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/vue-router/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -531,7 +531,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/vue-router/"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/vue-router/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -544,7 +544,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/vue-router/"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/vue-router/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -585,19 +585,19 @@
 
         
         
-<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/code_repository/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.js"></script>
 
 
-<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
 
 
-<script src="/code_repository/assets/js/thumbs.js"></script>
+<script src="/assets/js/thumbs.js"></script>
 
 
-<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
 
 <!--SCRIPTS END-->
 

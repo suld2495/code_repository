@@ -11,11 +11,11 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"IoC 컨테이너는 Bean 라이프 사이클을 관리하여 주고 특정한 시점에 Bean에게 이를 알려줄수 있는 메커니즘을 제공합니다. 스프링에서는 주로 init와 destroy 이벤트를 제공합니다.\nInitializingBean와 DisposableBean 인터페이스InitializingBean 인터페이스를 활용해서 Bean의 초기화 작업을 진행할수 있습니다. 해당 인터페이스에서 제공하는 afterPropertiesSet메소드를 구현하면 Spring이 Bean의 생성 후에 해당 메소드를 호출해 줍니다.\n12345678910@Componentpublic class Book implements InitializingBean &#123;    @Autowired    BeanFactory beanFactory;    public void afterPropertiesSet() throws Exception &#123;        System.out.println(\"Bean이 등록되었습니다.\");        System.out.println(beanFactory.getBean(\"book\"));    &#125;&#125;\n\n12Bean이 등록되었습니다.kr.co.spring.Book@3745e5c6\n\nDisposableBean 인터페이스에서 제공하는 destroy메소드를 구현하면 Bean의 소멸 직전에 해당 메소드를 호출해 줍니다.\n1234567891011@Componentpublic class Book implements DisposableBean &#123;    @Autowired    BeanFactory beanFactory;    public void destroy() throws Exception &#123;        System.out.println(\"Bean이 삭제됩니다..\");        System.out.println(beanFactory.getBean(\"book\"));    &#125;&#125;\n\n\n\nxml 빈 등록시 사용자 라이프사이클 메소드 정의xml에서 빈을 수동으로 등록시에 위의 InitializingBean, DisposableBean을 사용하지 않고 사용자 메소드를 정의 가능합니다.\n1&lt;bean id=\"book\" class=\"kr.co.spring.Book\" init-method=\"initBook\" destroy-method=\"destroyBook\"/&gt;\n\n123456789public class Book &#123;    public void initBook() &#123;        System.out.println(\"빈이 등록되었습니다.\");    &#125;    public void destoryBook() &#123;        System.out.println(\"빈이 삭제되었습니다.\");    &#125;&#125;\n\n\n\n@PostConstruct와 @PreDestroy좀 더 간편하게 어노테이션을 이용해서 위와 동일하게 사용할수 있습니다.\n@PostConstruct는 Bean이 생성 된 후에 호출 될 메소드 위에 사용합니다.\n1234567891011@Componentpublic class Book &#123;    @Autowired    BeanFactory beanFactory;    @PostConstruct    public void init() throws Exception &#123;        System.out.println(\"Bean이 등록되었습니다.\");        System.out.println(beanFactory.getBean(\"book\"));    &#125;&#125;\n\n12Bean이 등록되었습니다.kr.co.spring.Book@644baf4a\n\n@PreDestroy는 Bean이 소멸 직전에 호출 될 메소드 위에 사용합니다.\n12345678@Componentpublic class Book &#123;    @PreDestroy    public void destroy() throws Exception &#123;        System.out.println(\"빈이 삭제되었습니다.\");    &#125;&#125;\n\n\n\n기타ApplicationContext 클래스도 Bean으로 등록되어 있기 때문에 의존주입 받을수 있습니다. 이 뿐 아니라 ApplicationContext가 상속하고 있는 BeanFactory, ResourceLoader 등도 Bean으로 등록되어 있기 때문에 ApplicationContext를 의존주입 받지 않고 필요한 기능을 가진 Bean을 의존주입해서 사용하는 것이 가시성에 좋습니다(ex : Bean과 관련된 처리를 할때는 BeanFactory사용).\n","dateCreated":"2019-12-24T11:53:23+09:00","dateModified":"2019-12-24T12:38:06+09:00","datePublished":"2019-12-24T11:53:23+09:00","description":"","headline":"PostConstruct 어노테이션","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/","keywords":"postConstruct, 라이프사이클, initializingBean"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"IoC 컨테이너는 Bean 라이프 사이클을 관리하여 주고 특정한 시점에 Bean에게 이를 알려줄수 있는 메커니즘을 제공합니다. 스프링에서는 주로 init와 destroy 이벤트를 제공합니다.\nInitializingBean와 DisposableBean 인터페이스InitializingBean 인터페이스를 활용해서 Bean의 초기화 작업을 진행할수 있습니다. 해당 인터페이스에서 제공하는 afterPropertiesSet메소드를 구현하면 Spring이 Bean의 생성 후에 해당 메소드를 호출해 줍니다.\n12345678910@Componentpublic class Book implements InitializingBean &#123;    @Autowired    BeanFactory beanFactory;    public void afterPropertiesSet() throws Exception &#123;        System.out.println(\"Bean이 등록되었습니다.\");        System.out.println(beanFactory.getBean(\"book\"));    &#125;&#125;\n\n12Bean이 등록되었습니다.kr.co.spring.Book@3745e5c6\n\nDisposableBean 인터페이스에서 제공하는 destroy메소드를 구현하면 Bean의 소멸 직전에 해당 메소드를 호출해 줍니다.\n1234567891011@Componentpublic class Book implements DisposableBean &#123;    @Autowired    BeanFactory beanFactory;    public void destroy() throws Exception &#123;        System.out.println(\"Bean이 삭제됩니다..\");        System.out.println(beanFactory.getBean(\"book\"));    &#125;&#125;\n\n\n\nxml 빈 등록시 사용자 라이프사이클 메소드 정의xml에서 빈을 수동으로 등록시에 위의 InitializingBean, DisposableBean을 사용하지 않고 사용자 메소드를 정의 가능합니다.\n1&lt;bean id=\"book\" class=\"kr.co.spring.Book\" init-method=\"initBook\" destroy-method=\"destroyBook\"/&gt;\n\n123456789public class Book &#123;    public void initBook() &#123;        System.out.println(\"빈이 등록되었습니다.\");    &#125;    public void destoryBook() &#123;        System.out.println(\"빈이 삭제되었습니다.\");    &#125;&#125;\n\n\n\n@PostConstruct와 @PreDestroy좀 더 간편하게 어노테이션을 이용해서 위와 동일하게 사용할수 있습니다.\n@PostConstruct는 Bean이 생성 된 후에 호출 될 메소드 위에 사용합니다.\n1234567891011@Componentpublic class Book &#123;    @Autowired    BeanFactory beanFactory;    @PostConstruct    public void init() throws Exception &#123;        System.out.println(\"Bean이 등록되었습니다.\");        System.out.println(beanFactory.getBean(\"book\"));    &#125;&#125;\n\n12Bean이 등록되었습니다.kr.co.spring.Book@644baf4a\n\n@PreDestroy는 Bean이 소멸 직전에 호출 될 메소드 위에 사용합니다.\n12345678@Componentpublic class Book &#123;    @PreDestroy    public void destroy() throws Exception &#123;        System.out.println(\"빈이 삭제되었습니다.\");    &#125;&#125;\n\n\n\n기타ApplicationContext 클래스도 Bean으로 등록되어 있기 때문에 의존주입 받을수 있습니다. 이 뿐 아니라 ApplicationContext가 상속하고 있는 BeanFactory, ResourceLoader 등도 Bean으로 등록되어 있기 때문에 ApplicationContext를 의존주입 받지 않고 필요한 기능을 가진 Bean을 의존주입해서 사용하는 것이 가시성에 좋습니다(ex : Bean과 관련된 처리를 할때는 BeanFactory사용).\n","dateCreated":"2019-12-24T11:53:23+09:00","dateModified":"2019-12-24T12:38:06+09:00","datePublished":"2019-12-24T11:53:23+09:00","description":"","headline":"PostConstruct 어노테이션","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2019/12/24/spring-postconstruct/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2019/12/24/spring-postconstruct/","keywords":"postConstruct, 라이프사이클, initializingBean"}</script>
     <meta name="description" content="IoC 컨테이너는 Bean 라이프 사이클을 관리하여 주고 특정한 시점에 Bean에게 이를 알려줄수 있는 메커니즘을 제공합니다. 스프링에서는 주로 init와 destroy 이벤트를 제공합니다. InitializingBean와 DisposableBean 인터페이스InitializingBean 인터페이스를 활용해서 Bean의 초기화 작업을 진행할수 있습니다. 해">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="PostConstruct 어노테이션">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;24&#x2F;spring-postconstruct&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2019&#x2F;12&#x2F;24&#x2F;spring-postconstruct&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="IoC 컨테이너는 Bean 라이프 사이클을 관리하여 주고 특정한 시점에 Bean에게 이를 알려줄수 있는 메커니즘을 제공합니다. 스프링에서는 주로 init와 destroy 이벤트를 제공합니다. InitializingBean와 DisposableBean 인터페이스InitializingBean 인터페이스를 활용해서 Bean의 초기화 작업을 진행할수 있습니다. 해">
 <meta property="og:locale" content="en_US">
@@ -36,16 +36,16 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+<link rel="stylesheet" href="/assets/css/all.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+<link rel="stylesheet" href="/assets/css/thumbs.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
 
     <!--STYLES END-->
     
@@ -69,7 +69,7 @@
     <div class="header-title">
         <a
             class="header-title-link"
-            href="/code_repository/%20"
+            href="/%20"
             aria-label=""
         >
             
@@ -80,7 +80,7 @@
             <a
                 class="header-right-picture "
                 href="#about"
-                aria-label="Open the link: /code_repository/#about"
+                aria-label="Open the link: /#about"
             >
         
         
@@ -100,7 +100,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/%20"
+                             href="/%20"
                             
                             title="홈"
                         >
@@ -113,7 +113,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-categories"
+                             href="/all-categories"
                             
                             title="카테고리"
                         >
@@ -126,7 +126,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-tags"
+                             href="/all-tags"
                             
                             title="태그"
                         >
@@ -139,7 +139,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-archives"
+                             href="/all-archives"
                             
                             title="아카이브"
                         >
@@ -191,7 +191,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/atom.xml"
+                             href="/atom.xml"
                             
                             title="RSS"
                         >
@@ -231,7 +231,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/code_repository/categories/spring/">spring</a>, <a class="category-link" href="/code_repository/categories/spring/IoC-Container/">IoC Container</a>
+    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
 
 
     
@@ -284,7 +284,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/initializingBean/" rel="tag">initializingBean</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/postConstruct/" rel="tag">postConstruct</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4/" rel="tag">라이프사이클</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/initializingBean/" rel="tag">initializingBean</a> <a class="tag tag--primary tag--small t-link" href="/tags/postConstruct/" rel="tag">postConstruct</a> <a class="tag tag--primary tag--small t-link" href="/tags/%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4/" rel="tag">라이프사이클</a>
 
             </div>
         
@@ -308,7 +308,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/24/spring-primary-qualifier/"
+                    href="/2019/12/24/spring-primary-qualifier/"
                     data-tooltip="Primary, Qualifier 어노테이션"
                     aria-label="NEXT: Primary, Qualifier 어노테이션"
                 >
@@ -335,7 +335,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/24/spring-postconstruct/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -348,7 +348,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/24/spring-postconstruct/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -361,7 +361,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/24/spring-postconstruct/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -420,7 +420,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/24/spring-primary-qualifier/"
+                    href="/2019/12/24/spring-primary-qualifier/"
                     data-tooltip="Primary, Qualifier 어노테이션"
                     aria-label="NEXT: Primary, Qualifier 어노테이션"
                 >
@@ -447,7 +447,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/24/spring-postconstruct/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -460,7 +460,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/24/spring-postconstruct/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -473,7 +473,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/24/spring-postconstruct/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -507,7 +507,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/24/spring-postconstruct/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -520,7 +520,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/24/spring-postconstruct/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -533,7 +533,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/24/spring-postconstruct/"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/24/spring-postconstruct/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -574,19 +574,19 @@
 
         
         
-<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/code_repository/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.js"></script>
 
 
-<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
 
 
-<script src="/code_repository/assets/js/thumbs.js"></script>
+<script src="/assets/js/thumbs.js"></script>
 
 
-<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
 
 <!--SCRIPTS END-->
 

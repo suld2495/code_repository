@@ -11,26 +11,26 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"DataSourceDataSource는 ConnectionPool을 관리하기 위한 목적으로 사용되는 객체로 DataSource를 통해서 Connection을 얻어오고 반납하는 등의 작업을 구현합니다. ConnectionPool에는 여러개의 Connection 객체가 생성되어 운용되는데, 이를 직접 웹 어플리케이션에서 다루기 힘들기 때문에 DataSource라는 개념이 도입되었습니다.\nDataSourceUtilsDataSourceUtils 클래스는 JNDI에서 연결을 얻고 필요한 경우 연결을 닫는 메소드를 제공하는 기능을 제공 합니다. 그리고 DataSourceTransactionManager로 쓰레드에 기반한 연결을 지원합니다.\nDataSourceUtils에서 제공하는 메소드getConnection(DataSource dataSource)getConnection메소드는 제공 된 DataSource를 기반으로 하여 Connection을 생성해줍니다. Connection 생성은 트랜잭션 동기화 여부에 따라 다르게 작동합니다. 만약 트랜잭션 동기화가 활성화 되어 있다면 Connection을 생성하고 트랜잭션 저장소에 바인딩 합니다. 이후 트랜잭션 동기화 작업을 종료 할때까지 getConnection메소드를 호출하면 동일한 Connection을 반환하는 것을 확인할수 있습니다.\n12345678910111213public class DataSourceUtilsTest &#123;    @Autowired    DataSource dataSource;    public void testGetConnection() &#123;        TransactionSynchronizationManager.initSynchronization();        Connection conn1 = DataSourceUtils.getConnection(dataSource);        Connection conn2 = DataSourceUtils.getConnection(dataSource);        System.out.println(\"동일한 인스턴스 인가요? \" + conn1.equals(conn2));    &#125;&#125;\n\n\n트랜잭션이 동기화되어 있지 않을 경우에는 dataSource.getConnection()과 동일하게 작동합니다. 그래서 항상 새로운 Connection을 반환합니다.\n1234567891011public class DataSourceUtilsTest &#123;    @Autowired    DataSource dataSource;    public void testGetConnection() &#123;        Connection conn1 = DataSourceUtils.getConnection(dataSource);        Connection conn2 = DataSourceUtils.getConnection(dataSource);        System.out.println(\"동일한 인스턴스 인가요? \" + conn1.equals(conn2));    &#125;&#125;\n\n\nreleaseConnection(Connection conn, DataSource dataSource)releaseConnection메소드 또한 getConnection와 비슷하게 동작 합니다. 만약 트랜잭션 동기화가 활성화 되어 있다면 트랜잭션 저장소에서 Connection을 초기화 합니다. 이때 Connection의 연결은 종료하지 않습니다. 그리고 release 후 다시 getConnection으로 Connection을 받아왔을때 동일한 값이라는 것을 확인 할수 있습니다.\n1234567891011121314151617public class DataSourceUtilsTest &#123;    @Autowired    DataSource dataSource;    public void testGetConnection() &#123;        TransactionSynchronizationManager.initSynchronization();        Connection conn = DataSourceUtils.getConnection(dataSource);        DataSourceUtils.releaseConnection(conn, dataSource);        System.out.println(\"Connection이 종료 되었니? \" + conn.isClosed());        Connection conn2 = DataSourceUtils.getConnection(dataSource);        System.out.println(\"동일한 Connection 인가요? \" + conn.equals(conn2));    &#125;&#125;\n\n\n위와 같이 releaseConnection 메소드를 호출 하더라도 Connection은 종료되지 않는다. 단지 트랜잭션에서만 제거되었을 뿐이다. 이 때문에 사용시 주의할 필요가 있다.\n1234567891011121314151617181920public class DataSourceUtilsTest &#123;    @Autowired    DataSource dataSource;    public void testGetConnection() &#123;        TransactionSynchronizationManager.initSynchronization();        Connection conn = DataSourceUtils.getConnection(dataSource);        System.out.println(\"트랜잭션 저장소에 저장 중인가? \" + DataSourceUtils.isConnectionTransactional(conn, dataSource));        DataSourceUtils.releaseConnection(conn, dataSource);        TransactionSynchronizationManager.unbindResource(dataSource);        TransactionSynchronizationManager.clearSynchronization();        System.out.println(\"Connection이 종료 되었니? \" + conn.isClosed());        System.out.println(\"트랜잭션 저장소에 저장 중인가? \" + DataSourceUtils.isConnectionTransactional(conn, dataSource));    &#125;&#125;\n\n\n결론DataSourceUtils를 사용하면 동기화된 트랜잭션의 Connection을 가져와서 사용하기에 좋다. 하지만 releaseConnection은 Connection을 종료해주는 기능이 아니므로 사용시에 주의할 필요가 있다.\n트랜잭션 동기화 상태가 아닌 Connection이라면 releaseConnection메소드를 호출하면 close 해준다.\n","dateCreated":"2019-12-20T16:23:25+09:00","dateModified":"2019-12-21T15:55:53+09:00","datePublished":"2019-12-20T16:23:25+09:00","description":"","headline":"DataSourceUtils","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/","keywords":"java, transaction, datasource"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"DataSourceDataSource는 ConnectionPool을 관리하기 위한 목적으로 사용되는 객체로 DataSource를 통해서 Connection을 얻어오고 반납하는 등의 작업을 구현합니다. ConnectionPool에는 여러개의 Connection 객체가 생성되어 운용되는데, 이를 직접 웹 어플리케이션에서 다루기 힘들기 때문에 DataSource라는 개념이 도입되었습니다.\nDataSourceUtilsDataSourceUtils 클래스는 JNDI에서 연결을 얻고 필요한 경우 연결을 닫는 메소드를 제공하는 기능을 제공 합니다. 그리고 DataSourceTransactionManager로 쓰레드에 기반한 연결을 지원합니다.\nDataSourceUtils에서 제공하는 메소드getConnection(DataSource dataSource)getConnection메소드는 제공 된 DataSource를 기반으로 하여 Connection을 생성해줍니다. Connection 생성은 트랜잭션 동기화 여부에 따라 다르게 작동합니다. 만약 트랜잭션 동기화가 활성화 되어 있다면 Connection을 생성하고 트랜잭션 저장소에 바인딩 합니다. 이후 트랜잭션 동기화 작업을 종료 할때까지 getConnection메소드를 호출하면 동일한 Connection을 반환하는 것을 확인할수 있습니다.\n12345678910111213public class DataSourceUtilsTest &#123;    @Autowired    DataSource dataSource;    public void testGetConnection() &#123;        TransactionSynchronizationManager.initSynchronization();        Connection conn1 = DataSourceUtils.getConnection(dataSource);        Connection conn2 = DataSourceUtils.getConnection(dataSource);        System.out.println(\"동일한 인스턴스 인가요? \" + conn1.equals(conn2));    &#125;&#125;\n\n\n트랜잭션이 동기화되어 있지 않을 경우에는 dataSource.getConnection()과 동일하게 작동합니다. 그래서 항상 새로운 Connection을 반환합니다.\n1234567891011public class DataSourceUtilsTest &#123;    @Autowired    DataSource dataSource;    public void testGetConnection() &#123;        Connection conn1 = DataSourceUtils.getConnection(dataSource);        Connection conn2 = DataSourceUtils.getConnection(dataSource);        System.out.println(\"동일한 인스턴스 인가요? \" + conn1.equals(conn2));    &#125;&#125;\n\n\nreleaseConnection(Connection conn, DataSource dataSource)releaseConnection메소드 또한 getConnection와 비슷하게 동작 합니다. 만약 트랜잭션 동기화가 활성화 되어 있다면 트랜잭션 저장소에서 Connection을 초기화 합니다. 이때 Connection의 연결은 종료하지 않습니다. 그리고 release 후 다시 getConnection으로 Connection을 받아왔을때 동일한 값이라는 것을 확인 할수 있습니다.\n1234567891011121314151617public class DataSourceUtilsTest &#123;    @Autowired    DataSource dataSource;    public void testGetConnection() &#123;        TransactionSynchronizationManager.initSynchronization();        Connection conn = DataSourceUtils.getConnection(dataSource);        DataSourceUtils.releaseConnection(conn, dataSource);        System.out.println(\"Connection이 종료 되었니? \" + conn.isClosed());        Connection conn2 = DataSourceUtils.getConnection(dataSource);        System.out.println(\"동일한 Connection 인가요? \" + conn.equals(conn2));    &#125;&#125;\n\n\n위와 같이 releaseConnection 메소드를 호출 하더라도 Connection은 종료되지 않는다. 단지 트랜잭션에서만 제거되었을 뿐이다. 이 때문에 사용시 주의할 필요가 있다.\n1234567891011121314151617181920public class DataSourceUtilsTest &#123;    @Autowired    DataSource dataSource;    public void testGetConnection() &#123;        TransactionSynchronizationManager.initSynchronization();        Connection conn = DataSourceUtils.getConnection(dataSource);        System.out.println(\"트랜잭션 저장소에 저장 중인가? \" + DataSourceUtils.isConnectionTransactional(conn, dataSource));        DataSourceUtils.releaseConnection(conn, dataSource);        TransactionSynchronizationManager.unbindResource(dataSource);        TransactionSynchronizationManager.clearSynchronization();        System.out.println(\"Connection이 종료 되었니? \" + conn.isClosed());        System.out.println(\"트랜잭션 저장소에 저장 중인가? \" + DataSourceUtils.isConnectionTransactional(conn, dataSource));    &#125;&#125;\n\n\n결론DataSourceUtils를 사용하면 동기화된 트랜잭션의 Connection을 가져와서 사용하기에 좋다. 하지만 releaseConnection은 Connection을 종료해주는 기능이 아니므로 사용시에 주의할 필요가 있다.\n트랜잭션 동기화 상태가 아닌 Connection이라면 releaseConnection메소드를 호출하면 close 해준다.\n","dateCreated":"2019-12-20T16:23:25+09:00","dateModified":"2019-12-24T12:57:07+09:00","datePublished":"2019-12-20T16:23:25+09:00","description":"","headline":"DataSourceUtils","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2019/12/20/java-datasourceutils/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2019/12/20/java-datasourceutils/","keywords":"java, transaction, datasource"}</script>
     <meta name="description" content="DataSourceDataSource는 ConnectionPool을 관리하기 위한 목적으로 사용되는 객체로 DataSource를 통해서 Connection을 얻어오고 반납하는 등의 작업을 구현합니다. ConnectionPool에는 여러개의 Connection 객체가 생성되어 운용되는데, 이를 직접 웹 어플리케이션에서 다루기 힘들기 때문에 DataSource">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="DataSourceUtils">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;20&#x2F;java-datasourceutils&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2019&#x2F;12&#x2F;20&#x2F;java-datasourceutils&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="DataSourceDataSource는 ConnectionPool을 관리하기 위한 목적으로 사용되는 객체로 DataSource를 통해서 Connection을 얻어오고 반납하는 등의 작업을 구현합니다. ConnectionPool에는 여러개의 Connection 객체가 생성되어 운용되는데, 이를 직접 웹 어플리케이션에서 다루기 힘들기 때문에 DataSource">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;image&#x2F;java-datasourceutils1.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;image&#x2F;java-datasourceutils2.PNG">
-<meta property="og:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;image&#x2F;java-datasourceutils3.PNG">
-<meta property="og:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;image&#x2F;java-datasourceutils4.PNG">
+<meta property="og:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;image&#x2F;java-datasourceutils1.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;image&#x2F;java-datasourceutils2.PNG">
+<meta property="og:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;image&#x2F;java-datasourceutils3.PNG">
+<meta property="og:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;image&#x2F;java-datasourceutils4.PNG">
 <meta property="article:published_time" content="2019-12-20T07:23:25.000Z">
-<meta property="article:modified_time" content="2019-12-21T06:55:53.953Z">
+<meta property="article:modified_time" content="2019-12-24T03:57:07.968Z">
 <meta property="article:author" content="Moon Star">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="transaction">
 <meta property="article:tag" content="datasource">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;image&#x2F;java-datasourceutils1.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;image&#x2F;java-datasourceutils1.png">
     
     
         
@@ -41,16 +41,16 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+<link rel="stylesheet" href="/assets/css/all.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+<link rel="stylesheet" href="/assets/css/thumbs.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
 
     <!--STYLES END-->
     
@@ -74,7 +74,7 @@
     <div class="header-title">
         <a
             class="header-title-link"
-            href="/code_repository/%20"
+            href="/%20"
             aria-label=""
         >
             
@@ -85,7 +85,7 @@
             <a
                 class="header-right-picture "
                 href="#about"
-                aria-label="Open the link: /code_repository/#about"
+                aria-label="Open the link: /#about"
             >
         
         
@@ -105,7 +105,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/%20"
+                             href="/%20"
                             
                             title="홈"
                         >
@@ -118,7 +118,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-categories"
+                             href="/all-categories"
                             
                             title="카테고리"
                         >
@@ -131,7 +131,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-tags"
+                             href="/all-tags"
                             
                             title="태그"
                         >
@@ -144,7 +144,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-archives"
+                             href="/all-archives"
                             
                             title="아카이브"
                         >
@@ -196,7 +196,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/atom.xml"
+                             href="/atom.xml"
                             
                             title="RSS"
                         >
@@ -236,7 +236,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/code_repository/categories/java/">java</a>, <a class="category-link" href="/code_repository/categories/java/api/">api</a>
+    <a class="category-link" href="/categories/java/">java</a>, <a class="category-link" href="/categories/java/api/">api</a>
 
 
     
@@ -253,19 +253,19 @@
 <h2 id="DataSourceUtils에서-제공하는-메소드"><a href="#DataSourceUtils에서-제공하는-메소드" class="headerlink" title="DataSourceUtils에서 제공하는 메소드"></a>DataSourceUtils에서 제공하는 메소드</h2><h5 id="getConnection-DataSource-dataSource"><a href="#getConnection-DataSource-dataSource" class="headerlink" title="getConnection(DataSource dataSource)"></a>getConnection(DataSource dataSource)</h5><p>getConnection메소드는 제공 된 DataSource를 기반으로 하여 Connection을 생성해줍니다. Connection 생성은 트랜잭션 동기화 여부에 따라 다르게 작동합니다. 만약 트랜잭션 동기화가 활성화 되어 있다면 Connection을 생성하고 트랜잭션 저장소에 바인딩 합니다. 이후 트랜잭션 동기화 작업을 종료 할때까지 getConnection메소드를 호출하면 동일한 Connection을 반환하는 것을 확인할수 있습니다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceUtilsTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGetConnection</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        TransactionSynchronizationManager.initSynchronization();</span><br><span class="line"></span><br><span class="line">        Connection conn1 = DataSourceUtils.getConnection(dataSource);</span><br><span class="line">        Connection conn2 = DataSourceUtils.getConnection(dataSource);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"동일한 인스턴스 인가요? "</span> + conn1.equals(conn2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/code_repository/image/java-datasourceutils1.png" alt=""></p>
+<p><img src="/image/java-datasourceutils1.png" alt=""></p>
 <p>트랜잭션이 동기화되어 있지 않을 경우에는 <code>dataSource.getConnection()</code>과 동일하게 작동합니다. 그래서 항상 새로운 Connection을 반환합니다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceUtilsTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGetConnection</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Connection conn1 = DataSourceUtils.getConnection(dataSource);</span><br><span class="line">        Connection conn2 = DataSourceUtils.getConnection(dataSource);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"동일한 인스턴스 인가요? "</span> + conn1.equals(conn2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/code_repository/image/java-datasourceutils2.PNG" alt=""></p>
+<p><img src="/image/java-datasourceutils2.PNG" alt=""></p>
 <h5 id="releaseConnection-Connection-conn-DataSource-dataSource"><a href="#releaseConnection-Connection-conn-DataSource-dataSource" class="headerlink" title="releaseConnection(Connection conn, DataSource dataSource)"></a>releaseConnection(Connection conn, DataSource dataSource)</h5><p>releaseConnection메소드 또한 getConnection와 비슷하게 동작 합니다. 만약 트랜잭션 동기화가 활성화 되어 있다면 트랜잭션 저장소에서 Connection을 초기화 합니다. 이때 Connection의 연결은 종료하지 않습니다. 그리고 release 후 다시 getConnection으로 Connection을 받아왔을때 동일한 값이라는 것을 확인 할수 있습니다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceUtilsTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGetConnection</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        TransactionSynchronizationManager.initSynchronization();</span><br><span class="line"></span><br><span class="line">        Connection conn = DataSourceUtils.getConnection(dataSource);</span><br><span class="line"></span><br><span class="line">        DataSourceUtils.releaseConnection(conn, dataSource);</span><br><span class="line">        System.out.println(<span class="string">"Connection이 종료 되었니? "</span> + conn.isClosed());</span><br><span class="line"></span><br><span class="line">        Connection conn2 = DataSourceUtils.getConnection(dataSource);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"동일한 Connection 인가요? "</span> + conn.equals(conn2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/code_repository/image/java-datasourceutils3.PNG" alt=""></p>
+<p><img src="/image/java-datasourceutils3.PNG" alt=""></p>
 <p>위와 같이 releaseConnection 메소드를 호출 하더라도 Connection은 종료되지 않는다. 단지 트랜잭션에서만 제거되었을 뿐이다. 이 때문에 사용시 주의할 필요가 있다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceUtilsTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGetConnection</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        TransactionSynchronizationManager.initSynchronization();</span><br><span class="line"></span><br><span class="line">        Connection conn = DataSourceUtils.getConnection(dataSource);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"트랜잭션 저장소에 저장 중인가? "</span> + DataSourceUtils.isConnectionTransactional(conn, dataSource));</span><br><span class="line"></span><br><span class="line">        DataSourceUtils.releaseConnection(conn, dataSource);</span><br><span class="line"></span><br><span class="line">        TransactionSynchronizationManager.unbindResource(dataSource);</span><br><span class="line">        TransactionSynchronizationManager.clearSynchronization();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Connection이 종료 되었니? "</span> + conn.isClosed());</span><br><span class="line">        System.out.println(<span class="string">"트랜잭션 저장소에 저장 중인가? "</span> + DataSourceUtils.isConnectionTransactional(conn, dataSource));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/code_repository/image/java-datasourceutils4.PNG" alt=""></p>
+<p><img src="/image/java-datasourceutils4.PNG" alt=""></p>
 <h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><p>DataSourceUtils를 사용하면 동기화된 트랜잭션의 Connection을 가져와서 사용하기에 좋다. 하지만 releaseConnection은 Connection을 종료해주는 기능이 아니므로 사용시에 주의할 필요가 있다.</p>
 <div class="alert info"><p>트랜잭션 동기화 상태가 아닌 Connection이라면 releaseConnection메소드를 호출하면 close 해준다.</p>
 </div>
@@ -279,7 +279,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/datasource/" rel="tag">datasource</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/java/" rel="tag">java</a> <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/transaction/" rel="tag">transaction</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/datasource/" rel="tag">datasource</a> <a class="tag tag--primary tag--small t-link" href="/tags/java/" rel="tag">java</a> <a class="tag tag--primary tag--small t-link" href="/tags/transaction/" rel="tag">transaction</a>
 
             </div>
         
@@ -292,7 +292,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/java-junit5/"
+                    href="/2019/12/20/java-junit5/"
                     data-tooltip="스프링 테스트"
                     aria-label="PREVIOUS: 스프링 테스트"
                 >
@@ -306,7 +306,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-webpack-config/"
+                    href="/2019/12/20/vue-webpack-config/"
                     data-tooltip="웹팩"
                     aria-label="NEXT: 웹팩"
                 >
@@ -333,7 +333,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/java-datasourceutils/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -346,7 +346,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/java-datasourceutils/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -359,7 +359,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/java-datasourceutils/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -407,7 +407,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/java-junit5/"
+                    href="/2019/12/20/java-junit5/"
                     data-tooltip="스프링 테스트"
                     aria-label="PREVIOUS: 스프링 테스트"
                 >
@@ -421,7 +421,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-webpack-config/"
+                    href="/2019/12/20/vue-webpack-config/"
                     data-tooltip="웹팩"
                     aria-label="NEXT: 웹팩"
                 >
@@ -448,7 +448,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/java-datasourceutils/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -461,7 +461,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/java-datasourceutils/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -474,7 +474,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/java-datasourceutils/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -508,7 +508,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/java-datasourceutils/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -521,7 +521,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/java-datasourceutils/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -534,7 +534,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/java-datasourceutils/"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/java-datasourceutils/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -575,19 +575,19 @@
 
         
         
-<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/code_repository/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.js"></script>
 
 
-<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
 
 
-<script src="/code_repository/assets/js/thumbs.js"></script>
+<script src="/assets/js/thumbs.js"></script>
 
 
-<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
 
 <!--SCRIPTS END-->
 

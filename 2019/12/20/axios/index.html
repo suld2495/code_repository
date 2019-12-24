@@ -11,11 +11,11 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"axios 정의axios는 HTTP 클라이언트 라이브러리로써, 비동기 방식으로 HTTP 데이터 요청을 실행한다. 내부적으로 직접 XMLHttpRequest를 사용하지 않고 AJAX 호출을 할수있다.그리고 axios는 Promise 기반 api이다.\napi는 따로 관리한다.axios를 사용할 vue 페이지에서 직접 import axios를 통해서 사용하지 않고 api 파일을 따로 작성하여 해당 메소드를 호출 하는 방식으로 설계를 한다.\napi에서는 직접 then 및 catch 작업을 하지 않는다.아래와 같이 호출만 하고 Promise를 return 하는 방식으로 작성한다.\n123function test() &#123;    return axios.get(...);    &#125;\n\nAPI 작성 방법1. 기본 HTTP Request &amp; Response와 관련된 기본설정을 한다.123const config = &#123;    baseUrl: 'http://127.0.0.1/test/'&#125;\n\n2. API 함수들을 정리한다.1234567export const getRoleList = function() &#123;    return axios.get(...);&#125;export const getUserList = function() &#123;    return axios.get(...);&#125;","dateCreated":"2019-12-20T10:12:19+09:00","dateModified":"2019-12-21T15:55:53+09:00","datePublished":"2019-12-20T10:12:19+09:00","description":"","headline":"axios","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/20/axios/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/20/axios/","keywords":"axios"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"axios 정의axios는 HTTP 클라이언트 라이브러리로써, 비동기 방식으로 HTTP 데이터 요청을 실행한다. 내부적으로 직접 XMLHttpRequest를 사용하지 않고 AJAX 호출을 할수있다.그리고 axios는 Promise 기반 api이다.\napi는 따로 관리한다.axios를 사용할 vue 페이지에서 직접 import axios를 통해서 사용하지 않고 api 파일을 따로 작성하여 해당 메소드를 호출 하는 방식으로 설계를 한다.\napi에서는 직접 then 및 catch 작업을 하지 않는다.아래와 같이 호출만 하고 Promise를 return 하는 방식으로 작성한다.\n123function test() &#123;    return axios.get(...);    &#125;\n\nAPI 작성 방법1. 기본 HTTP Request &amp; Response와 관련된 기본설정을 한다.123const config = &#123;    baseUrl: 'http://127.0.0.1/test/'&#125;\n\n2. API 함수들을 정리한다.1234567export const getRoleList = function() &#123;    return axios.get(...);&#125;export const getUserList = function() &#123;    return axios.get(...);&#125;","dateCreated":"2019-12-20T10:12:19+09:00","dateModified":"2019-12-21T15:55:53+09:00","datePublished":"2019-12-20T10:12:19+09:00","description":"","headline":"axios","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2019/12/20/axios/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2019/12/20/axios/","keywords":"axios"}</script>
     <meta name="description" content="axios 정의axios는 HTTP 클라이언트 라이브러리로써, 비동기 방식으로 HTTP 데이터 요청을 실행한다. 내부적으로 직접 XMLHttpRequest를 사용하지 않고 AJAX 호출을 할수있다.그리고 axios는 Promise 기반 api이다. api는 따로 관리한다.axios를 사용할 vue 페이지에서 직접 import axios를 통해서 사용하지 않">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="axios">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;20&#x2F;axios&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2019&#x2F;12&#x2F;20&#x2F;axios&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="axios 정의axios는 HTTP 클라이언트 라이브러리로써, 비동기 방식으로 HTTP 데이터 요청을 실행한다. 내부적으로 직접 XMLHttpRequest를 사용하지 않고 AJAX 호출을 할수있다.그리고 axios는 Promise 기반 api이다. api는 따로 관리한다.axios를 사용할 vue 페이지에서 직접 import axios를 통해서 사용하지 않">
 <meta property="og:locale" content="en_US">
@@ -34,16 +34,16 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+<link rel="stylesheet" href="/assets/css/all.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+<link rel="stylesheet" href="/assets/css/thumbs.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
 
     <!--STYLES END-->
     
@@ -67,7 +67,7 @@
     <div class="header-title">
         <a
             class="header-title-link"
-            href="/code_repository/%20"
+            href="/%20"
             aria-label=""
         >
             
@@ -78,7 +78,7 @@
             <a
                 class="header-right-picture "
                 href="#about"
-                aria-label="Open the link: /code_repository/#about"
+                aria-label="Open the link: /#about"
             >
         
         
@@ -98,7 +98,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/%20"
+                             href="/%20"
                             
                             title="홈"
                         >
@@ -111,7 +111,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-categories"
+                             href="/all-categories"
                             
                             title="카테고리"
                         >
@@ -124,7 +124,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-tags"
+                             href="/all-tags"
                             
                             title="태그"
                         >
@@ -137,7 +137,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-archives"
+                             href="/all-archives"
                             
                             title="아카이브"
                         >
@@ -189,7 +189,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/atom.xml"
+                             href="/atom.xml"
                             
                             title="RSS"
                         >
@@ -229,7 +229,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/code_repository/categories/javascript/">javascript</a>, <a class="category-link" href="/code_repository/categories/javascript/%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/">라이브러리</a>
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/">라이브러리</a>
 
 
     
@@ -259,7 +259,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/axios/" rel="tag">axios</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/axios/" rel="tag">axios</a>
 
             </div>
         
@@ -272,7 +272,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-mixin/"
+                    href="/2019/12/20/vue-mixin/"
                     data-tooltip="Mixin 기본 사용방법"
                     aria-label="PREVIOUS: Mixin 기본 사용방법"
                 >
@@ -286,7 +286,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-navigation-guard/"
+                    href="/2019/12/20/vue-navigation-guard/"
                     data-tooltip="라우터 네비게이션 가드"
                     aria-label="NEXT: 라우터 네비게이션 가드"
                 >
@@ -313,7 +313,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/axios/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/axios/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -326,7 +326,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/axios/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/axios/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -339,7 +339,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/axios/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/axios/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -387,7 +387,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-mixin/"
+                    href="/2019/12/20/vue-mixin/"
                     data-tooltip="Mixin 기본 사용방법"
                     aria-label="PREVIOUS: Mixin 기본 사용방법"
                 >
@@ -401,7 +401,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/20/vue-navigation-guard/"
+                    href="/2019/12/20/vue-navigation-guard/"
                     data-tooltip="라우터 네비게이션 가드"
                     aria-label="NEXT: 라우터 네비게이션 가드"
                 >
@@ -428,7 +428,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/axios/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/axios/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -441,7 +441,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/axios/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/axios/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -454,7 +454,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/axios/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/axios/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -488,7 +488,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/20/axios/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/20/axios/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -501,7 +501,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/20/axios/"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/20/axios/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -514,7 +514,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/20/axios/"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/20/axios/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -555,19 +555,19 @@
 
         
         
-<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/code_repository/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.js"></script>
 
 
-<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
 
 
-<script src="/code_repository/assets/js/thumbs.js"></script>
+<script src="/assets/js/thumbs.js"></script>
 
 
-<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
 
 <!--SCRIPTS END-->
 

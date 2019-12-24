@@ -11,11 +11,11 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"foreach 확장1. foreach에서 배열사용하기기존에는 foreach에서는 List만 사용이 가능하다고 알고 있었는데 배열도 사용가능하다.\nList 사용방법12345678910111213&lt;!-- JAVA --&gt;List list &#x3D; new ArrayList();list.add(&quot;value1&quot;);list.add(&quot;value2&quot;);Map map &#x3D; new Map();map.put(&quot;list&quot;, list);&lt;!-- MYBATIS --&gt;&lt;foreach collection&#x3D;&quot;list&quot; item&#x3D;&quot;item&quot;&gt;    #&#123;item&#125;&lt;&#x2F;foreach&gt;\n\n배열 사용방법1234567891011121314&lt;!-- JAVA --&gt;String[] array &#x3D; &#123;    &quot;value1&quot;,    &quot;value2&quot;&#125;;Map map &#x3D; new Map();map.put(&quot;array&quot;, array);&lt;!-- MYBATIS --&gt;&lt;foreach collection&#x3D;&quot;array&quot; item&#x3D;&quot;item&quot;&gt;    #&#123;item&#125;&lt;&#x2F;foreach&gt;\n\n\n배열이나 리스트나 사용방법은 동일 하다\n\n2. foreach에서 Map 사용하기foreach에서 Map을 지원하는건 아니다. Map의 메서드들 중 하나인 entrySet을 이용하여 작성한다\n12345678910111213&lt;!-- JAVA --&gt;Map paramMap &#x3D; new Map();paramMap.put(&quot;id&quot;, &quot;value&quot;);paramMap.put(&quot;name&quot;, &quot;value&quot;);Map map &#x3D; new Map();map.put(&quot;paramMap&quot;, paramMap);&lt;!-- MYBATIS --&gt;&lt;foreach collection&#x3D;&quot;paramMap.entrySet()&quot; index&#x3D;&quot;key&quot; item&#x3D;&quot;value&quot;&gt;    #&#123;value&#125;&lt;&#x2F;foreach&gt;\n\n\n\n1234567891011121314151617181920212223&lt;!-- WHERE 절에서 사용 --&gt;Map paramMap &#x3D; new Map();paramMap.put(&quot;id&quot;, &quot;value&quot;);paramMap.put(&quot;name&quot;, &quot;value&quot;);SELECT *  FROM TABLE WHERE &lt;!-- WHERE 절에 사용 --&gt;&lt;foreach collection&#x3D;&quot;paramMap.entrySet()&quot; index&#x3D;&quot;key&quot; item&#x3D;&quot;value&quot;&gt;    $&#123;key&#125; &#x3D; #&#123;value&#125;&lt;&#x2F;foreach&gt;&lt;!-- UPDATE문에서 활용 --&gt;Map paramMap &#x3D; new Map();paramMap.put(&quot;id&quot;, &quot;value&quot;);paramMap.put(&quot;name&quot;, &quot;value&quot;);UPDATE TABLE   SET&lt;foreach collection&#x3D;&quot;paramMap.entrySet()&quot; index&#x3D;&quot;key&quot; item&#x3D;&quot;value&quot;&gt;    $&#123;key&#125; &#x3D; #&#123;value&#125;&lt;&#x2F;foreach&gt;\n\n\nMap을 활용해서 where 조건을 걸때나 update시에 값 변경할때 동적으로 사용가능하다\n\n","dateCreated":"2019-12-19T00:48:16+09:00","dateModified":"2019-12-19T00:49:35+09:00","datePublished":"2019-12-19T00:48:16+09:00","description":"","headline":"마이바티스에서 foreach 사용하기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/","keywords":"mybatis"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"foreach 확장1. foreach에서 배열사용하기기존에는 foreach에서는 List만 사용이 가능하다고 알고 있었는데 배열도 사용가능하다.\nList 사용방법12345678910111213&lt;!-- JAVA --&gt;List list &#x3D; new ArrayList();list.add(&quot;value1&quot;);list.add(&quot;value2&quot;);Map map &#x3D; new Map();map.put(&quot;list&quot;, list);&lt;!-- MYBATIS --&gt;&lt;foreach collection&#x3D;&quot;list&quot; item&#x3D;&quot;item&quot;&gt;    #&#123;item&#125;&lt;&#x2F;foreach&gt;\n\n배열 사용방법1234567891011121314&lt;!-- JAVA --&gt;String[] array &#x3D; &#123;    &quot;value1&quot;,    &quot;value2&quot;&#125;;Map map &#x3D; new Map();map.put(&quot;array&quot;, array);&lt;!-- MYBATIS --&gt;&lt;foreach collection&#x3D;&quot;array&quot; item&#x3D;&quot;item&quot;&gt;    #&#123;item&#125;&lt;&#x2F;foreach&gt;\n\n\n배열이나 리스트나 사용방법은 동일 하다\n\n2. foreach에서 Map 사용하기foreach에서 Map을 지원하는건 아니다. Map의 메서드들 중 하나인 entrySet을 이용하여 작성한다\n12345678910111213&lt;!-- JAVA --&gt;Map paramMap &#x3D; new Map();paramMap.put(&quot;id&quot;, &quot;value&quot;);paramMap.put(&quot;name&quot;, &quot;value&quot;);Map map &#x3D; new Map();map.put(&quot;paramMap&quot;, paramMap);&lt;!-- MYBATIS --&gt;&lt;foreach collection&#x3D;&quot;paramMap.entrySet()&quot; index&#x3D;&quot;key&quot; item&#x3D;&quot;value&quot;&gt;    #&#123;value&#125;&lt;&#x2F;foreach&gt;\n\n\n\n1234567891011121314151617181920212223&lt;!-- WHERE 절에서 사용 --&gt;Map paramMap &#x3D; new Map();paramMap.put(&quot;id&quot;, &quot;value&quot;);paramMap.put(&quot;name&quot;, &quot;value&quot;);SELECT *  FROM TABLE WHERE &lt;!-- WHERE 절에 사용 --&gt;&lt;foreach collection&#x3D;&quot;paramMap.entrySet()&quot; index&#x3D;&quot;key&quot; item&#x3D;&quot;value&quot;&gt;    $&#123;key&#125; &#x3D; #&#123;value&#125;&lt;&#x2F;foreach&gt;&lt;!-- UPDATE문에서 활용 --&gt;Map paramMap &#x3D; new Map();paramMap.put(&quot;id&quot;, &quot;value&quot;);paramMap.put(&quot;name&quot;, &quot;value&quot;);UPDATE TABLE   SET&lt;foreach collection&#x3D;&quot;paramMap.entrySet()&quot; index&#x3D;&quot;key&quot; item&#x3D;&quot;value&quot;&gt;    $&#123;key&#125; &#x3D; #&#123;value&#125;&lt;&#x2F;foreach&gt;\n\n\nMap을 활용해서 where 조건을 걸때나 update시에 값 변경할때 동적으로 사용가능하다\n\n","dateCreated":"2019-12-19T00:48:16+09:00","dateModified":"2019-12-19T00:49:35+09:00","datePublished":"2019-12-19T00:48:16+09:00","description":"","headline":"마이바티스에서 foreach 사용하기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2019/12/19/mybatis-foreach/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2019/12/19/mybatis-foreach/","keywords":"mybatis"}</script>
     <meta name="description" content="foreach 확장1. foreach에서 배열사용하기기존에는 foreach에서는 List만 사용이 가능하다고 알고 있었는데 배열도 사용가능하다. List 사용방법12345678910111213&lt;!-- JAVA --&gt;List list &#x3D; new ArrayList();list.add(&quot;value1&quot;);list.add(&amp;qu">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="마이바티스에서 foreach 사용하기">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;code_repository&#x2F;2019&#x2F;12&#x2F;19&#x2F;mybatis-foreach&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2019&#x2F;12&#x2F;19&#x2F;mybatis-foreach&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="foreach 확장1. foreach에서 배열사용하기기존에는 foreach에서는 List만 사용이 가능하다고 알고 있었는데 배열도 사용가능하다. List 사용방법12345678910111213&lt;!-- JAVA --&gt;List list &#x3D; new ArrayList();list.add(&quot;value1&quot;);list.add(&amp;qu">
 <meta property="og:locale" content="en_US">
@@ -34,16 +34,16 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/code_repository/assets/css/all.css">
+<link rel="stylesheet" href="/assets/css/all.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/thumbs.css">
+<link rel="stylesheet" href="/assets/css/thumbs.css">
 
     
-<link rel="stylesheet" href="/code_repository/assets/css/tranquilpeak.css">
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
 
     <!--STYLES END-->
     
@@ -67,7 +67,7 @@
     <div class="header-title">
         <a
             class="header-title-link"
-            href="/code_repository/%20"
+            href="/%20"
             aria-label=""
         >
             
@@ -78,7 +78,7 @@
             <a
                 class="header-right-picture "
                 href="#about"
-                aria-label="Open the link: /code_repository/#about"
+                aria-label="Open the link: /#about"
             >
         
         
@@ -98,7 +98,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/%20"
+                             href="/%20"
                             
                             title="홈"
                         >
@@ -111,7 +111,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-categories"
+                             href="/all-categories"
                             
                             title="카테고리"
                         >
@@ -124,7 +124,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-tags"
+                             href="/all-tags"
                             
                             title="태그"
                         >
@@ -137,7 +137,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/all-archives"
+                             href="/all-archives"
                             
                             title="아카이브"
                         >
@@ -189,7 +189,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/code_repository/atom.xml"
+                             href="/atom.xml"
                             
                             title="RSS"
                         >
@@ -229,7 +229,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/code_repository/categories/mybatis/">mybatis</a>
+    <a class="category-link" href="/categories/mybatis/">mybatis</a>
 
 
     
@@ -270,7 +270,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/code_repository/tags/mybatis/" rel="tag">mybatis</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/mybatis/" rel="tag">mybatis</a>
 
             </div>
         
@@ -283,7 +283,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/java-list/"
+                    href="/2019/12/19/java-list/"
                     data-tooltip="리스트(List)"
                     aria-label="PREVIOUS: 리스트(List)"
                 >
@@ -297,7 +297,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/vue-single-file-component/"
+                    href="/2019/12/19/vue-single-file-component/"
                     data-tooltip="뷰 싱글파일 컴포넌트 체계(7)"
                     aria-label="NEXT: 뷰 싱글파일 컴포넌트 체계(7)"
                 >
@@ -324,7 +324,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/19/mybatis-foreach/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -337,7 +337,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/19/mybatis-foreach/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -350,7 +350,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/19/mybatis-foreach/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -398,7 +398,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/java-list/"
+                    href="/2019/12/19/java-list/"
                     data-tooltip="리스트(List)"
                     aria-label="PREVIOUS: 리스트(List)"
                 >
@@ -412,7 +412,7 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/code_repository/2019/12/19/vue-single-file-component/"
+                    href="/2019/12/19/vue-single-file-component/"
                     data-tooltip="뷰 싱글파일 컴포넌트 체계(7)"
                     aria-label="NEXT: 뷰 싱글파일 컴포넌트 체계(7)"
                 >
@@ -439,7 +439,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/19/mybatis-foreach/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -452,7 +452,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/19/mybatis-foreach/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -465,7 +465,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/19/mybatis-foreach/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -499,7 +499,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2019/12/19/mybatis-foreach/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -512,7 +512,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2019/12/19/mybatis-foreach/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -525,7 +525,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/code_repository/2019/12/19/mybatis-foreach/"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2019/12/19/mybatis-foreach/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -566,19 +566,19 @@
 
         
         
-<div id="cover" style="background-image:url('/code_repository/assets/images/cover.jpg');"></div>
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/code_repository/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.js"></script>
 
 
-<script src="/code_repository/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
 
 
-<script src="/code_repository/assets/js/thumbs.js"></script>
+<script src="/assets/js/thumbs.js"></script>
 
 
-<script src="/code_repository/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
 
 <!--SCRIPTS END-->
 
