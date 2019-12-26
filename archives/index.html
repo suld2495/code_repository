@@ -216,6 +216,189 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2019/12/26/spring-environment/"
+                            aria-label=": Environment"
+                        >
+                            Environment
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-26T11:14:11+09:00">
+	
+		    Dec 26, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h5 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h5><p>ApplicationContext는 EnvironmentCapable 인터페이스를 구현하고 있습니다. 이 인터페이스는 getEnvironment 메소드를 제공하며 호출시 Environment를 반환해 줍니다. Environment 클래스는 프로파일 및 프로퍼티 값과 관련이 있습니다.</p>
+<h5 id="프로파일"><a href="#프로파일" class="headerlink" title="프로파일"></a>프로파일</h5><p>개발을 하다보면 로컬, 개발, 운영등 각 환경마다 설정을 달리 해주어야 하는 경우가 발생합니다. 이때 각 환경마다 활성화할 Bean을 관리해주는 역할을 하는게 프로파일입니다. </p>
+<p>프로파일을 설정하면 앱 구동시에 설정된 프로파일 active 값에 따라서 해당 bean을 등록 할지 여부를 결정하게 됩니다. 예를 들어 A라는 Bean은 테스트시에만 쓰고 싶다면, 해당 Bean을 테스트 프로파일로 구성하면 테스트시에만 활성화 되게 됩니다.</p>
+<h5 id="설정-방법"><a href="#설정-방법" class="headerlink" title="설정 방법"></a>설정 방법</h5><p>설정 파일에 클래스에 정의를 하면 해당 설정 파일에서 정의한 모든 Bean을 한번에 정의할수 있습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan</span><br><span class="line">@Profile(&quot;test&quot;)</span><br><span class="line">public class BeanConfig &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>메소드로 정의하여 개별적으로 정의 할수도 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- DevBean<span class="class">.<span class="keyword">class</span> --&gt;</span></span><br><span class="line"><span class="class">@<span class="title">Component</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">DevBean</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- LocalBean<span class="class">.<span class="keyword">class</span> --&gt;</span></span><br><span class="line"><span class="class">@<span class="title">Component</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">LocalBean</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- AllBean<span class="class">.<span class="keyword">class</span> --&gt;</span></span><br><span class="line"><span class="class">@<span class="title">Component</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">AllBean</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@Profile</span>(<span class="string">"local"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> LocalBean <span class="title">localBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LocalBean();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@Profile</span>(<span class="string">"dev"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> DevBean <span class="title">devBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DevBean();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AllBean <span class="title">allBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> AllBean();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Profile을 설정하지 않은 allBean와 활성화 프로파일로 설정한 dev만 bean이 등록된것을 확인할수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">ContextConfiguration</span>(<span class="title">classes</span> </span>= BeanConfig<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line">@ActiveProfiles("dev")</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestControllerTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    ApplicationContext ctx;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Arrays.toString(ctx.getBeanDefinitionNames()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[...,allBean, devBean]]</span><br></pre></td></tr></table></figure>
+
+<p>위의 방법 이외에도 Bean 등록할 클래스에 직접 사용할수도 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Profile</span>(<span class="string">"local"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalBean</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="프로파일-문자열"><a href="#프로파일-문자열" class="headerlink" title="프로파일 문자열"></a>프로파일 문자열</h5><p>지금까지 사용했었던 프로파일 문자열은 사용자가 임의로 만들수 있습니다. 그리고 지금까지는 활성화할 프로파일을 하나만 설정하였지만 연산자를 통해서 한번에 여러개의 프로파일을 활성화할수 있습니다.</p>
+<p>!를 문자열 앞에 붙이면 반대의 의미가 됩니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!dev 는 dev가 아닌 것만 활성화</span><br></pre></td></tr></table></figure>
+
+<p>&amp;는 and의 의미를 가지고 있습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abc &amp; def는 abc 이면서 def인것만 활성화</span><br></pre></td></tr></table></figure>
+
+<p>|는 or의 의미를 가지고 있습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abc | def는 abc이거나 def인것만 활성화</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h5 id="프로퍼티"><a href="#프로퍼티" class="headerlink" title="프로퍼티"></a>프로퍼티</h5><p>프로퍼티는 다양한 방법으로 정의할수 있는 설정값입니다. 프로퍼티는 <code>key=value</code>로 구성이 됩니다.</p>
+<h5 id="추가-방법"><a href="#추가-방법" class="headerlink" title="추가 방법"></a>추가 방법</h5><p><code>@PropertySource(&quot;classpath:파일위치&quot;)</code>로 추가가 가능합니다. XML에서도 프로퍼티 등록이 가능합니다. 되도록 @Configuration이 선언된 클래스에 함께 사용하도록 합시다.</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/26/spring-environment/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/12/26/spring-component-scan/"
+                            aria-label=": Scope 어노테이션"
+                        >
+                            Scope 어노테이션
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-26T10:25:30+09:00">
+	
+		    Dec 26, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h5 id="싱글톤"><a href="#싱글톤" class="headerlink" title="싱글톤"></a>싱글톤</h5><p>스프링에서 Scope에 대한 설정을 하지 않고 Bean 등록을 하게 되면 싱글톤으로 등록이 됩니다. 이 경우에는 하나의 bean을 사용하게 됩니다.</p>
+<p>테스트용으로만 사용 할 Library 클래스입니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Library</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>동일한지 테스트 코드를 실행해 봅니다. 정상 실행이 되는 것을 확인할수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestControllerTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(BeanConfig<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        Library library1 = (Library) ctx.getBean(<span class="string">"library"</span>);</span><br><span class="line">        Library library2 = (Library) ctx.getBean(<span class="string">"library"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(library1);</span><br><span class="line">        System.out.println(library2);</span><br><span class="line">        assertEquals(library1, library2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kr.co.spring.Library@6293abcc</span><br><span class="line">kr.co.spring.Library@6293abcc</span><br></pre></td></tr></table></figure>
+
+<h5 id="프로토타입"><a href="#프로토타입" class="headerlink" title="프로토타입"></a>프로토타입</h5><p>프로토타입으로 설정을 하는 경우 사용할때 마다 새로운 객체를 받습니다. 사용하는 방법은 프로토타입으로 사용할 객체 위에 <code>@Scope(&quot;prototype&quot;)</code>를 추가해주면 됩니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope</span>(<span class="string">"prototype"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Library</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>동일한 테스트 코드를 실행했을때 이번에는 두개의 객체가 서로 다르다를 에러가 발생하엿습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestControllerTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(BeanConfig<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        Library library1 = (Library) ctx.getBean(<span class="string">"library"</span>);</span><br><span class="line">        Library library2 = (Library) ctx.getBean(<span class="string">"library"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(library1);</span><br><span class="line">        System.out.println(library2);</span><br><span class="line">        assertEquals(library1, library2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kr.co.spring.Library@2133814f</span><br><span class="line">kr.co.spring.Library@4c15e7fd</span><br><span class="line"></span><br><span class="line">java.lang.AssertionError: </span><br><span class="line">Expected :kr.co.spring.Library@2133814f</span><br><span class="line">Actual   :kr.co.spring.Library@4c15e7fd</span><br></pre></td></tr></table></figure>
+
+<h5 id="싱글톤-타입에서-프로토-타입-의존주입"><a href="#싱글톤-타입에서-프로토-타입-의존주입" class="headerlink" title="싱글톤 타입에서 프로토 타입 의존주입"></a>싱글톤 타입에서 프로토 타입 의존주입</h5><p>프로토타입 bean에서 싱글톤타입의 bean을 의존주입 받아서 사용할때는 아무런 문제가 발생하지 않습니다. 하지만 반대의 경우에는 개발자의 의도와는 다른 결과를 발생시킬수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- SingletonBean --&gt;</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonBean</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    PrototypeBean prototypeBean;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PrototypeBean <span class="title">getPrototypeBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> prototypeBean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- PrototypeBean --&gt;</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope</span>(<span class="string">"prototype"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrototypeBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestControllerTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(BeanConfig<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        SingletonBean singletonBean = (SingletonBean) ctx.getBean(<span class="string">"singletonBean"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(singletonBean.getPrototypeBean());</span><br><span class="line">        System.out.println(singletonBean.getPrototypeBean());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kr.co.spring.PrototypeBean@37918c79</span><br><span class="line">kr.co.spring.PrototypeBean@37918c79</span><br></pre></td></tr></table></figure>
+
+<p>위의 결과를 보았을때 프로토타입으로 Scope를 설정했지만 동일한 객체인것을 확인 할수 있습니다.</p>
+<h5 id="해결방법1-프록시객체를-의존주입하기"><a href="#해결방법1-프록시객체를-의존주입하기" class="headerlink" title="해결방법1. 프록시객체를 의존주입하기"></a>해결방법1. 프록시객체를 의존주입하기</h5><p>@Scope 어노테이션에 프록시 설정을 하여 해당 프로토타입 빈을 감싸는 프록시 객체를 반환하는 방식을 사용하여 해결할수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope</span>(value = <span class="string">"prototype"</span>, proxyMode = ScopedProxyMode.TARGET_CLASS)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrototypeBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kr.co.spring.PrototypeBean@28eaa59a</span><br><span class="line">kr.co.spring.PrototypeBean@3427b02d</span><br></pre></td></tr></table></figure>
+
+<h5 id="해결방법2-ObjectProvider-사용"><a href="#해결방법2-ObjectProvider-사용" class="headerlink" title="해결방법2. ObjectProvider 사용"></a>해결방법2. ObjectProvider 사용</h5><p>프로토타입 bean을 의존주입 받을 때 ObjectProvider&lt;타입&gt;을 사용 할수 있습니다. 실제 bean을 사용할 때는 getIfAvailable메소드를 이용합니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonBean</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    ObjectProvider&lt;PrototypeBean&gt; prototypeBean;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PrototypeBean <span class="title">getPrototypeBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> prototypeBean.getIfAvailable();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kr.co.spring.PrototypeBean@222114ba</span><br><span class="line">kr.co.spring.PrototypeBean@3d121db3</span><br></pre></td></tr></table></figure>
+
+<p>위의 방법의 경우에는 스프링 클래스를 사용하기 때문에 스프링에 의존이 되어 첫번째 방법을 추천.</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/26/spring-component-scan/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2019/12/24/spring-postconstruct/"
                             aria-label=": PostConstruct 어노테이션"
                         >
@@ -925,176 +1108,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/20/vue-vuex/"
-                            aria-label=": vuex의 기본"
-                        >
-                            vuex의 기본
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-20T10:20:20+09:00">
-	
-		    Dec 20, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vuex/">vuex</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="vuex의-설치-및-시작"><a href="#vuex의-설치-및-시작" class="headerlink" title="vuex의 설치 및 시작"></a>vuex의 설치 및 시작</h1><h2 id="기본구성"><a href="#기본구성" class="headerlink" title="기본구성"></a>기본구성</h2><h3 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i vuex</span><br></pre></td></tr></table></figure>
-
-<h3 id="vuex-구성"><a href="#vuex-구성" class="headerlink" title="vuex 구성"></a>vuex 구성</h3><p>라우터와 마찬가지로 main.js에 직접 구성하는 것은 좋지 못하므로 다른 디렉토리를 구축해서 코드 구성은 해당 파일에서 작성하여 import만 해오자.</p>
-<h3 id="vuex의-정의"><a href="#vuex의-정의" class="headerlink" title="vuex의 정의"></a>vuex의 정의</h3><p>vuex란 간단히 말해 상태관리도구이다. 애플리케이션의 모든 컴포넌트에 대한 중앙 집중식 저장소 역할을 한다. 그래서 어느 컴포넌트에서나 쉽게 상태에 접근할수 있다.</p>
-<h3 id="simple-vuex-코드"><a href="#simple-vuex-코드" class="headerlink" title="simple vuex 코드"></a>simple vuex 코드</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"></span><br><span class="line">Vue.use(Vuex);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        array: []</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h3><p>라우터와 마찬가지로 main.js에서 직접 Vuex를 생성하지 않고 따로 작성된 js에서 import 받아와서 사용한다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;store&#125; <span class="keyword">from</span> <span class="string">'store/index.js'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    render: <span class="function"><span class="params">h</span> =&gt;</span> h(App),</span><br><span class="line">    store</span><br><span class="line">&#125;).$mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="프로퍼티"><a href="#프로퍼티" class="headerlink" title="프로퍼티"></a>프로퍼티</h2><h5 id="1-state"><a href="#1-state" class="headerlink" title="1. state"></a>1. state</h5><p>state는 말그대로 상태를 저장하고 있다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vuex = &#123;</span><br><span class="line">    state : &#123;</span><br><span class="line">        array: [],</span><br><span class="line">        data: &#123;&#125;,</span><br><span class="line">        str: <span class="string">""</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-actions"><a href="#2-actions" class="headerlink" title="2. actions"></a>2. actions</h5><p>api와의 통신 역할을 담당한다. api 호출 코드를 여기에서 작성 하면 된다. action에 정의 된 메소드라는 것을 표시하기 위해 대문자 스네이크 표기법을 강의에서는 사용했었다. </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> actions = &#123;</span><br><span class="line">    state: &#123;&#125;,</span><br><span class="line">    actions: &#123;</span><br><span class="line">        FETCH_DATA(context, param) &#123;</span><br><span class="line">            fetchDataList()</span><br><span class="line">                .then()</span><br><span class="line">                .catch()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>component에서 actions에 정의된 메소드 호출하기</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$store.disaptch(<span class="string">'메소드명'</span>);</span><br><span class="line"><span class="keyword">this</span>.$store.disaptch(<span class="string">'메소드명'</span>, 값); <span class="comment">// 값은 오직 하나만 전달 가능하므로 여러개를 전달하려면 객체를 통해 전달한다.</span></span><br></pre></td></tr></table></figure>
-
-<p>actions에서 api통신을 한 결과를 state에 전달하여야 하는데 이때 actions 내부에서 바로 state에 접근이 불가능하다. mutations라는 것을 통해서만 가능하다.<br>actions에 정의된 메소드의 파라미터로 context값이 넘어오는데 context의 commit 메소드를 호출하면 mutation에 전달가능하다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> actions = &#123;</span><br><span class="line">    state: &#123;&#125;,</span><br><span class="line">    actions: &#123;</span><br><span class="line">        FETCH_DATA(context, param) &#123;    <span class="comment">// param에 dispatch를 실행할때 넘겼던 값을 받을수 있다.</span></span><br><span class="line">            fetchDataList()</span><br><span class="line">                .then(<span class="function">(<span class="params">&#123; data &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">                    context.commit(<span class="string">'mutation메소드명'</span>, <span class="string">'전달할 값'</span>)    </span><br><span class="line">                &#125;)</span><br><span class="line">                .catch()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-mutations"><a href="#3-mutations" class="headerlink" title="3. mutations"></a>3. mutations</h5><p>actions에서 backend(api)와이 실행 결과를 state에 저장할때 사용되는 중간 연결자이다. actions에서 context.commit으로 실행될 메소드를 정의한다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mutations = &#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        data: &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    actions: &#123;&#125;,</span><br><span class="line">    mutations: &#123;</span><br><span class="line">        SET_DATA(state, data) &#123;</span><br><span class="line">            state.data = data;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>첫번째 파라미터는 state가 넘어오고 두번째 파라미터는 commit 호출시에 넘겨준 파라미터가 넘어온다.</p>
-<h2 id="vue에서-store-접근"><a href="#vue에서-store-접근" class="headerlink" title="vue에서 store 접근"></a>vue에서 store 접근</h2><h5 id="1-가장-원시적인-방법"><a href="#1-가장-원시적인-방법" class="headerlink" title="1. 가장 원시적인 방법"></a>1. 가장 원시적인 방법</h5><p>아래는 자바스크립트에서 사용방법</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$store.state.프로퍼티</span><br></pre></td></tr></table></figure>
-
-<p>아래는 vue의 template에서 사용방법</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;&#123;&#123; this.$store.state.프로퍼티 &#125;&#125;&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>위의 방법은 Vuex를 모듈방식으로 작성하기 시작하면 참조가 너무 길어진다.(a.b.c.d.e.f.g.value)</p>
-<h5 id="2-computed를-이용한-방법"><a href="#2-computed를-이용한-방법" class="headerlink" title="2. computed를 이용한 방법"></a>2. computed를 이용한 방법</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Vue = &#123;</span><br><span class="line">    computed: &#123;</span><br><span class="line">        state() &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.$store.state</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>단순하게 vue의 computed를 이용해서 공통된 부븐을 메소드에 저장하는 방법이다.</p>
-<h5 id="3-vuex의-mapState를-이용"><a href="#3-vuex의-mapState를-이용" class="headerlink" title="3. vuex의 mapState를 이용"></a>3. vuex의 mapState를 이용</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; mapState &#125; <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Vue = &#123;</span><br><span class="line">    computed: &#123;</span><br><span class="line">        ...mapState(&#123;</span><br><span class="line">            value: <span class="function"><span class="params">state</span> =&gt;</span> state.value</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>vuex에서 제공하는 mapState를 활용하는 방법으로 파라미터로 state가 넘어오다보니 위와 마찬가지로 모듈이 많아지게 되면 state.a.b.c.d.value로 길어질수 있다.</p>
-<h5 id="4-vuex의-mapGetter를-이용-mapGetters의-배열을-이용하는-방법"><a href="#4-vuex의-mapGetter를-이용-mapGetters의-배열을-이용하는-방법" class="headerlink" title="4. vuex의 mapGetter를 이용(mapGetters의 배열을 이용하는 방법)"></a>4. vuex의 mapGetter를 이용(mapGetters의 배열을 이용하는 방법)</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vuex 파일</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    getters: &#123;</span><br><span class="line">        value(state) &#123;</span><br><span class="line">            <span class="keyword">return</span> state.value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// state 값 사용 할 파일</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapGetters &#125; <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Vue = &#123;</span><br><span class="line">    computed: &#123;</span><br><span class="line">        ...mapGetters([<span class="string">'value'</span>])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>getters는 computed와 비슷한 역할을 한다. 컴포넌트에서는 mapGetter에서 배열을 넘겨준다(이때 배열의 문자열이 vuex의 getters에 정의 된 메소드 이름을 넘겨주면 해당값을 받아온다. getters에 등록 하는 번거로움이 있지만 사용할때는 변수명이 명료해서 보기 좋다.</p>
-<h5 id="5-vuex의-mapGetter를-이용-mapGetters의-객체를-이용하는-방법"><a href="#5-vuex의-mapGetter를-이용-mapGetters의-객체를-이용하는-방법" class="headerlink" title="5. vuex의 mapGetter를 이용(mapGetters의 객체를 이용하는 방법)"></a>5. vuex의 mapGetter를 이용(mapGetters의 객체를 이용하는 방법)</h5><p>vuex 파일의 사용법은 위와 동일하다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// state 값 사용 할 파일</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapGetters &#125; <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Vue = &#123;</span><br><span class="line">    computed: &#123;</span><br><span class="line">        ...mapGetters(&#123;</span><br><span class="line">            myValue: <span class="string">'value'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>배열을 이용할때는 변수명을 마음대로 지정이 불가능하지만 객체를 이용하면 이름을 컴포넌트에서 마음대로 지정 할수 있다.</p>
-<h5 id="모듈화"><a href="#모듈화" class="headerlink" title="모듈화"></a>모듈화</h5><p>하나의 파일에서 모든 데이터를 관리하면 알아보기 힘들기 때문에 모듈화 작업을 한다. mutations, actions, state, getters를 따로 파일을 만들어서 관리한다. 상황에 따라 분리 할수도 있고 길지 않다면 하나의 파일에서 관리할수 있고 더 세분화로 분리할수도 있다.</p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/20/vue-vuex/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/20/vue-hoc/"
-                            aria-label=": 하이오더컴포넌트"
-                        >
-                            하이오더컴포넌트
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-20T10:18:10+09:00">
-	
-		    Dec 20, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%ED%99%9C%EC%9A%A9%EB%B0%A9%EB%B2%95/">vue 활용방법</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="하이오더컴포넌트-기본사용-방법"><a href="#하이오더컴포넌트-기본사용-방법" class="headerlink" title="하이오더컴포넌트 기본사용 방법"></a>하이오더컴포넌트 기본사용 방법</h1><h2 id="정의"><a href="#정의" class="headerlink" title="정의"></a>정의</h2><p>Mixin와 마찬가지로 컴포넌트의 로직을 재사용하기 위한 기술이다.</p>
-<h2 id="방법"><a href="#방법" class="headerlink" title="방법"></a>방법</h2><h5 id="1-공통으로-사용할-부분을-js로-따로-만든다"><a href="#1-공통으로-사용할-부분을-js로-따로-만든다" class="headerlink" title="1. 공통으로 사용할 부분을 js로 따로 만든다."></a>1. 공통으로 사용할 부분을 js로 따로 만든다.</h5><h5 id="2-함수를-하나-선언하고-return-해준다"><a href="#2-함수를-하나-선언하고-return-해준다" class="headerlink" title="2. 함수를 하나 선언하고 return 해준다."></a>2. 함수를 하나 선언하고 return 해준다.</h5><h5 id="3-return에-들어가는-것-render-나머지-공통으로-사용되는-부분-작성"><a href="#3-return에-들어가는-것-render-나머지-공통으로-사용되는-부분-작성" class="headerlink" title="3. return에 들어가는 것 : render, 나머지 공통으로 사용되는 부분 작성"></a>3. return에 들어가는 것 : render, 나머지 공통으로 사용되는 부분 작성</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Component <span class="keyword">from</span> <span class="string">'component.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">hoc</span>(<span class="params">componentName</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        name: componentName,    <span class="comment">// 해당 이름으로 컴포넌트 생성됨</span></span><br><span class="line">        computed() &#123;</span><br><span class="line">            </span><br><span class="line">        &#125;,</span><br><span class="line">        data() &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        runder(h) &#123;</span><br><span class="line">            <span class="keyword">return</span> h(Component);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>render 부분은 공통으로 사용되는 템플릿 부분을 사용하기 위한 것이다.</p>
-<h2 id="단점"><a href="#단점" class="headerlink" title="단점"></a>단점</h2><p>HOC를 사용하게 되면 depth가 하나 추가된다. 이는 많이 사용하게 되면 컴포넌트의 깊이가 깊어져서 데이터 통신이 어려워진다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">일반구조 : 상위 - 하위</span><br><span class="line">HOC구조 : 상위 - HOC - 하위</span><br></pre></td></tr></table></figure>
-
-<p>vue에서는 mixins와 scoped slotㅇ을 활용하고 함수형 프로그래밍이나 컴포넌트 재사용성을 극대화 하고 싶다면 HOC 활용하는것도 좋을거 같다.</p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/20/vue-hoc/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -1110,7 +1123,7 @@
             </a>
           </li>
         
-        <li class="pagination-number">page 1 of 4</li>
+        <li class="pagination-number">page 1 of 5</li>
     </ul>
 </div>
 
