@@ -215,6 +215,82 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2019/12/20/vue-dynamic-routing/"
+                            aria-label=": 동적 라우팅"
+                        >
+                            동적 라우팅
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-20T09:12:10+09:00">
+	
+		    Dec 20, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EB%9D%BC%EC%9A%B0%ED%84%B0/">vue 라우터</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="동적-라우팅"><a href="#동적-라우팅" class="headerlink" title="동적 라우팅"></a>동적 라우팅</h1><p>블로그 주소를 <code>/post/포스트번호</code>로 설계하여 포스트번호가 동적으로 변화하여야 하는 경우에는 동적으로 라우팅을 설정해야 합니다. 동적으로 주소를 사용할땐 주소 앞에 <code>:</code>를 사용합니다.</p>
+<h4 id="동적-라우팅-구성"><a href="#동적-라우팅-구성" class="headerlink" title="동적 라우팅 구성"></a>동적 라우팅 구성</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">'/post/:postId'</span>,</span><br><span class="line">        component: &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;포스팅입니다.&lt;/p&gt;'</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>/post/001</code>, <code>/post/002</code> 처럼 동적으로 접근 가능<br>게시판에서 게시글 상세보기 접근할때 해당하는 동적 주소 사용 가능</p>
+</blockquote>
+<h4 id="동적-라우팅으로-구성한-데이터-접근"><a href="#동적-라우팅으로-구성한-데이터-접근" class="headerlink" title="동적 라우팅으로 구성한 데이터 접근"></a>동적 라우팅으로 구성한 데이터 접근</h4><p>동적으로 작성된 주소의 데이터는 <code>this.$route.params.데이터명</code> 으로 접근이 가능합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    created() &#123;</span><br><span class="line"><span class="actionscript">        <span class="keyword">this</span>.$route.params.postId</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="props로-데이터-접근"><a href="#props로-데이터-접근" class="headerlink" title="props로 데이터 접근"></a>props로 데이터 접근</h4><p>동적 라우팅으로 구성한 데이터를 props로 가져 올수 있다. <code>this.$route.params.데이터명</code>로 하면 라우트와의 의존성이 높아지므로 props를 활용하는게 좋다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var routes &#x3D; [</span><br><span class="line">    &#123;</span><br><span class="line">        path: &#39;&#x2F;post&#x2F;:postId&#39;,</span><br><span class="line">        component: &#123;template: &#39;&lt;p&gt;포스팅입니다.&lt;&#x2F;p&gt;&#39;&#125;,</span><br><span class="line">        props: true</span><br><span class="line">    &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h4 id="URL에-동적-데이터-구성-이외에도-queryString-방식도-이용-가능-하다"><a href="#URL에-동적-데이터-구성-이외에도-queryString-방식도-이용-가능-하다" class="headerlink" title="URL에 동적 데이터 구성 이외에도 queryString 방식도 이용 가능 하다."></a>URL에 동적 데이터 구성 이외에도 queryString 방식도 이용 가능 하다.</h4><h5 id="1-url-작성"><a href="#1-url-작성" class="headerlink" title="1. url 작성"></a>1. url 작성</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url : &#x2F;user?id&#x3D;userId</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-라우터-작성"><a href="#2-라우터-작성" class="headerlink" title="2. 라우터 작성"></a>2. 라우터 작성</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var routes &#x3D; [&#123;</span><br><span class="line">    path: &#39;&#x2F;user&#39;</span><br><span class="line">    component: 컴포넌트</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-값-받아오기"><a href="#3-값-받아오기" class="headerlink" title="3. 값 받아오기"></a>3. 값 받아오기</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$route.query.id</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-props로-받아오기"><a href="#4-props로-받아오기" class="headerlink" title="4. props로 받아오기"></a>4. props로 받아오기</h5><p>키가 id 값을 props에 userName이라는 키로 변환하여 보내주고 있다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var routes &#x3D; [&#123;</span><br><span class="line">    path: &#39;&#x2F;user&#39;</span><br><span class="line">    component: 컴포넌트,</span><br><span class="line">    props: (route) &#x3D;&gt; (&#123;userName: route.query.id&#125;)</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/20/vue-dynamic-routing/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2019/12/20/vue-router/"
                             aria-label=": 뷰 라우터"
                         >
@@ -857,74 +933,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/19/javascript-number/"
-                            aria-label=": 숫자와 관련된 팁"
-                        >
-                            숫자와 관련된 팁
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-19T01:08:07+09:00">
-	
-		    Dec 19, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/%EC%9C%A0%EC%9A%A9%ED%95%9C%ED%8C%81/">유용한팁</a>, <a class="category-link" href="/categories/javascript/%EC%9C%A0%EC%9A%A9%ED%95%9C%ED%8C%81/number/">number</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="1-숫자를-천자리마다-콤마찍기"><a href="#1-숫자를-천자리마다-콤마찍기" class="headerlink" title="1. 숫자를 천자리마다 콤마찍기"></a>1. 숫자를 천자리마다 콤마찍기</h2><h3 id="사용조건"><a href="#사용조건" class="headerlink" title="사용조건"></a>사용조건</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 숫자만 가능</span><br><span class="line">2. 숫자를 변수에 저장 후 가능</span><br></pre></td></tr></table></figure>
-
-<h3 id="소스코드"><a href="#소스코드" class="headerlink" title="소스코드"></a>소스코드</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> number = <span class="number">123</span></span><br><span class="line"><span class="keyword">var</span> result = number.toLocaleString()</span><br></pre></td></tr></table></figure>
-
-<h4 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h4><ol>
-<li>크롬에서는 작동을 하나 모든 곳에서 통하는 소스코드인지는 아직 확인 불가</li>
-<li>심플하게 만들수 있다는 장점</li>
-<li>숫자값인 문자열로는 사용불가능하고 필히 숫자 타입으로 바꿔줘야 함</li>
-<li>문자열을 대상으로 toLocaleString 메서드를 호출하면 그냥 그대로 나옴</li>
-<li>결과값은 당연하게도 <code>문자열</code></li>
-</ol>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/19/javascript-number/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -960,7 +968,7 @@
 
                 <footer id="footer" class="main-content-wrap">
     <span class="copyrights">
-        Copyrights &copy; 2019 Moon Star. All Rights Reserved.
+        Copyrights &copy; 2020 Moon Star. All Rights Reserved.
     </span>
 </footer>
 
