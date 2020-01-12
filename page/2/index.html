@@ -215,6 +215,64 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2019/12/20/java-junit5/"
+                            aria-label=": 스프링 테스트"
+                        >
+                            스프링 테스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-20T17:43:23+09:00">
+	
+		    Dec 20, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/java/">java</a>, <a class="category-link" href="/categories/java/junit/">junit</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Spring-Test"><a href="#Spring-Test" class="headerlink" title="Spring-Test"></a>Spring-Test</h2><p>스프링은 Junit을 이용하는 테스트 컨텍스트 프레임워크를 제공한다. 이를 이용하면 어노테이션을 이용하여 간편하게 컨텍스트를 사용할수 있다. 해당 방법이 없이 Bean을 사용하려면 직접 ApplicationContext를 생성하는 번거로운 작업을 진행하여야 하나 이로 인해 편하게 작업을 진행 할수 있다.</p>
+<h2 id="ContextConfiguration"><a href="#ContextConfiguration" class="headerlink" title="@ContextConfiguration"></a>@ContextConfiguration</h2>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/20/java-junit5/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2019/12/20/java-datasourceutils/"
                             aria-label=": DataSourceUtils"
                         >
@@ -844,76 +902,6 @@
                         <p>
                             <a
                                 href="/2019/12/20/vue-router-transition/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/20/vue-router-object/"
-                            aria-label=": 라우터 객체"
-                        >
-                            라우터 객체
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-20T09:15:24+09:00">
-	
-		    Dec 20, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EB%9D%BC%EC%9A%B0%ED%84%B0/">vue 라우터</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="라우터-객체"><a href="#라우터-객체" class="headerlink" title="라우터 객체"></a>라우터 객체</h1><h3 id="router-객체"><a href="#router-객체" class="headerlink" title="router 객체"></a>router 객체</h3><h4 id="라우터-객체를-이용한-주소변경"><a href="#라우터-객체를-이용한-주소변경" class="headerlink" title="라우터 객체를 이용한 주소변경"></a>라우터 객체를 이용한 주소변경</h4><p>앞서서 <code>&lt;view-link to=&quot;&quot;&gt;</code>를 활용한 주소변경에 대해서는 알아보았습니다. 하지만 때론 자바스크립트로 주소변경을 해야 하는 경우가 발생할수 있습니다.<br>이런 경우에는 <code>this.$router.push(&#39;주소&#39;)</code>을 이용하여 주소를 이동할수 있습니다.</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"onClik"</span>&gt;</span>클릭<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    methods: &#123;</span><br><span class="line">        onClick() &#123;</span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.push(<span class="string">'주소'</span>);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.push(&#123;path : <span class="string">'주소'</span>&#125;);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.push(&#123;path : <span class="string">'주소'</span>, params: &#123;id: <span class="number">123</span>&#125;&#125;);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.push(&#123;path : <span class="string">'주소'</span>, query: &#123;id: <span class="number">123</span>&#125;&#125;);   <span class="comment">// query를 사용하는 경우 주소창에 /주소?id=123으로 출력</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="히스토리-목록에-추가하지-않고-주소-변경"><a href="#히스토리-목록에-추가하지-않고-주소-변경" class="headerlink" title="히스토리 목록에 추가하지 않고 주소 변경"></a>히스토리 목록에 추가하지 않고 주소 변경</h4><p>push를 이용하면 히스토리 목록에 추가가 됩니다. 하지만 replace를 이용하면 목록에 추가 되지 않습니다.($router.go 메서드를 이용해서 이전 주소로 이동이 불가능합니다.)</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"주소"</span> <span class="attr">replace</span>&gt;</span><span class="tag">&lt;/<span class="name">router-link</span>&gt;</span>   <span class="comment">&lt;!-- 선언적 방식은 속성으로 replace를 추가 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    methods: &#123;</span><br><span class="line">        onClick() &#123;</span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.replace(<span class="string">'주소'</span>);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.replace(&#123;path : <span class="string">'주소'</span>&#125;);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.replace(&#123;path : <span class="string">'주소'</span>, params: &#123;id: <span class="number">123</span>&#125;&#125;);</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$router.replace(&#123;path : <span class="string">'주소'</span>, query: &#123;id: <span class="number">123</span>&#125;&#125;);   <span class="comment">// query를 사용하는 경우 주소창에 /주소?id=123으로 출력</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>$router는 VueRouter인스턴스 입니다.</p>
-</blockquote>
-<h3 id="route-객체"><a href="#route-객체" class="headerlink" title="route 객체"></a>route 객체</h3><h4 id="route-params"><a href="#route-params" class="headerlink" title="$route.params"></a>$route.params</h4><p>동적라우팅으로 데이터를 받거나 push등을 통해서 params에 데이터를 저장한 경우에 <code>this.$route.params.데이터</code>를 통해서 데이터를 얻어 올수 있습니다.</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    created() &#123;</span><br><span class="line"><span class="actionscript">        <span class="keyword">this</span>.$route.params.데이터</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="route-query"><a href="#route-query" class="headerlink" title="$route.query"></a>$route.query</h4><p>push등을 통해서 query에 데이터를 저장한 경우에 <code>this.$route.query.데이터</code>를 통해서 데이터를 얻어 올수 있습니다.</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    created() &#123;</span><br><span class="line"><span class="actionscript">        <span class="keyword">this</span>.$route.query.데이터</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/20/vue-router-object/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
