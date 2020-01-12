@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="">
+    <title>Vue 컴포넌트 작성 방법 - null</title>
+    <meta name="author" content="Moon Star">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"Vue 컴포넌트 작성Vue에서는 템플릿을 통해서 HTML을 작성하는 것을 권장하고 있습니다. 하지만 특정 상황에서는 자바스크립트를 이용해야 하는 상황이 있습니다. 그렇기 때문에 템플릿 뿐 아니라 자바스크립트로도 컴포넌트를 작성하는 방법에 대해서 알고 있어야 합니다.\n싱글 파일 컴포넌트template, script, style 3개의 태그를 이용하여 하나의 파일에서 작성 합니다.\n1234567891011121314151617181920&lt;template&gt;    &lt;div&gt;        &#123;&#123; str &#125;&#125;    &lt;/div&gt;&lt;/template&gt;&lt;script&gt;    export default &#123;        name: 'VueSingleFileComponent',        props: &#123;            str: &#123;                type: String            &#125;        &#125;    &#125;&lt;/script&gt;&lt;style scoped&gt;&lt;/style&gt;\n\n사용하기다른 컴포넌트에서 import를 통해 사용할수 있습니다.\n1234567891011121314151617&lt;template&gt;    &lt;vue-string-file-component/&gt;&lt;/template&gt;&lt;script&gt;import VueSingleFileComponent from './VueSingleFileComponent.vue';export default &#123;    name: 'VueView',    components: &#123;        VueSingleFileComponent    &#125;&#125;&lt;/script&gt;&lt;style&gt;&lt;/style&gt;\n\n\nVue.component를 통해서 등록하면 실제 사용하는 곳에서 import를 할 필요 없이 사용할수 있습니다.\nmain.js1234import Vue from 'vue';import VueSingleFileComponent from './VueSingleFileComponent.vue';Vue.component('vue-single-file-component', VueSingleFileComponent);\n\nVueView.vue컴포넌트를 import 하거나 components 속성을 등록 할 필요 없이 사용가능합니다.\n123456789101112&lt;template&gt;    &lt;vue-string-file-component/&gt;&lt;/template&gt;&lt;script&gt;export default &#123;    name: 'VueView',&#125;&lt;/script&gt;&lt;style&gt;&lt;/style&gt;\n\n\n\nString으로 컴포넌트 작성템플릿을 js의 String으로 정의하는 방법입니다. 위 처럼 vue 확장자를 가진 파일을 따로 생성하지 않고 Vue.component에 직접 등록 합니다.\n12345678910import Vue from 'vue';Vue.component('vue-string', &#123;    template: '&lt;div&gt; &#123;&#123; str &#125;&#125;&lt;/div&gt;',    props: &#123;        str: &#123;            type: String        &#125;    &#125;&#125;)\n\nVue.component를 사용하기 때문에 import로 호출만 하고 compoents 속성에 따로 등록 하진 않아도 됩니다.\n12345678&lt;template&gt;    &lt;vue-string/&gt;&lt;/template&gt;import '../components/vue-render/VueString.js';export default &#123;    name: 'VueView',&#125;\n\n\n\nRender function을 사용하여 컴포넌트 작성template을 사용하지 않고 render 함수를 이용해서 컴포넌트를 작성 할수 있습니다. 해당 컴포넌트를 import해서 사용방법은 SPA랑 동일 합니다.\n1234567891011export default &#123;    name: \"VueRenderFunc\",    props: &#123;        str : &#123;            type: String        &#125;    &#125;,    render(h) &#123;        return h('div', [this.str]);    &#125;&#125;\n\n\n\n결론기본적으로 SPA 방식으로 작성하는 게 좋다고 생각합니다. js를 활용해야 하는 경우에는 render 함수를 이용하여 작성하는 것도 하나의 선택이 될수 있을거라 생각합니다.\n","dateCreated":"2020-01-10T13:31:42+09:00","dateModified":"2020-01-12T18:55:59+09:00","datePublished":"2020-01-10T13:31:42+09:00","description":"","headline":"Vue 컴포넌트 작성 방법","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2020/01/10/vue-render/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2020/01/10/vue-render/","keywords":"vue, component, render"}</script>
+    <meta name="description" content="Vue 컴포넌트 작성Vue에서는 템플릿을 통해서 HTML을 작성하는 것을 권장하고 있습니다. 하지만 특정 상황에서는 자바스크립트를 이용해야 하는 상황이 있습니다. 그렇기 때문에 템플릿 뿐 아니라 자바스크립트로도 컴포넌트를 작성하는 방법에 대해서 알고 있어야 합니다. 싱글 파일 컴포넌트template, script, style 3개의 태그를 이용하여 하나의">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Vue 컴포넌트 작성 방법">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2020&#x2F;01&#x2F;10&#x2F;vue-render&#x2F;index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="Vue 컴포넌트 작성Vue에서는 템플릿을 통해서 HTML을 작성하는 것을 권장하고 있습니다. 하지만 특정 상황에서는 자바스크립트를 이용해야 하는 상황이 있습니다. 그렇기 때문에 템플릿 뿐 아니라 자바스크립트로도 컴포넌트를 작성하는 방법에 대해서 알고 있어야 합니다. 싱글 파일 컴포넌트template, script, style 3개의 태그를 이용하여 하나의">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-10T04:31:42.000Z">
+<meta property="article:modified_time" content="2020-01-12T09:55:59.973Z">
+<meta property="article:author" content="Moon Star">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="component">
+<meta property="article:tag" content="render">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/%20"
+                            
+                            title="홈"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="카테고리"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="태그"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="아카이브"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="검색"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Vue 컴포넌트 작성 방법
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-01-10T13:31:42+09:00">
+	
+		    Jan 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-component/">vue component</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="Vue-컴포넌트-작성"><a href="#Vue-컴포넌트-작성" class="headerlink" title="Vue 컴포넌트 작성"></a>Vue 컴포넌트 작성</h2><p>Vue에서는 템플릿을 통해서 HTML을 작성하는 것을 권장하고 있습니다. 하지만 특정 상황에서는 자바스크립트를 이용해야 하는 상황이 있습니다. 그렇기 때문에 템플릿 뿐 아니라 자바스크립트로도 컴포넌트를 작성하는 방법에 대해서 알고 있어야 합니다.</p>
+<h4 id="싱글-파일-컴포넌트"><a href="#싱글-파일-컴포넌트" class="headerlink" title="싱글 파일 컴포넌트"></a>싱글 파일 컴포넌트</h4><p>template, script, style 3개의 태그를 이용하여 하나의 파일에서 작성 합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        &#123;&#123; str &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">        name: <span class="string">'VueSingleFileComponent'</span>,</span></span><br><span class="line">        props: &#123;</span><br><span class="line">            str: &#123;</span><br><span class="line"><span class="javascript">                type: <span class="built_in">String</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="사용하기"><a href="#사용하기" class="headerlink" title="사용하기"></a>사용하기</h6><p>다른 컴포넌트에서 import를 통해 사용할수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-string-file-component</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> VueSingleFileComponent <span class="keyword">from</span> <span class="string">'./VueSingleFileComponent.vue'</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">    name: <span class="string">'VueView'</span>,</span></span><br><span class="line">    components: &#123;</span><br><span class="line">        VueSingleFileComponent</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Vue.component를 통해서 등록하면 실제 사용하는 곳에서 import를 할 필요 없이 사용할수 있습니다.</p>
+<h6 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> VueSingleFileComponent <span class="keyword">from</span> <span class="string">'./VueSingleFileComponent.vue'</span>;</span><br><span class="line"></span><br><span class="line">Vue.component(<span class="string">'vue-single-file-component'</span>, VueSingleFileComponent);</span><br></pre></td></tr></table></figure>
+
+<h6 id="VueView-vue"><a href="#VueView-vue" class="headerlink" title="VueView.vue"></a>VueView.vue</h6><p>컴포넌트를 import 하거나 components 속성을 등록 할 필요 없이 사용가능합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-string-file-component</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">    name: <span class="string">'VueView'</span>,</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="String으로-컴포넌트-작성"><a href="#String으로-컴포넌트-작성" class="headerlink" title="String으로 컴포넌트 작성"></a>String으로 컴포넌트 작성</h4><p>템플릿을 js의 String으로 정의하는 방법입니다. 위 처럼 vue 확장자를 가진 파일을 따로 생성하지 않고 Vue.component에 직접 등록 합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line">Vue.component(<span class="string">'vue-string'</span>, &#123;</span><br><span class="line">    template: <span class="string">'&lt;div&gt; &#123;&#123; str &#125;&#125;&lt;/div&gt;'</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">        str: &#123;</span><br><span class="line">            type: <span class="built_in">String</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Vue.component를 사용하기 때문에 import로 호출만 하고 compoents 속성에 따로 등록 하진 않아도 됩니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;vue-string/&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import '../</span>components/vue-render/VueString.js<span class="string">';</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    name: '</span>VueView<span class="string">',</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="Render-function을-사용하여-컴포넌트-작성"><a href="#Render-function을-사용하여-컴포넌트-작성" class="headerlink" title="Render function을 사용하여 컴포넌트 작성"></a>Render function을 사용하여 컴포넌트 작성</h4><p>template을 사용하지 않고 render 함수를 이용해서 컴포넌트를 작성 할수 있습니다. 해당 컴포넌트를 import해서 사용방법은 SPA랑 동일 합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">"VueRenderFunc"</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">        str : &#123;</span><br><span class="line">            type: <span class="built_in">String</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    render(h) &#123;</span><br><span class="line">        <span class="keyword">return</span> h(<span class="string">'div'</span>, [<span class="keyword">this</span>.str]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h3><p>기본적으로 SPA 방식으로 작성하는 게 좋다고 생각합니다. js를 활용해야 하는 경우에는 render 함수를 이용하여 작성하는 것도 하나의 선택이 될수 있을거라 생각합니다.</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/component/" rel="tag">component</a> <a class="tag tag--primary tag--small t-link" href="/tags/render/" rel="tag">render</a> <a class="tag tag--primary tag--small t-link" href="/tags/vue/" rel="tag">vue</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/10/vue-render-func/"
+                    data-tooltip="Render 함수를 이용한 컴포넌트 작성"
+                    aria-label="PREVIOUS: Render 함수를 이용한 컴포넌트 작성"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/09/spring-databinding1/"
+                    data-tooltip="데이터 바인딩 추상화1"
+                    aria-label="NEXT: 데이터 바인딩 추상화1"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/01/10/vue-render/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/01/10/vue-render/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/01/10/vue-render/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Moon Star. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/10/vue-render-func/"
+                    data-tooltip="Render 함수를 이용한 컴포넌트 작성"
+                    aria-label="PREVIOUS: Render 함수를 이용한 컴포넌트 작성"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/09/spring-databinding1/"
+                    data-tooltip="데이터 바인딩 추상화1"
+                    aria-label="NEXT: 데이터 바인딩 추상화1"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/01/10/vue-render/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/01/10/vue-render/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/01/10/vue-render/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/01/10/vue-render/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/01/10/vue-render/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2020/01/10/vue-render/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Moon Star</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

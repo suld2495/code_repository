@@ -216,6 +216,237 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/01/10/vue-functional/"
+                            aria-label=": 함수형 컴포넌트"
+                        >
+                            함수형 컴포넌트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-10T15:26:51+09:00">
+	
+		    Jan 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-component/">vue component</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="함수형-컴포넌트"><a href="#함수형-컴포넌트" class="headerlink" title="함수형 컴포넌트"></a>함수형 컴포넌트</h2><p>어떠한 상태도 없고 라이프사이클 관련 메소드도 사용하지 않을때 지금까지 사용해왔었던 컴포넌트 생성 방법을 사용한다면 사용하지도 않는 메소드를 추가하게 됩니다. 함수형 컴포넌트를 사용하면 심플하게 작성할수 있습니다.</p>
+<h3 id="사용방법"><a href="#사용방법" class="headerlink" title="사용방법"></a>사용방법</h3><h5 id="functional-속성으로-사용"><a href="#functional-속성으로-사용" class="headerlink" title="functional 속성으로 사용"></a>functional 속성으로 사용</h5><p>functional 속성을 사용하는 경우 template 태그를 사용할수 없습니다. 이때 render 함수를 사용 합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">    functional : <span class="literal">true</span>,</span></span><br><span class="line">    render(h, context) &#123;</span><br><span class="line"><span class="actionscript">        <span class="comment">// ...</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="장점"><a href="#장점" class="headerlink" title="장점"></a>장점</h3><p>함수형 컴포넌트는 라이프 사이클 메소드를 가지지 않습니다. 이를 통해서 앱 퍼포먼스 향상 효과를 가질수 있습니다.</p>
+<h6 id="FunctionalView"><a href="#FunctionalView" class="headerlink" title="FunctionalView"></a>FunctionalView</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-for</span>=<span class="string">"item in list"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">functional-component</span> <span class="attr">:key</span>=<span class="string">"item"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> FunctionalComponent <span class="keyword">from</span> <span class="string">'../components/functional/FunctionalComponent.vue'</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">        components: &#123;</span><br><span class="line">            FunctionalComponent</span><br><span class="line">        &#125;,</span><br><span class="line">        data() &#123;</span><br><span class="line"><span class="actionscript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line">                list: []</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        created() &#123;</span><br><span class="line"><span class="javascript">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span></span><br><span class="line"><span class="actionscript">                <span class="keyword">this</span>.list.push(i);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="FunctionalComponent"><a href="#FunctionalComponent" class="headerlink" title="FunctionalComponent"></a>FunctionalComponent</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">        functional: <span class="literal">true</span>,</span></span><br><span class="line">        render(h) &#123;</span><br><span class="line"><span class="actionscript">           <span class="keyword">return</span> h(<span class="string">'div'</span>, <span class="string">'함수형 컴포넌트'</span>);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>함수형 컴포넌트를 1000개 생성하고 있습니다. 하지만 count는 1이라는 것을 확인할수 있습니다.</p>
+<p><img src="/image/functional.PNG" alt=""></p>
+<h6 id="NoneFunctionalComponent"><a href="#NoneFunctionalComponent" class="headerlink" title="NoneFunctionalComponent"></a>NoneFunctionalComponent</h6><p>functional만 지우고 나머지는 위의 코드와 동일 합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">        render(h) &#123;</span><br><span class="line"><span class="actionscript">           <span class="keyword">return</span> h(<span class="string">'div'</span>, <span class="string">'함수형 컴포넌트'</span>);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/image/nonefunctional.PNG" alt=""></p>
+<br>
+
+<h2 id="SPA에서-functional-사용하기"><a href="#SPA에서-functional-사용하기" class="headerlink" title="SPA에서 functional 사용하기"></a>SPA에서 functional 사용하기</h2><p>2.5.0+ 이후로는 템플릿 기반의 함수형 컴포넌트를 정의할수 있습니다. template 태그에 functional 속성을 추가하면 동일하게 함수형 컴포넌트를 사용할수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">functional</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>함수형입니다.<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/10/vue-functional/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/01/10/vue-render-func/"
+                            aria-label=": Render 함수를 이용한 컴포넌트 작성"
+                        >
+                            Render 함수를 이용한 컴포넌트 작성
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-10T14:42:26+09:00">
+	
+		    Jan 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-component/">vue component</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Render-함수를-이용한-컴포넌트-작성"><a href="#Render-함수를-이용한-컴포넌트-작성" class="headerlink" title="Render 함수를 이용한 컴포넌트 작성"></a>Render 함수를 이용한 컴포넌트 작성</h2><p>template을 사용하지 않고 render함수를 이용하여 컴포넌트를 작성 할수 있습니다. 이때 createElement 함수를 사용하여 작성합니다. </p>
+<h6 id="기본-구성"><a href="#기본-구성" class="headerlink" title="기본 구성"></a>기본 구성</h6><p>컴포넌트 작성시의 차이점은 template 속성을 사용 하는 대신에 render 함수를 사용한다는 차이점 뿐입니다. render함수는 return으로 VNode를 반환해주기만 하면 됩니다. VNode 생성은 createElement함수를 호출하면 반환해 줍니다(this.$createElement로도 동일하게 사용 가능).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">''</span>,</span><br><span class="line">    proprs: &#123;&#125;,</span><br><span class="line">    created() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    data() &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// h를 쓰기도 하고 createElement라고 쓰기도 한다.</span></span><br><span class="line">    render(h) &#123;</span><br><span class="line">        <span class="keyword">return</span> h(<span class="string">'div'</span>, [<span class="string">'값'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="createElement-함수-호출"><a href="#createElement-함수-호출" class="headerlink" title="createElement 함수 호출"></a>createElement 함수 호출</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">createElement(</span><br><span class="line">    <span class="comment">// &#123;String | Object | Function&#125;</span></span><br><span class="line">    <span class="comment">// HTML 태그 이름(사용자가 만든 컴포넌트 태그 이름 포함), 컴포넌트 옵션 또는 함수 중</span></span><br><span class="line">    <span class="comment">// 하나를 반환하는 함수. 필수사항</span></span><br><span class="line">    <span class="string">'div'</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#123;Object&#125;</span></span><br><span class="line">    <span class="comment">// 컴포넌트에서 사용할 속성 값을 설정합니다. </span></span><br><span class="line">    <span class="comment">// 해당 값은 선택사항 입니다.</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#123;String | Array&#125;</span></span><br><span class="line">    <span class="comment">// VNode 자식들</span></span><br><span class="line">    <span class="comment">// 하위 태그를 작성할때 사용 합니다.</span></span><br><span class="line">    <span class="comment">// createElement()를 사용하거나, 문자열을 입력 가능합니다.</span></span><br><span class="line">    <span class="comment">// 해당 값은 선택사항 입니다.</span></span><br><span class="line">    [</span><br><span class="line">        <span class="string">'문자열'</span>,</span><br><span class="line">        createElement(<span class="string">'h1'</span>, <span class="string">'옵션 사용 없이 바로 문자열'</span>)</span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">createElement(</span><br><span class="line">    <span class="string">'div'</span>,</span><br><span class="line">    &#123;</span><br><span class="line">        props</span><br><span class="line">    &#125;,</span><br><span class="line">    [</span><br><span class="line">        <span class="string">'문자열'</span></span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>지금까지 확인결과 VNode 자식값을 사용할시에 배열로 넘기자.</p>
+</blockquote>
+<h5 id="데이터-객체"><a href="#데이터-객체" class="headerlink" title="데이터 객체"></a>데이터 객체</h5><p>createElement의 두번째 파라미터로 사용 하는 데이터 객체는 컴포넌트에 속성을 정의 할때 사용하게 됩니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">// v-bind:class와 동일</span></span><br><span class="line">    <span class="string">'class'</span>: &#123;</span><br><span class="line">        foo: <span class="literal">true</span>,</span><br><span class="line">        bar: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// v-bind:style와 동일</span></span><br><span class="line">    style: &#123;</span><br><span class="line">        color: <span class="string">'red'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 일반 HTML 속성을 정의할때 사용</span></span><br><span class="line">    attrs: &#123;</span><br><span class="line">        id: <span class="string">'foo'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// DOM 속성을 정의할때 사용</span></span><br><span class="line">    domProps: &#123;</span><br><span class="line">        innerHTML: <span class="string">'baz'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// v-on:click 등과 같은 역할을 합니다.</span></span><br><span class="line">    on: &#123;</span><br><span class="line">        click: <span class="keyword">this</span>.handlerClcik</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 다른 컴포넌트의 slot으로 들어가는 컴포넌트인 경우 슬롯의 이름을 여기에 적어줍니다.</span></span><br><span class="line">    slot: <span class="string">'slot-name'</span>,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ref를 지정하고 싶으면 해당 key를 사용합니다.</span></span><br><span class="line">    ref: <span class="string">'refValue'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/10/vue-render-func/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/01/10/vue-render/"
+                            aria-label=": Vue 컴포넌트 작성 방법"
+                        >
+                            Vue 컴포넌트 작성 방법
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-10T13:31:42+09:00">
+	
+		    Jan 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-component/">vue component</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Vue-컴포넌트-작성"><a href="#Vue-컴포넌트-작성" class="headerlink" title="Vue 컴포넌트 작성"></a>Vue 컴포넌트 작성</h2><p>Vue에서는 템플릿을 통해서 HTML을 작성하는 것을 권장하고 있습니다. 하지만 특정 상황에서는 자바스크립트를 이용해야 하는 상황이 있습니다. 그렇기 때문에 템플릿 뿐 아니라 자바스크립트로도 컴포넌트를 작성하는 방법에 대해서 알고 있어야 합니다.</p>
+<h4 id="싱글-파일-컴포넌트"><a href="#싱글-파일-컴포넌트" class="headerlink" title="싱글 파일 컴포넌트"></a>싱글 파일 컴포넌트</h4><p>template, script, style 3개의 태그를 이용하여 하나의 파일에서 작성 합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        &#123;&#123; str &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">        name: <span class="string">'VueSingleFileComponent'</span>,</span></span><br><span class="line">        props: &#123;</span><br><span class="line">            str: &#123;</span><br><span class="line"><span class="javascript">                type: <span class="built_in">String</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="사용하기"><a href="#사용하기" class="headerlink" title="사용하기"></a>사용하기</h6><p>다른 컴포넌트에서 import를 통해 사용할수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-string-file-component</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> VueSingleFileComponent <span class="keyword">from</span> <span class="string">'./VueSingleFileComponent.vue'</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">    name: <span class="string">'VueView'</span>,</span></span><br><span class="line">    components: &#123;</span><br><span class="line">        VueSingleFileComponent</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Vue.component를 통해서 등록하면 실제 사용하는 곳에서 import를 할 필요 없이 사용할수 있습니다.</p>
+<h6 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> VueSingleFileComponent <span class="keyword">from</span> <span class="string">'./VueSingleFileComponent.vue'</span>;</span><br><span class="line"></span><br><span class="line">Vue.component(<span class="string">'vue-single-file-component'</span>, VueSingleFileComponent);</span><br></pre></td></tr></table></figure>
+
+<h6 id="VueView-vue"><a href="#VueView-vue" class="headerlink" title="VueView.vue"></a>VueView.vue</h6><p>컴포넌트를 import 하거나 components 속성을 등록 할 필요 없이 사용가능합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-string-file-component</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">    name: <span class="string">'VueView'</span>,</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="String으로-컴포넌트-작성"><a href="#String으로-컴포넌트-작성" class="headerlink" title="String으로 컴포넌트 작성"></a>String으로 컴포넌트 작성</h4><p>템플릿을 js의 String으로 정의하는 방법입니다. 위 처럼 vue 확장자를 가진 파일을 따로 생성하지 않고 Vue.component에 직접 등록 합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line">Vue.component(<span class="string">'vue-string'</span>, &#123;</span><br><span class="line">    template: <span class="string">'&lt;div&gt; &#123;&#123; str &#125;&#125;&lt;/div&gt;'</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">        str: &#123;</span><br><span class="line">            type: <span class="built_in">String</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Vue.component를 사용하기 때문에 import로 호출만 하고 compoents 속성에 따로 등록 하진 않아도 됩니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;vue-string/&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import '../</span>components/vue-render/VueString.js<span class="string">';</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    name: '</span>VueView<span class="string">',</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="Render-function을-사용하여-컴포넌트-작성"><a href="#Render-function을-사용하여-컴포넌트-작성" class="headerlink" title="Render function을 사용하여 컴포넌트 작성"></a>Render function을 사용하여 컴포넌트 작성</h4><p>template을 사용하지 않고 render 함수를 이용해서 컴포넌트를 작성 할수 있습니다. 해당 컴포넌트를 import해서 사용방법은 SPA랑 동일 합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">"VueRenderFunc"</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">        str : &#123;</span><br><span class="line">            type: <span class="built_in">String</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    render(h) &#123;</span><br><span class="line">        <span class="keyword">return</span> h(<span class="string">'div'</span>, [<span class="keyword">this</span>.str]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h3><p>기본적으로 SPA 방식으로 작성하는 게 좋다고 생각합니다. js를 활용해야 하는 경우에는 render 함수를 이용하여 작성하는 것도 하나의 선택이 될수 있을거라 생각합니다.</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/10/vue-render/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2019/12/20/vue-data-transfer-1/"
                             aria-label=": 데이터 흐름 처리"
                         >
@@ -706,236 +937,6 @@
                         <p>
                             <a
                                 href="/2019/12/20/vue-router-object/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/20/vue-dynamic-routing/"
-                            aria-label=": 동적 라우팅"
-                        >
-                            동적 라우팅
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-20T09:12:10+09:00">
-	
-		    Dec 20, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EB%9D%BC%EC%9A%B0%ED%84%B0/">vue 라우터</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="동적-라우팅"><a href="#동적-라우팅" class="headerlink" title="동적 라우팅"></a>동적 라우팅</h1><p>블로그 주소를 <code>/post/포스트번호</code>로 설계하여 포스트번호가 동적으로 변화하여야 하는 경우에는 동적으로 라우팅을 설정해야 합니다. 동적으로 주소를 사용할땐 주소 앞에 <code>:</code>를 사용합니다.</p>
-<h4 id="동적-라우팅-구성"><a href="#동적-라우팅-구성" class="headerlink" title="동적 라우팅 구성"></a>동적 라우팅 구성</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">'/post/:postId'</span>,</span><br><span class="line">        component: &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;포스팅입니다.&lt;/p&gt;'</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><code>/post/001</code>, <code>/post/002</code> 처럼 동적으로 접근 가능<br>게시판에서 게시글 상세보기 접근할때 해당하는 동적 주소 사용 가능</p>
-</blockquote>
-<h4 id="동적-라우팅으로-구성한-데이터-접근"><a href="#동적-라우팅으로-구성한-데이터-접근" class="headerlink" title="동적 라우팅으로 구성한 데이터 접근"></a>동적 라우팅으로 구성한 데이터 접근</h4><p>동적으로 작성된 주소의 데이터는 <code>this.$route.params.데이터명</code> 으로 접근이 가능합니다.</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    created() &#123;</span><br><span class="line"><span class="actionscript">        <span class="keyword">this</span>.$route.params.postId</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="props로-데이터-접근"><a href="#props로-데이터-접근" class="headerlink" title="props로 데이터 접근"></a>props로 데이터 접근</h4><p>동적 라우팅으로 구성한 데이터를 props로 가져 올수 있다. <code>this.$route.params.데이터명</code>로 하면 라우트와의 의존성이 높아지므로 props를 활용하는게 좋다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var routes &#x3D; [</span><br><span class="line">    &#123;</span><br><span class="line">        path: &#39;&#x2F;post&#x2F;:postId&#39;,</span><br><span class="line">        component: &#123;template: &#39;&lt;p&gt;포스팅입니다.&lt;&#x2F;p&gt;&#39;&#125;,</span><br><span class="line">        props: true</span><br><span class="line">    &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-
-<h4 id="URL에-동적-데이터-구성-이외에도-queryString-방식도-이용-가능-하다"><a href="#URL에-동적-데이터-구성-이외에도-queryString-방식도-이용-가능-하다" class="headerlink" title="URL에 동적 데이터 구성 이외에도 queryString 방식도 이용 가능 하다."></a>URL에 동적 데이터 구성 이외에도 queryString 방식도 이용 가능 하다.</h4><h5 id="1-url-작성"><a href="#1-url-작성" class="headerlink" title="1. url 작성"></a>1. url 작성</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url : &#x2F;user?id&#x3D;userId</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-라우터-작성"><a href="#2-라우터-작성" class="headerlink" title="2. 라우터 작성"></a>2. 라우터 작성</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var routes &#x3D; [&#123;</span><br><span class="line">    path: &#39;&#x2F;user&#39;</span><br><span class="line">    component: 컴포넌트</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-값-받아오기"><a href="#3-값-받아오기" class="headerlink" title="3. 값 받아오기"></a>3. 값 받아오기</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$route.query.id</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-props로-받아오기"><a href="#4-props로-받아오기" class="headerlink" title="4. props로 받아오기"></a>4. props로 받아오기</h5><p>키가 id 값을 props에 userName이라는 키로 변환하여 보내주고 있다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var routes &#x3D; [&#123;</span><br><span class="line">    path: &#39;&#x2F;user&#39;</span><br><span class="line">    component: 컴포넌트,</span><br><span class="line">    props: (route) &#x3D;&gt; (&#123;userName: route.query.id&#125;)</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/20/vue-dynamic-routing/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/20/vue-router/"
-                            aria-label=": 뷰 라우터"
-                        >
-                            뷰 라우터
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-20T09:08:19+09:00">
-	
-		    Dec 20, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EB%9D%BC%EC%9A%B0%ED%84%B0/">vue 라우터</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="뷰-라우터"><a href="#뷰-라우터" class="headerlink" title="뷰 라우터"></a>뷰 라우터</h1><p>싱글페이지앱에서는 화면의 새로고침이 없이 페이지가 전환이 되어야 합니다. 그럴때 사용하는 것이 뷰 라우터로써 라우트에 컴포넌트를 맵핑 시켜 놓고 특정주소에서 해당하는 컴포넌트를 렌더링하는 방식으로 싱글페이지앱에서 페이지의 전환을 대신합니다.</p>
-<h3 id="1-vue-router-구성"><a href="#1-vue-router-구성" class="headerlink" title="1. vue-router 구성"></a>1. vue-router 구성</h3><h3 id="1-1-vue-router파일-작성"><a href="#1-1-vue-router파일-작성" class="headerlink" title="1-1. vue-router파일 작성"></a>1-1. vue-router파일 작성</h3><h4 id="참고사항"><a href="#참고사항" class="headerlink" title="참고사항"></a>참고사항</h4><p>vue-router의 실제 코드를 main.js에 작성하게 되면 vue-router 편향적인 파일이 되기 때문에 삼가한다. vue-router만을 위한 파일을 생성하여 작성하도록 하자.</p>
-<h4 id="vue-router-설치"><a href="#vue-router-설치" class="headerlink" title="vue-router 설치"></a>vue-router 설치</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-router</span><br></pre></td></tr></table></figure>
-
-<h4 id="import"><a href="#import" class="headerlink" title="import"></a>import</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span>;</span><br><span class="line"></span><br><span class="line">Vue.use(VueRouter);</span><br></pre></td></tr></table></figure>
-
-<h4 id="컴포넌트-생성"><a href="#컴포넌트-생성" class="headerlink" title="컴포넌트 생성"></a>컴포넌트 생성</h4><p>렌더링할 컴포넌트 생성</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Foo = &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;foo&lt;/p&gt;'</span>&#125;</span><br><span class="line"><span class="keyword">const</span> Bar = &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;bar&lt;/p&gt;'</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="VueRouter-생성"><a href="#VueRouter-생성" class="headerlink" title="VueRouter 생성"></a>VueRouter 생성</h4><p>path는 주소, component는 해당 주소에서 렌더링할 컴포넌트를 맵핑</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> routes = [</span><br><span class="line">    &#123;<span class="attr">path</span>: <span class="string">'/foo'</span>, <span class="attr">component</span>: Foo&#125;,</span><br><span class="line">    &#123;<span class="attr">path</span>: <span class="string">'/bar'</span>, <span class="attr">component</span>: Bar&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">    routes</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-2-main-js-작성"><a href="#1-2-main-js-작성" class="headerlink" title="1-2. main.js 작성"></a>1-2. main.js 작성</h3><h4 id="Vue-인스턴스-생성"><a href="#Vue-인스턴스-생성" class="headerlink" title="Vue 인스턴스 생성"></a>Vue 인스턴스 생성</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;router&#125; <span class="keyword">from</span> <span class="string">'라우터작성 경로'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    router</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="뷰-라우터-태그-작성"><a href="#뷰-라우터-태그-작성" class="headerlink" title="뷰 라우터 태그 작성"></a>뷰 라우터 태그 작성</h4><p>라우터 설정시에 맵핑했었던 컴포넌트가 router-view에 렌더링 됩니다.</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="라우터-이동"><a href="#라우터-이동" class="headerlink" title="라우터 이동"></a>라우터 이동</h4><p>path부분에 주소를 입력 해주면 해당 라우팅 경로로 이동할수 있습니다(실제론 해당 주소로 컴포넌트를 바꿔서 렌더링 작업을 처리해준다는 것).</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"path"</span>&gt;</span><span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="redirect"><a href="#redirect" class="headerlink" title="redirect"></a>redirect</h4><p>path 경로로 들어왔을 때 리다이렉트 할수 있다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">'/'</span>,</span><br><span class="line">        redirect: <span class="string">'/리다이렉트할 경로'</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<h4 id="url에-제거하기"><a href="#url에-제거하기" class="headerlink" title="url에 # 제거하기"></a>url에 # 제거하기</h4><p>mode에 history값을 주면 #을 제거 가능하다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">	mode : history,</span><br><span class="line">	routes : [</span><br><span class="line">	</span><br><span class="line">	]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-심화된-라우팅-구성"><a href="#2-심화된-라우팅-구성" class="headerlink" title="2. 심화된 라우팅 구성"></a>2. 심화된 라우팅 구성</h3><h4 id="중첩된-라우트"><a href="#중첩된-라우트" class="headerlink" title="중첩된 라우트"></a>중첩된 라우트</h4><p>중첩된 라우트를 사용하기 위해서는 children 속성을 이용하면 가능합니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">'/mypage'</span>,</span><br><span class="line">        component: &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;안녕하세요&lt;/p&gt;&lt;router-view&gt;&lt;/router-view&gt;'</span>&#125;,</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 중첩된 라우트를 사용하기 위해서는 children 속성을 이용하면 가능합니다.</span></span><br><span class="line">        children: &#123;</span><br><span class="line">            path: <span class="string">'myBoard'</span>,</span><br><span class="line">            component: &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;내 게시물&lt;/p&gt;'</span>&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">    routes</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>중첩된 라우트는 화면 구성 컴포넌트의 수가 적으면 유용하지만 한번에 더 많은 컴포넌트를 표시하는데는 한계가 있습니다.</p>
-<h4 id="다중-라우트"><a href="#다중-라우트" class="headerlink" title="다중 라우트"></a>다중 라우트</h4><p>하나의 주소에 여러개의 컴포넌트와 매핑을 합니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;view-router&gt;<span class="xml"><span class="tag">&lt;/<span class="name">view-router</span>&gt;</span></span></span><br><span class="line">&lt;view-router name=<span class="string">"header"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">view-router</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">'/mypage'</span>,</span><br><span class="line">        components: &#123;</span><br><span class="line">            <span class="keyword">default</span>: &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;기본 컴포넌트&lt;/p&gt;'</span>&#125;,        <span class="comment">// view-router에 name속성의 값을 설정하지 않으면 default</span></span><br><span class="line">            header: &#123;<span class="attr">template</span>: <span class="string">'&lt;header&gt;헤더 컴포넌트&lt;/header&gt;'</span>&#125;    <span class="comment">// view-router에 name속성의 값을 키로 하여 컴포넌트를 맵핑</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">    routes</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>상하위 관계가 아닌 동등한 레벨의 여러개의 컴포넌트를 한번에 표시가 가능합니다.</p>
-</blockquote>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/20/vue-router/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/19/vue-extends/"
-                            aria-label=": vue-extends"
-                        >
-                            vue-extends
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-19T09:51:55+09:00">
-	
-		    Dec 19, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EA%B8%B0%EB%B3%B8%EB%AC%B8%EB%B2%95/">vue 기본문법</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="component-확장해서-사용하기"><a href="#component-확장해서-사용하기" class="headerlink" title="component 확장해서 사용하기"></a>component 확장해서 사용하기</h2><p>extends는 기존 컴포넌트를 확장해서 유사한 컴포넌트를 만들수 있는 방법입니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Hello.vue */</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &#123;&#123; message &#125;&#125;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            message: <span class="string">"Hello extends 사용하기"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    created() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Hello created 호출'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span>* HelloWorld.vue *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">import Hello from './</span>Hello.vue<span class="string">';</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">  name: '</span>HelloWorld<span class="string">',</span></span><br><span class="line"><span class="string">  extends: Hello,</span></span><br><span class="line"><span class="string">  data() &#123;</span></span><br><span class="line"><span class="string">    return &#123;</span></span><br><span class="line"><span class="string">        message: "HelloWorld extends 사용하기"</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  created() &#123;</span></span><br><span class="line"><span class="string">    console.log('</span>HelloWorld created 호출<span class="string">');</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>extends를 사용할 경우 data, computed, methods, filters는 오버라이딩이 된다. 하지만 라이프사이클은 모두 순서대로 호출이 된다.</p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/19/vue-extends/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
