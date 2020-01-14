@@ -216,6 +216,64 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/01/14/spring-property-load/"
+                            aria-label=": 프로퍼티 파일 가져오기"
+                        >
+                            프로퍼티 파일 가져오기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-14T21:26:41+09:00">
+	
+		    Jan 14, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/spring/">spring</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="프로퍼티-파일-가져오기"><a href="#프로퍼티-파일-가져오기" class="headerlink" title="프로퍼티 파일 가져오기"></a>프로퍼티 파일 가져오기</h2><h5 id="스프링을-이용해서-프러퍼티-가져오기"><a href="#스프링을-이용해서-프러퍼티-가져오기" class="headerlink" title="스프링을 이용해서 프러퍼티 가져오기"></a>스프링을 이용해서 프러퍼티 가져오기</h5><p>스프링에서 제공하는 Resource와 PropertySource를 통해서 쉽게 프로퍼티 파일을 가져 올수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PropertiesTest</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"클래스패스 경로"</span>);   <span class="comment">// prefix로 classpath:를 붙이지 않는다.</span></span><br><span class="line">        PropertySource propertySource = <span class="keyword">new</span> ResourcePropertySource(resource);</span><br><span class="line"></span><br><span class="line">        propertySource.getProperty(<span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/14/spring-property-load/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/01/14/spring-validation/"
                             aria-label=": 스프링 벨리데이션"
                         >
@@ -919,111 +977,6 @@
                         <p>
                             <a
                                 href="/2020/01/09/spring-databinding1/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/27/spring-resource/"
-                            aria-label=": 스프링 리소스"
-                        >
-                            스프링 리소스
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-27T12:24:32+09:00">
-	
-		    Dec 27, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Resource-추상화"><a href="#Resource-추상화" class="headerlink" title="Resource 추상화"></a>Resource 추상화</h2><p>스프링의 <strong>Resource</strong> 객체는 java.net.URL을 추상화한 인터페이스입니다. Resource 객체는 스프링 내부에서 가장 많이 사용이 되는 인터페이스이며 스프링 IoC 컨테이너가 생성 될때, 컨테이너 설정 정보를 담는 파일들을 가져올때도 사용합니다.</p>
-<p>Resource 인터페이스를 통해 추상화한 이유 java.net.URL의 한계로 클래스 패스를 기준으로 리소스를 읽어오는 기능이 존재하지 않기 때문입니다.</p>
-<br>
-
-<h5 id="주요-메소드"><a href="#주요-메소드" class="headerlink" title="주요 메소드"></a>주요 메소드</h5><ol>
-<li>exists</li>
-<li>isOpen</li>
-<li>isFile</li>
-<li>isDirectory</li>
-<li>getFile(항상 파일로 가져올수 있는 것은 아님)</li>
-</ol>
-<br>
-
-<h5 id="구현체"><a href="#구현체" class="headerlink" title="구현체"></a>구현체</h5><ol>
-<li>UrlResource : URL을 기준으로 리소스를 읽어들이며 기본으로 제공하는 프로토콜에는 <strong>http, https, ftp, file, jar</strong></li>
-<li>ClassPathResource : 클래스패스를 기준으로 리소스를 읽어들이며 접두어로 <strong>classapth:</strong>를 사용</li>
-<li>FileSystemResource : 파일 시스템을 기준으로 읽어들임 </li>
-<li>ServletContextResource : 웹 어플리케이션 루트에서 상대경로로 리소스를 읽어들임</li>
-</ol>
-<h2 id="ResourceLoader"><a href="#ResourceLoader" class="headerlink" title="ResourceLoader"></a>ResourceLoader</h2><p><strong>ResourceLoader</strong>는 리소스를 읽어오는 기능을 제공하는 인터페이스 입니다. ApplicationContext도 ResourceLoader를 상속하고 있습니다. 기능은 말그대로 리소스를 읽어오는 기능만 제공하고 있습니다.</p>
-<h5 id="구현체-1"><a href="#구현체-1" class="headerlink" title="구현체"></a>구현체</h5><ol>
-<li>DefaultResourceLoader : UrlResource(경로가 http, https 등 프로토콜로 시작)와 ClassPathResource(경로가 classapth:로 시작)를 가져올때 사용</li>
-<li>FileSystemResourceLoader : DefaultResourceLoader를 상속하고 있으며 경로가 /로 시작하는 경우 FileSystemResource를 반환.</li>
-<li>GenericWebApplicationContext : DefaultResourceLoader를 상속하고 있으며 경로가 /로 시작하는 경우 ServletContextResource를 반환<ul>
-<li>DefaultResourceLoader를 직접 상속 하고 있지는 않음</li>
-</ul>
-</li>
-</ol>
-<p>리소스를 가져오는 코드는 아래와 같습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resourceLoader.getResource(<span class="string">"location 문자열"</span>);</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="Resource의-타입과-ApplicationContext-타입의-관계"><a href="#Resource의-타입과-ApplicationContext-타입의-관계" class="headerlink" title="Resource의 타입과 ApplicationContext 타입의 관계"></a>Resource의 타입과 ApplicationContext 타입의 관계</h2><p>Resource의 타입은 location 문자열과 ApplicationContext의 타입에 따라 결정됩니다. 위의 ResourceLoader 구현체를 통해서 Resource를 얻어오는게 아니라 bean으로 등록 된 ApplicationContext를 통해서 Resource를 가져올때는 아래와 같이 적용됩니다.</p>
-<ol>
-<li>ClassPathXmlApplicationContext =&gt; ClassPathResource</li>
-<li>FileSystemXmlApplicationContext =&gt; FileSystemResource</li>
-<li>WebApplicationContext =&gt; ServletContextResource</li>
-</ol>
-<p>만약 ApplicationContext의 타입과 상관없이 리소스 타입을 강제하고 싶다면 접두어를 사용하면 됩니다.</p>
-<ol>
-<li>classpath</li>
-<li>file</li>
-<li>http</li>
-</ol>
-<p>그래서 좀더 명확한 코드를 작성하기 위해 접두어를 사용해서 Resource를 가져오는 것이 좋습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">ContextConfiguration</span>(<span class="title">classes</span> </span>= BeanConfig<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">TestControllerTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    ResourceLoader resourceLoader;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(resourceLoader.getClass());</span><br><span class="line"></span><br><span class="line">        Resource resource = resourceLoader.getResource(<span class="string">"test.properties"</span>);</span><br><span class="line">        System.out.println(resource.getClass());</span><br><span class="line"></span><br><span class="line">        ResourceLoader defulatResourceLoader = <span class="keyword">new</span> DefaultResourceLoader();</span><br><span class="line">        Resource defaultResource = defulatResourceLoader.getResource(<span class="string">"classpath:test.properties"</span>);</span><br><span class="line">        System.out.println(defaultResource.getClass());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class org.springframework.context.support.GenericApplicationContext</span><br><span class="line">class org.springframework.core.io.DefaultResourceLoader$ClassPathContextResource</span><br><span class="line">class org.springframework.core.io.ClassPathResource</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/27/spring-resource/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

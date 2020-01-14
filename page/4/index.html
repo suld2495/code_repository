@@ -215,6 +215,99 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2019/12/20/vue-router/"
+                            aria-label=": 뷰 라우터"
+                        >
+                            뷰 라우터
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-20T09:08:19+09:00">
+	
+		    Dec 20, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EB%9D%BC%EC%9A%B0%ED%84%B0/">vue 라우터</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="뷰-라우터"><a href="#뷰-라우터" class="headerlink" title="뷰 라우터"></a>뷰 라우터</h1><p>싱글페이지앱에서는 화면의 새로고침이 없이 페이지가 전환이 되어야 합니다. 그럴때 사용하는 것이 뷰 라우터로써 라우트에 컴포넌트를 맵핑 시켜 놓고 특정주소에서 해당하는 컴포넌트를 렌더링하는 방식으로 싱글페이지앱에서 페이지의 전환을 대신합니다.</p>
+<h3 id="1-vue-router-구성"><a href="#1-vue-router-구성" class="headerlink" title="1. vue-router 구성"></a>1. vue-router 구성</h3><h3 id="1-1-vue-router파일-작성"><a href="#1-1-vue-router파일-작성" class="headerlink" title="1-1. vue-router파일 작성"></a>1-1. vue-router파일 작성</h3><h4 id="참고사항"><a href="#참고사항" class="headerlink" title="참고사항"></a>참고사항</h4><p>vue-router의 실제 코드를 main.js에 작성하게 되면 vue-router 편향적인 파일이 되기 때문에 삼가한다. vue-router만을 위한 파일을 생성하여 작성하도록 하자.</p>
+<h4 id="vue-router-설치"><a href="#vue-router-설치" class="headerlink" title="vue-router 설치"></a>vue-router 설치</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-router</span><br></pre></td></tr></table></figure>
+
+<h4 id="import"><a href="#import" class="headerlink" title="import"></a>import</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span>;</span><br><span class="line"></span><br><span class="line">Vue.use(VueRouter);</span><br></pre></td></tr></table></figure>
+
+<h4 id="컴포넌트-생성"><a href="#컴포넌트-생성" class="headerlink" title="컴포넌트 생성"></a>컴포넌트 생성</h4><p>렌더링할 컴포넌트 생성</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Foo = &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;foo&lt;/p&gt;'</span>&#125;</span><br><span class="line"><span class="keyword">const</span> Bar = &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;bar&lt;/p&gt;'</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="VueRouter-생성"><a href="#VueRouter-생성" class="headerlink" title="VueRouter 생성"></a>VueRouter 생성</h4><p>path는 주소, component는 해당 주소에서 렌더링할 컴포넌트를 맵핑</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> routes = [</span><br><span class="line">    &#123;<span class="attr">path</span>: <span class="string">'/foo'</span>, <span class="attr">component</span>: Foo&#125;,</span><br><span class="line">    &#123;<span class="attr">path</span>: <span class="string">'/bar'</span>, <span class="attr">component</span>: Bar&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">    routes</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-main-js-작성"><a href="#1-2-main-js-작성" class="headerlink" title="1-2. main.js 작성"></a>1-2. main.js 작성</h3><h4 id="Vue-인스턴스-생성"><a href="#Vue-인스턴스-생성" class="headerlink" title="Vue 인스턴스 생성"></a>Vue 인스턴스 생성</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;router&#125; <span class="keyword">from</span> <span class="string">'라우터작성 경로'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    router</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="뷰-라우터-태그-작성"><a href="#뷰-라우터-태그-작성" class="headerlink" title="뷰 라우터 태그 작성"></a>뷰 라우터 태그 작성</h4><p>라우터 설정시에 맵핑했었던 컴포넌트가 router-view에 렌더링 됩니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="라우터-이동"><a href="#라우터-이동" class="headerlink" title="라우터 이동"></a>라우터 이동</h4><p>path부분에 주소를 입력 해주면 해당 라우팅 경로로 이동할수 있습니다(실제론 해당 주소로 컴포넌트를 바꿔서 렌더링 작업을 처리해준다는 것).</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"path"</span>&gt;</span><span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="redirect"><a href="#redirect" class="headerlink" title="redirect"></a>redirect</h4><p>path 경로로 들어왔을 때 리다이렉트 할수 있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">'/'</span>,</span><br><span class="line">        redirect: <span class="string">'/리다이렉트할 경로'</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h4 id="url에-제거하기"><a href="#url에-제거하기" class="headerlink" title="url에 # 제거하기"></a>url에 # 제거하기</h4><p>mode에 history값을 주면 #을 제거 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">	mode : history,</span><br><span class="line">	routes : [</span><br><span class="line">	</span><br><span class="line">	]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-심화된-라우팅-구성"><a href="#2-심화된-라우팅-구성" class="headerlink" title="2. 심화된 라우팅 구성"></a>2. 심화된 라우팅 구성</h3><h4 id="중첩된-라우트"><a href="#중첩된-라우트" class="headerlink" title="중첩된 라우트"></a>중첩된 라우트</h4><p>중첩된 라우트를 사용하기 위해서는 children 속성을 이용하면 가능합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">'/mypage'</span>,</span><br><span class="line">        component: &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;안녕하세요&lt;/p&gt;&lt;router-view&gt;&lt;/router-view&gt;'</span>&#125;,</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 중첩된 라우트를 사용하기 위해서는 children 속성을 이용하면 가능합니다.</span></span><br><span class="line">        children: &#123;</span><br><span class="line">            path: <span class="string">'myBoard'</span>,</span><br><span class="line">            component: &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;내 게시물&lt;/p&gt;'</span>&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">    routes</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>중첩된 라우트는 화면 구성 컴포넌트의 수가 적으면 유용하지만 한번에 더 많은 컴포넌트를 표시하는데는 한계가 있습니다.</p>
+<h4 id="다중-라우트"><a href="#다중-라우트" class="headerlink" title="다중 라우트"></a>다중 라우트</h4><p>하나의 주소에 여러개의 컴포넌트와 매핑을 합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;view-router&gt;<span class="xml"><span class="tag">&lt;/<span class="name">view-router</span>&gt;</span></span></span><br><span class="line">&lt;view-router name=<span class="string">"header"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">view-router</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">'/mypage'</span>,</span><br><span class="line">        components: &#123;</span><br><span class="line">            <span class="keyword">default</span>: &#123;<span class="attr">template</span>: <span class="string">'&lt;p&gt;기본 컴포넌트&lt;/p&gt;'</span>&#125;,        <span class="comment">// view-router에 name속성의 값을 설정하지 않으면 default</span></span><br><span class="line">            header: &#123;<span class="attr">template</span>: <span class="string">'&lt;header&gt;헤더 컴포넌트&lt;/header&gt;'</span>&#125;    <span class="comment">// view-router에 name속성의 값을 키로 하여 컴포넌트를 맵핑</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">    routes</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>상하위 관계가 아닌 동등한 레벨의 여러개의 컴포넌트를 한번에 표시가 가능합니다.</p>
+</blockquote>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/20/vue-router/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2019/12/19/vue-extends/"
                             aria-label=": vue-extends"
                         >
@@ -819,96 +912,6 @@
                         <p>
                             <a
                                 href="/2019/12/19/javascript-number/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/19/javascript-Map/"
-                            aria-label=": Map 타입"
-                        >
-                            Map 타입
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-19T01:05:48+09:00">
-	
-		    Dec 19, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/es6/">es6</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="1-Map-생성하기"><a href="#1-Map-생성하기" class="headerlink" title="1. Map 생성하기"></a>1. Map 생성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">    [<span class="string">"key1"</span>, <span class="string">"value1"</span>],</span><br><span class="line">    [<span class="string">"key2"</span>, <span class="string">"value2"</span>],</span><br><span class="line">    [<span class="string">"key3"</span>, <span class="string">"value3"</span>],</span><br><span class="line">    [<span class="string">"key4"</span>, <span class="string">"value4"</span>],</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><code>new Map([{id: 1},{id: 2},{id: 3},{id: 4}])</code>이런식으로 작성하려고 하니까 안됨. Map생성시 파라미터는 이차원배열로 넣어야 할듯</p>
-</blockquote>
-<h2 id="2-Map에-값-추가하기"><a href="#2-Map에-값-추가하기" class="headerlink" title="2. Map에 값 추가하기"></a>2. Map에 값 추가하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(<span class="string">'key'</span>, <span class="string">'value'</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>값을 추가하는 부분에서 Map와 Object의 차이점이 나타남. Map의 경우에는 <strong>Key로 문자열이외에도 모든걸 Key로 가능</strong></p>
-</blockquote>
-<h2 id="3-Map의-값-호출하기"><a href="#3-Map의-값-호출하기" class="headerlink" title="3. Map의 값 호출하기"></a>3. Map의 값 호출하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> key = &#123;<span class="attr">name</span>: <span class="string">'name'</span>&#125;</span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(key, <span class="string">'value'</span>)</span><br><span class="line">map.get(key)</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-Map의-사이즈-확인"><a href="#4-Map의-사이즈-확인" class="headerlink" title="4. Map의 사이즈 확인"></a>4. Map의 사이즈 확인</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> key = &#123;<span class="attr">name</span>: <span class="string">'name'</span>&#125;</span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(key, <span class="string">'value'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(map.size)</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-배열로-만들기"><a href="#5-배열로-만들기" class="headerlink" title="5. 배열로 만들기"></a>5. 배열로 만들기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(<span class="string">'key1'</span>, <span class="string">'value1'</span>)</span><br><span class="line">map.set(<span class="string">'key2'</span>, <span class="string">'value2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> array = [...map]</span><br><span class="line"><span class="built_in">console</span>.log(map)    <span class="comment">// map: [['key1', 'value1'], ['key2', 'value2']]</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Object와는 다르게 Map은 <code>[...map]</code>을 통해서 Array로 만들수 있습니다. 결과값은 <code>[[key, value], [key, value]]</code>의 형태로 만들어 진다.</p>
-</blockquote>
-<h2 id="6-순회하기"><a href="#6-순회하기" class="headerlink" title="6. 순회하기"></a>6. 순회하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="built_in">Map</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [key, value] <span class="keyword">of</span> map) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">map.forEach(<span class="function">(<span class="params">key, value</span>) =&gt;</span> &#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Object와는 다르게 forof와 forEach를 사용할수 있다.<br>Array에서 제공하는 map, filter등에 대한 메서드는 제공하지 않는 것으로 판단된다.</p>
-</blockquote>
-<h2 id="7-Iterator-사용하기"><a href="#7-Iterator-사용하기" class="headerlink" title="7. Iterator 사용하기"></a>7. Iterator 사용하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line"></span><br><span class="line">map.keys()      <span class="comment">// key모음</span></span><br><span class="line">map.values()    <span class="comment">// value모음</span></span><br><span class="line">map.entries()   <span class="comment">// key와 value 한쌍의 모음</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Iterator이다 보니 for문과 함께 사용하면 좋을 듯</p>
-</blockquote>
-<h2 id="기타-메서드"><a href="#기타-메서드" class="headerlink" title="기타 메서드"></a>기타 메서드</h2><h3 id="has-해당-Key-존재-여부"><a href="#has-해당-Key-존재-여부" class="headerlink" title="has : 해당 Key 존재 여부"></a>has : 해당 Key 존재 여부</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">map.set(<span class="string">'key'</span>, <span class="string">'value'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(map.has(<span class="string">'key'</span>)) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="delete-해당-Key의-값-삭제"><a href="#delete-해당-Key의-값-삭제" class="headerlink" title="delete : 해당 Key의 값 삭제"></a>delete : 해당 Key의 값 삭제</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">map.set(<span class="string">'key'</span>, <span class="string">'value'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(map.delete(<span class="string">'key'</span>))  <span class="comment">// true =&gt; 존재했으면 true 없었으면 false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(map.has(<span class="string">'key'</span>)) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="clear-모든-데이터-삭제"><a href="#clear-모든-데이터-삭제" class="headerlink" title="clear : 모든 데이터 삭제"></a>clear : 모든 데이터 삭제</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">map.clear()</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/19/javascript-Map/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

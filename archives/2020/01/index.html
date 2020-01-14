@@ -216,6 +216,64 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/01/14/spring-property-load/"
+                            aria-label=": 프로퍼티 파일 가져오기"
+                        >
+                            프로퍼티 파일 가져오기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-14T21:26:41+09:00">
+	
+		    Jan 14, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/spring/">spring</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="프로퍼티-파일-가져오기"><a href="#프로퍼티-파일-가져오기" class="headerlink" title="프로퍼티 파일 가져오기"></a>프로퍼티 파일 가져오기</h2><h5 id="스프링을-이용해서-프러퍼티-가져오기"><a href="#스프링을-이용해서-프러퍼티-가져오기" class="headerlink" title="스프링을 이용해서 프러퍼티 가져오기"></a>스프링을 이용해서 프러퍼티 가져오기</h5><p>스프링에서 제공하는 Resource와 PropertySource를 통해서 쉽게 프로퍼티 파일을 가져 올수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PropertiesTest</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"클래스패스 경로"</span>);   <span class="comment">// prefix로 classpath:를 붙이지 않는다.</span></span><br><span class="line">        PropertySource propertySource = <span class="keyword">new</span> ResourcePropertySource(resource);</span><br><span class="line"></span><br><span class="line">        propertySource.getProperty(<span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/14/spring-property-load/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/01/14/spring-validation/"
                             aria-label=": 스프링 벨리데이션"
                         >

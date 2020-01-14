@@ -215,6 +215,103 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2019/12/18/vue-lifecycle/"
+                            aria-label=": 뷰 라이프사이클(3)"
+                        >
+                            뷰 라이프사이클(3)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-18T21:46:01+09:00">
+	
+		    Dec 18, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EA%B8%B0%EB%B3%B8%EB%AC%B8%EB%B2%95/">vue 기본문법</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h4 id="설명"><a href="#설명" class="headerlink" title="설명"></a>설명</h4><p>vue는 여러 종류의 라이프 사이클을 가집니다. 각각의 라이프 사이클 마다 사용자 정의 로직을 실행할수 있는 라이크 사이클 훅을 호출 합니다.</p>
+<br>
+
+<h4 id="라이프사이클-훅의-종류"><a href="#라이프사이클-훅의-종류" class="headerlink" title="라이프사이클 훅의 종류"></a>라이프사이클 훅의 종류</h4><h5 id="1-beforeCreate"><a href="#1-beforeCreate" class="headerlink" title="1. beforeCreate"></a>1. beforeCreate</h5><p>인스턴스를 생성 후 가장 먼저 실행되는 라이프 사이클 단계입니다. 이 단계에서는 data및 methods 속성이 정의되어 있지 않습니다.</p>
+<br>
+
+<h5 id="2-created"><a href="#2-created" class="headerlink" title="2. created"></a>2. created</h5><p>beforeCreate 다음 실행 단계로써 data 및 methods 속성에 접근이 가능합니다. 아직까지 화면에 부착전이기 때문에 돔 요소에 접근은 불가능합니다.</p>
+<h5 id="사용용도"><a href="#사용용도" class="headerlink" title="사용용도"></a><strong>사용용도</strong></h5><blockquote>
+<p>보통 이 단계에서 서버에서 데이터를 요청하여 받아오는 로직을 수행하기에 좋습니다<br>이 단계부터 data나 속성 등에 접근이 가능하기 때문에 화면에 부착하기 전 data등의 속성에 값을 변경 시키는 등의 작업을 이 단계에서 진행합니다.</p>
+</blockquote>
+<br>
+
+<h5 id="3-beforeMount"><a href="#3-beforeMount" class="headerlink" title="3. beforeMount"></a>3. beforeMount</h5><p>화면에 인스턴스를 부착하기 전 단계입니다. </p>
+<h5 id="사용용도-1"><a href="#사용용도-1" class="headerlink" title="사용용도"></a><strong>사용용도</strong></h5><blockquote>
+<p>render 함수가 호출 되기 직전의 로직을 추가하기에 좋습니다.</p>
+</blockquote>
+<br>
+
+<h5 id="4-mounted"><a href="#4-mounted" class="headerlink" title="4. mounted"></a>4. mounted</h5><p>화면에 인스턴스가 부착되고 난 후에 호출 되는 단계입니다. 이때 부터 template 속성에 정의한 화면요소에 대한 접근이 가능합니다. 돔에 인스턴스가 부착되자마자 바로 호출 되는 단계라서 하위 컴포넌트나 외부 라이브러리에 의해 추가 된 화면 요소들이 HTML 코드로 변환되는 시점과 다를수있습니다.</p>
+<h5 id="사용용도-2"><a href="#사용용도-2" class="headerlink" title="사용용도"></a><strong>사용용도</strong></h5><blockquote>
+<p>이 단계부터 template 속성의 값이 화면에 부착되었기 때문에 돔에 접근을 할때 사용합니다.</p>
+</blockquote>
+<br>
+
+<h5 id="5-beforeUpdate"><a href="#5-beforeUpdate" class="headerlink" title="5. beforeUpdate"></a>5. beforeUpdate</h5><p> : 인스턴스에 정의 된 속성이 변경되어 돔으로 화면을 다시 그리기 전 단계입니다.</p>
+<p>아직 화면에 그려지기 전에 변경 된 데이터에 접근이 가능합니다. 이때 값을 변경하는 로직을 넣어 렌더링이 발생하더라도 트리거 되지 않습니다.</p>
+<br>
+
+<h5 id="6-updated"><a href="#6-updated" class="headerlink" title="6. updated"></a>6. updated</h5><p>변경 된 데이터가 화면으로 그려지고 난 후 실행되는 단계입니다. 이 단계에서 값을 변경 할 경우 무한루프에 빠질 수 있습니다.</p>
+<h5 id="사용용도-3"><a href="#사용용도-3" class="headerlink" title="사용용도"></a><strong>사용용도</strong></h5><p>인스턴스의 속성 값이 변경 될때 값을 변경하는 로직을 실행해야 한다면 beforeUpdate에서 작성을 하고 updated에서는 속성 값이 변경 될때 화면 구성요소와 관련 된 작업을 이단계에 넣습니다.</p>
+<br>
+
+<h5 id="7-beforeDestory"><a href="#7-beforeDestory" class="headerlink" title="7. beforeDestory"></a>7. beforeDestory</h5><p>뷰 인스턴스가 파괴되기 직전에 호출 되는 단계입니다.</p>
+<h5 id="사용용도-4"><a href="#사용용도-4" class="headerlink" title="사용용도"></a><strong>사용용도</strong></h5><p>뷰 인스턴스의 데이터를 삭제하기 좋은 단계입니다. 이벤트버스를 사용 할때 해당 컴포넌트가 삭제가 되어도 그대로 남아 있어서 이벤트가 여러번 실행되는 경우가 발생합니다. 해당 컴포넌트에서 이벤트버스 $on을 사용했다면 여기에서 $off 추가합시다.</p>
+<br>
+
+<h5 id="8-destroyed"><a href="#8-destroyed" class="headerlink" title="8. destroyed"></a>8. destroyed</h5><p>뷰 인스턴스가 파괴되고 난 후 호출되는 단계입니다.                    </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: '#app',</span><br><span class="line">    beforeCreate() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    created() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    beforeMount() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    mounted() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    beforeUpdate() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    updated() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    beforeDestroy() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    destroyed() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://user-images.githubusercontent.com/42727909/55003776-595bb700-501c-11e9-84b8-3a4acfc5465c.png" alt="뷰 라이프 사이클"></p>
+<blockquote><footer><strong>https://kr.vuejs.org/v2/guide/instance.htm 인용</strong></footer></blockquote>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/18/vue-lifecycle/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2019/12/18/vue-terms/"
                             aria-label=": 뷰 기본용어(2)"
                         >
