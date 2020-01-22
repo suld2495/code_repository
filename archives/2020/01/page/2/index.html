@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="">
-    <title>Tag: databinding - null</title>
+    <title>Archives: 2020/1 - null</title>
     <meta name="author" content="Moon Star">
     
     
@@ -15,7 +15,7 @@
     <meta name="description" content="개발 정리 블로그">
 <meta property="og:type" content="blog">
 <meta property="og:title">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;tags&#x2F;databinding&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;archives&#x2F;2020&#x2F;01&#x2F;page&#x2F;2&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="개발 정리 블로그">
 <meta property="og:locale" content="en_US">
@@ -216,23 +216,23 @@
                     
                         <a
                             class="link-unstyled"
-                            href="/2020/01/19/spring-databinding2/"
-                            aria-label=": 데이터 바인딩 추상화2"
+                            href="/2020/01/10/vue-render/"
+                            aria-label=": Vue 컴포넌트 작성 방법"
                         >
-                            데이터 바인딩 추상화2
+                            Vue 컴포넌트 작성 방법
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2020-01-19T09:27:07+09:00">
+    <time datetime="2020-01-10T13:31:42+09:00">
 	
-		    Jan 19, 2020
+		    Jan 10, 2020
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-component/">vue component</a>
 
 
     
@@ -241,10 +241,37 @@
             </div>
             
                 <div class="postShorten-content">
-                    <h2 id="데이터-바인딩-추사황-Converter와-Formatter"><a href="#데이터-바인딩-추사황-Converter와-Formatter" class="headerlink" title="데이터 바인딩 추사황 : Converter와 Formatter"></a>데이터 바인딩 추사황 : Converter와 Formatter</h2><p>초기 스프링에서는 PropertyEditor를 사용하였습니다. 이후 이를 대체할 Converter, Formatter 인터페이스가 등장하였습니다.</p>
-<h4 id="Converter"><a href="#Converter" class="headerlink" title="Converter"></a>Converter</h4><p>Converter는 S타입을 T타입으로 변환할수 있습니다. PropertyEditor와는 다르게 상태정보가 없기 때문에 쓰레드 세이프합니다. 이로 인하여 빈으로 등록 후 사용하여도 문제가 없습니다.</p>
-<h4 id="xml을-이용한-Custom-Converter-등록하기"><a href="#xml을-이용한-Custom-Converter-등록하기" class="headerlink" title="xml을 이용한 Custom Converter 등록하기"></a>xml을 이용한 Custom Converter 등록하기</h4><h6 id="Converter-만들기"><a href="#Converter-만들기" class="headerlink" title="Converter 만들기"></a>Converter 만들기</h6><p>Conterver를 만드는 방법은 간단합니다. Converter&lt;&gt;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventConverter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StringToEventConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">String</span>, <span class="title">Event</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Event <span class="title">convert</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">            Event event = <span class="keyword">new</span> Event();</span><br><span class="line">            event.setId(Integer.parseInt(source));</span><br><span class="line">            <span class="keyword">return</span> event;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">EventToStringConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">Event</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">convert</span><span class="params">(Event source)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"convert : "</span> + source.getId();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    <h2 id="Vue-컴포넌트-작성"><a href="#Vue-컴포넌트-작성" class="headerlink" title="Vue 컴포넌트 작성"></a>Vue 컴포넌트 작성</h2><p>Vue에서는 템플릿을 통해서 HTML을 작성하는 것을 권장하고 있습니다. 하지만 특정 상황에서는 자바스크립트를 이용해야 하는 상황이 있습니다. 그렇기 때문에 템플릿 뿐 아니라 자바스크립트로도 컴포넌트를 작성하는 방법에 대해서 알고 있어야 합니다.</p>
+<h4 id="싱글-파일-컴포넌트"><a href="#싱글-파일-컴포넌트" class="headerlink" title="싱글 파일 컴포넌트"></a>싱글 파일 컴포넌트</h4><p>template, script, style 3개의 태그를 이용하여 하나의 파일에서 작성 합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        &#123;&#123; str &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">        name: <span class="string">'VueSingleFileComponent'</span>,</span></span><br><span class="line">        props: &#123;</span><br><span class="line">            str: &#123;</span><br><span class="line"><span class="javascript">                type: <span class="built_in">String</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="사용하기"><a href="#사용하기" class="headerlink" title="사용하기"></a>사용하기</h6><p>다른 컴포넌트에서 import를 통해 사용할수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-string-file-component</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> VueSingleFileComponent <span class="keyword">from</span> <span class="string">'./VueSingleFileComponent.vue'</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">    name: <span class="string">'VueView'</span>,</span></span><br><span class="line">    components: &#123;</span><br><span class="line">        VueSingleFileComponent</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Vue.component를 통해서 등록하면 실제 사용하는 곳에서 import를 할 필요 없이 사용할수 있습니다.</p>
+<h6 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> VueSingleFileComponent <span class="keyword">from</span> <span class="string">'./VueSingleFileComponent.vue'</span>;</span><br><span class="line"></span><br><span class="line">Vue.component(<span class="string">'vue-single-file-component'</span>, VueSingleFileComponent);</span><br></pre></td></tr></table></figure>
+
+<h6 id="VueView-vue"><a href="#VueView-vue" class="headerlink" title="VueView.vue"></a>VueView.vue</h6><p>컴포넌트를 import 하거나 components 속성을 등록 할 필요 없이 사용가능합니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-string-file-component</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">    name: <span class="string">'VueView'</span>,</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="String으로-컴포넌트-작성"><a href="#String으로-컴포넌트-작성" class="headerlink" title="String으로 컴포넌트 작성"></a>String으로 컴포넌트 작성</h4><p>템플릿을 js의 String으로 정의하는 방법입니다. 위 처럼 vue 확장자를 가진 파일을 따로 생성하지 않고 Vue.component에 직접 등록 합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line">Vue.component(<span class="string">'vue-string'</span>, &#123;</span><br><span class="line">    template: <span class="string">'&lt;div&gt; &#123;&#123; str &#125;&#125;&lt;/div&gt;'</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">        str: &#123;</span><br><span class="line">            type: <span class="built_in">String</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Vue.component를 사용하기 때문에 import로 호출만 하고 compoents 속성에 따로 등록 하진 않아도 됩니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;vue-string/&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">import '../</span>components/vue-render/VueString.js<span class="string">';</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">    name: '</span>VueView<span class="string">',</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="Render-function을-사용하여-컴포넌트-작성"><a href="#Render-function을-사용하여-컴포넌트-작성" class="headerlink" title="Render function을 사용하여 컴포넌트 작성"></a>Render function을 사용하여 컴포넌트 작성</h4><p>template을 사용하지 않고 render 함수를 이용해서 컴포넌트를 작성 할수 있습니다. 해당 컴포넌트를 import해서 사용방법은 SPA랑 동일 합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">"VueRenderFunc"</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">        str : &#123;</span><br><span class="line">            type: <span class="built_in">String</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    render(h) &#123;</span><br><span class="line">        <span class="keyword">return</span> h(<span class="string">'div'</span>, [<span class="keyword">this</span>.str]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h3><p>기본적으로 SPA 방식으로 작성하는 게 좋다고 생각합니다. js를 활용해야 하는 경우에는 render 함수를 이용하여 작성하는 것도 하나의 선택이 될수 있을거라 생각합니다.</p>
+
                     
                         
 
@@ -253,7 +280,7 @@
                     
                         <p>
                             <a
-                                href="/2020/01/19/spring-databinding2/#post-footer"
+                                href="/2020/01/10/vue-render/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
@@ -377,12 +404,24 @@
     <div class="pagination-bar">
     <ul class="pagination">
         
+          <li class="pagination-prev">
+            <a
+                class="btn btn--default btn--small"
+                href="/archives/2020/01/"
+                aria-label="NEWER POSTS"
+            >
+              <i class="fa fa-angle-left text-base icon-mr"></i>
+              <span>NEWER POSTS</span>
+            </a>
+          </li>
         
-        <li class="pagination-number">page 1 of 1</li>
+        
+        <li class="pagination-number">page 2 of 2</li>
     </ul>
 </div>
 
 </section>
+
 
 
                 <footer id="footer" class="main-content-wrap">

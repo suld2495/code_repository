@@ -6,23 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="">
-    <title>프로퍼티 파일 가져오기 - null</title>
+    <title>데이터 바인딩 추상화2 - null</title>
     <meta name="author" content="Moon Star">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"프로퍼티 파일 가져오기스프링을 이용해서 프러퍼티 가져오기스프링에서 제공하는 Resource와 PropertySource를 통해서 쉽게 프로퍼티 파일을 가져 올수 있습니다.\n12345678910public class PropertiesTest &#123;        @Test    public void getProperties() &#123;        Resource resource = new ClassPathResource(\"클래스패스 경로\");   // prefix로 classpath:를 붙이지 않는다.        PropertySource propertySource = new ResourcePropertySource(resource);        propertySource.getProperty(\"\");    &#125;&#125;","dateCreated":"2020-01-14T21:26:41+09:00","dateModified":"2020-01-14T21:32:23+09:00","datePublished":"2020-01-14T21:26:41+09:00","description":"","headline":"프로퍼티 파일 가져오기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2020/01/14/spring-property-load/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2020/01/14/spring-property-load/","keywords":"properties"}</script>
-    <meta name="description" content="프로퍼티 파일 가져오기스프링을 이용해서 프러퍼티 가져오기스프링에서 제공하는 Resource와 PropertySource를 통해서 쉽게 프로퍼티 파일을 가져 올수 있습니다. 12345678910public class PropertiesTest &amp;#123;        @Test    public void getProperties() &amp;#123;">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"데이터 바인딩 추사황 : Converter와 Formatter초기 스프링에서는 PropertyEditor를 사용하였습니다. 이후 이를 대체할 Converter, Formatter 인터페이스가 등장하였습니다.\nConverterConverter는 S타입을 T타입으로 변환할수 있습니다. PropertyEditor와는 다르게 상태정보가 없기 때문에 쓰레드 세이프합니다. 이로 인하여 빈으로 등록 후 사용하여도 문제가 없습니다.\nxml을 이용한 Custom Converter 등록하기Converter 만들기Conterver를 만드는 방법은 간단합니다. Converter&lt;&gt;\n123456789101112131415161718public class EventConverter &#123;    public static class StringToEventConverter implements Converter&lt;String, Event&gt; &#123;        public Event convert(String source) &#123;            Event event = new Event();            event.setId(Integer.parseInt(source));            return event;        &#125;    &#125;    public static class EventToStringConverter implements Converter&lt;Event, String&gt; &#123;        public String convert(Event source) &#123;            return \"convert : \" + source.getId();        &#125;    &#125;&#125;","dateCreated":"2020-01-19T09:27:07+09:00","dateModified":"2020-01-22T20:15:47+09:00","datePublished":"2020-01-19T09:27:07+09:00","description":"","headline":"데이터 바인딩 추상화2","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2020/01/19/spring-databinding2/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2020/01/19/spring-databinding2/","keywords":"databinding, converter, formatter"}</script>
+    <meta name="description" content="데이터 바인딩 추사황 : Converter와 Formatter초기 스프링에서는 PropertyEditor를 사용하였습니다. 이후 이를 대체할 Converter, Formatter 인터페이스가 등장하였습니다. ConverterConverter는 S타입을 T타입으로 변환할수 있습니다. PropertyEditor와는 다르게 상태정보가 없기 때문에 쓰레드 세이프합">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="프로퍼티 파일 가져오기">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2020&#x2F;01&#x2F;14&#x2F;spring-property-load&#x2F;index.html">
+<meta property="og:title" content="데이터 바인딩 추상화2">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2020&#x2F;01&#x2F;19&#x2F;spring-databinding2&#x2F;index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="프로퍼티 파일 가져오기스프링을 이용해서 프러퍼티 가져오기스프링에서 제공하는 Resource와 PropertySource를 통해서 쉽게 프로퍼티 파일을 가져 올수 있습니다. 12345678910public class PropertiesTest &amp;#123;        @Test    public void getProperties() &amp;#123;">
+<meta property="og:description" content="데이터 바인딩 추사황 : Converter와 Formatter초기 스프링에서는 PropertyEditor를 사용하였습니다. 이후 이를 대체할 Converter, Formatter 인터페이스가 등장하였습니다. ConverterConverter는 S타입을 T타입으로 변환할수 있습니다. PropertyEditor와는 다르게 상태정보가 없기 때문에 쓰레드 세이프합">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-01-14T12:26:41.000Z">
-<meta property="article:modified_time" content="2020-01-14T12:32:23.690Z">
+<meta property="article:published_time" content="2020-01-19T00:27:07.000Z">
+<meta property="article:modified_time" content="2020-01-22T11:15:47.374Z">
 <meta property="article:author" content="Moon Star">
-<meta property="article:tag" content="properties">
+<meta property="article:tag" content="databinding">
+<meta property="article:tag" content="converter">
+<meta property="article:tag" content="formatter">
 <meta name="twitter:card" content="summary">
     
     
@@ -216,20 +218,20 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            프로퍼티 파일 가져오기
+            데이터 바인딩 추상화2
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-01-14T21:26:41+09:00">
+    <time datetime="2020-01-19T09:27:07+09:00">
 	
-		    Jan 14, 2020
+		    Jan 19, 2020
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/spring/">spring</a>
+    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
 
 
     
@@ -241,8 +243,10 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <h2 id="프로퍼티-파일-가져오기"><a href="#프로퍼티-파일-가져오기" class="headerlink" title="프로퍼티 파일 가져오기"></a>프로퍼티 파일 가져오기</h2><h5 id="스프링을-이용해서-프러퍼티-가져오기"><a href="#스프링을-이용해서-프러퍼티-가져오기" class="headerlink" title="스프링을 이용해서 프러퍼티 가져오기"></a>스프링을 이용해서 프러퍼티 가져오기</h5><p>스프링에서 제공하는 Resource와 PropertySource를 통해서 쉽게 프로퍼티 파일을 가져 올수 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PropertiesTest</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"클래스패스 경로"</span>);   <span class="comment">// prefix로 classpath:를 붙이지 않는다.</span></span><br><span class="line">        PropertySource propertySource = <span class="keyword">new</span> ResourcePropertySource(resource);</span><br><span class="line"></span><br><span class="line">        propertySource.getProperty(<span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h2 id="데이터-바인딩-추사황-Converter와-Formatter"><a href="#데이터-바인딩-추사황-Converter와-Formatter" class="headerlink" title="데이터 바인딩 추사황 : Converter와 Formatter"></a>데이터 바인딩 추사황 : Converter와 Formatter</h2><p>초기 스프링에서는 PropertyEditor를 사용하였습니다. 이후 이를 대체할 Converter, Formatter 인터페이스가 등장하였습니다.</p>
+<h4 id="Converter"><a href="#Converter" class="headerlink" title="Converter"></a>Converter</h4><p>Converter는 S타입을 T타입으로 변환할수 있습니다. PropertyEditor와는 다르게 상태정보가 없기 때문에 쓰레드 세이프합니다. 이로 인하여 빈으로 등록 후 사용하여도 문제가 없습니다.</p>
+<h4 id="xml을-이용한-Custom-Converter-등록하기"><a href="#xml을-이용한-Custom-Converter-등록하기" class="headerlink" title="xml을 이용한 Custom Converter 등록하기"></a>xml을 이용한 Custom Converter 등록하기</h4><h6 id="Converter-만들기"><a href="#Converter-만들기" class="headerlink" title="Converter 만들기"></a>Converter 만들기</h6><p>Conterver를 만드는 방법은 간단합니다. Converter&lt;&gt;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventConverter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StringToEventConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">String</span>, <span class="title">Event</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Event <span class="title">convert</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">            Event event = <span class="keyword">new</span> Event();</span><br><span class="line">            event.setId(Integer.parseInt(source));</span><br><span class="line">            <span class="keyword">return</span> event;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">EventToStringConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">Event</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">convert</span><span class="params">(Event source)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"convert : "</span> + source.getId();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
             
 
 
@@ -253,7 +257,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/properties/" rel="tag">properties</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/converter/" rel="tag">converter</a> <a class="tag tag--primary tag--small t-link" href="/tags/databinding/" rel="tag">databinding</a> <a class="tag tag--primary tag--small t-link" href="/tags/formatter/" rel="tag">formatter</a>
 
             </div>
         
@@ -266,9 +270,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/01/19/spring-databinding2/"
-                    data-tooltip="데이터 바인딩 추상화2"
-                    aria-label="PREVIOUS: 데이터 바인딩 추상화2"
+                    href="/2020/01/22/spring-el/"
+                    data-tooltip="SpEL"
+                    aria-label="PREVIOUS: SpEL"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -280,9 +284,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/01/14/spring-validation/"
-                    data-tooltip="스프링 벨리데이션"
-                    aria-label="NEXT: 스프링 벨리데이션"
+                    href="/2020/01/14/spring-property-load/"
+                    data-tooltip="프로퍼티 파일 가져오기"
+                    aria-label="NEXT: 프로퍼티 파일 가져오기"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -307,7 +311,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/01/14/spring-property-load/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/01/19/spring-databinding2/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -320,7 +324,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/01/14/spring-property-load/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/01/19/spring-databinding2/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -333,7 +337,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/01/14/spring-property-load/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/01/19/spring-databinding2/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -381,9 +385,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/01/19/spring-databinding2/"
-                    data-tooltip="데이터 바인딩 추상화2"
-                    aria-label="PREVIOUS: 데이터 바인딩 추상화2"
+                    href="/2020/01/22/spring-el/"
+                    data-tooltip="SpEL"
+                    aria-label="PREVIOUS: SpEL"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -395,9 +399,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/01/14/spring-validation/"
-                    data-tooltip="스프링 벨리데이션"
-                    aria-label="NEXT: 스프링 벨리데이션"
+                    href="/2020/01/14/spring-property-load/"
+                    data-tooltip="프로퍼티 파일 가져오기"
+                    aria-label="NEXT: 프로퍼티 파일 가져오기"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -422,7 +426,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/01/14/spring-property-load/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/01/19/spring-databinding2/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -435,7 +439,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/01/14/spring-property-load/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/01/19/spring-databinding2/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -448,7 +452,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/01/14/spring-property-load/"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/01/19/spring-databinding2/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -482,7 +486,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/01/14/spring-property-load/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/01/19/spring-databinding2/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -495,7 +499,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/01/14/spring-property-load/"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/01/19/spring-databinding2/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -508,7 +512,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://suld2495.github.io/2020/01/14/spring-property-load/"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2020/01/19/spring-databinding2/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>

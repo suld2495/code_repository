@@ -216,6 +216,194 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/01/22/spring-el/"
+                            aria-label=": SpEL"
+                        >
+                            SpEL
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-22T20:16:31+09:00">
+	
+		    Jan 22, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Spring-Expression-language-란"><a href="#Spring-Expression-language-란" class="headerlink" title="Spring Expression language 란?"></a>Spring Expression language 란?</h2><p>SpEL이란 런타임시에 객체 그래프를 조회하고 조작하는 표현언어입니다. 스프링 3.0이상부터 지원하여 EL과 비슷하지만 메소드 호출 지원, 문자열 템플릿 기능까지 제공해 줍니다.</p>
+<h2 id="SpEL에서-지원하는-기능"><a href="#SpEL에서-지원하는-기능" class="headerlink" title="SpEL에서 지원하는 기능"></a>SpEL에서 지원하는 기능</h2><ol>
+<li>Literal expressions</li>
+<li>Boolean and relational operators</li>
+<li>Regular expressions</li>
+<li>Class expressions</li>
+<li>Accessing properties, arrays, lists, and maps</li>
+<li>Method invocation</li>
+<li>Relational operators</li>
+<li>Assignment</li>
+<li>Calling constructors</li>
+<li>Bean references</li>
+<li>Array construction</li>
+<li>Inline lists</li>
+<li>Inline maps</li>
+<li>Ternary operator</li>
+<li>Variables</li>
+<li>User-defined functions</li>
+<li>Collection projection</li>
+<li>Collection selection</li>
+<li>Templated expressions</li>
+</ol>
+<br>
+
+<h2 id="SpelExpressionParser"><a href="#SpelExpressionParser" class="headerlink" title="SpelExpressionParser"></a>SpelExpressionParser</h2><p><code>SpelExpressionParser</code> 클래스를 사용해서 리터럴 문자열 표현식을 파싱할수 있습니다. 싱글 쿼테이션으로 둘러싸인 문자열을 파싱 해줍니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"'Hello World'"</span>);</span><br><span class="line">    String message = (String) exp.getValue();</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>SpEL은 메소드를 호출하거나 프로퍼티에 접근하거나 생성자를 호출할수 있습니다. 아래의 예제는 String 메소드 중 하나인 concat을 호출하고 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"'Hello World'.concat('!')"</span>);</span><br><span class="line">    String message = (String) exp.getValue();</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>SpEL을 사용해서 객체(rootObject라고 부름)의 필드의 값을 가져 올수 있습니다. 그리고 Expression의 getValue의 파라미터 중에 하나인 desiredResultType에 반환받은 타입을 입력하면 위의 예제 처럼 캐스팅을 하지 않아도 됩니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpELVO</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpELVO</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    SpELVO spELVO = <span class="keyword">new</span> SpELVO(<span class="string">"intelli"</span>);</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"name"</span>);</span><br><span class="line">    String message = (String) exp.getValue(spELVO, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">intelli</span><br></pre></td></tr></table></figure>
+
+<h2 id="EvaluationContext"><a href="#EvaluationContext" class="headerlink" title="EvaluationContext"></a>EvaluationContext</h2><p><code>EvaluationContext</code> 인터페이스는 프로퍼티, 메소드, 필드를 처리하고 타입변환을 수행하는 표현식을 평가할때 사용합니다. 스프링에서는 두개의 구현체를 제공합니다.</p>
+<br>
+
+<p><strong>1. SimpleEvaluationContext</strong> : SpEL에서 필수적인 기능만 제공합니다.(4.3.15 버전부터 지원)<br><strong>2. StandardEvaluationContext</strong> : SpEL의 모든 기능을 사용할수 있습니다.</p>
+<p>지금까지의 예제에서도 내부에서는 EvaluationContext를 사용하고 있습니다. 아래처럼 EvaluationContext를 직접 생성 후에 사용할수도 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    SpELVO spELVO = <span class="keyword">new</span> SpELVO(<span class="string">"intelli"</span>);</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"name"</span>);</span><br><span class="line">    EvaluationContext evaluationContext = <span class="keyword">new</span> StandardEvaluationContext();</span><br><span class="line">    String message = exp.getValue(evaluationContext, spELVO, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p>SpEL을 이용해서 배열에 접근 할수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; names;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getNames</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> names;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNames</span><span class="params">(List&lt;String&gt; names)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.names = names;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test5</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayList arrayList = <span class="keyword">new</span> ArrayList();</span><br><span class="line">    arrayList.setNames(Arrays.asList(<span class="string">"woman"</span>, <span class="string">"man"</span>));</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"names[0]"</span>);</span><br><span class="line">    EvaluationContext evaluationContext = <span class="keyword">new</span> StandardEvaluationContext(arrayList); <span class="comment">// rootObject를 여기에 바로 쓸수도 있다.</span></span><br><span class="line">    String message = exp.getValue(evaluationContext, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">woman</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>값을 가져오는 것 말고도 값을 변경할수도 있습니다. 유의 해야할 점은 값을 추가해주는게 아닌 변경해주는 것입니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test6</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayLists arrayLists = <span class="keyword">new</span> ArrayLists();</span><br><span class="line">    arrayLists.setNames(Arrays.asList(<span class="string">"man"</span>));</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"names[0]"</span>);</span><br><span class="line">    EvaluationContext evaluationContext = <span class="keyword">new</span> StandardEvaluationContext(arrayLists);</span><br><span class="line">    exp.setValue(evaluationContext, <span class="string">"woman"</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(arrayLists.getNames().get(<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>값을 변경해주는 기능은 배열 뿐 아니라 일반 객체에서도 사용 가능합니다. 이때 필드는 public 이거나 setter 메소드가 구현되어 있어야 합니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test7</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    SpELVO spELVO = <span class="keyword">new</span> SpELVO(<span class="string">"jesi"</span>);</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"name"</span>);</span><br><span class="line">    EvaluationContext evaluationContext = <span class="keyword">new</span> StandardEvaluationContext(spELVO);</span><br><span class="line">    exp.setValue(evaluationContext, <span class="string">"sara"</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(spELVO.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="SpelParserConfiguration"><a href="#SpelParserConfiguration" class="headerlink" title="SpelParserConfiguration"></a>SpelParserConfiguration</h2><p><code>SpelParserConfiguration</code>를 사용 하면 Collection에서 index가 null일 경우에 자동으로 생성해주는 기능을 활성화 할수 있습니다. </p>
+<p>아래의 예제에서는 배열에서 index가 null인 요소에 접근하려고 할때 자동으로 배열에 빈값이 추가된것을 확인 할수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test8</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayLists arrayLists = <span class="keyword">new</span> ArrayLists();</span><br><span class="line"></span><br><span class="line">    SpelParserConfiguration configuration = <span class="keyword">new</span> SpelParserConfiguration(<span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser(configuration);</span><br><span class="line">    Expression expression = parser.parseExpression(<span class="string">"names[4]"</span>);</span><br><span class="line">    String name = expression.getValue(arrayLists, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"result : "</span> + name);</span><br><span class="line">    System.out.println(arrayLists.getNames().size());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result : </span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<p>String 뿐 아니라 일반 객체도 자동으로 생성해 줍니다. 이때 자동으로 생성 될 객체는 디폴트 생성자가 존재하여야 합니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpELVO</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpELVO</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayRefrence</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;SpELVO&gt; spELVOs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;SpELVO&gt; <span class="title">getSpELVOs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> spELVOs;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSpELVOs</span><span class="params">(List&lt;SpELVO&gt; spELVOs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.spELVOs = spELVOs;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test9</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayRefrence arrayLists = <span class="keyword">new</span> ArrayRefrence();</span><br><span class="line"></span><br><span class="line">    SpelParserConfiguration configuration = <span class="keyword">new</span> SpelParserConfiguration(<span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser(configuration);</span><br><span class="line">    Expression expression = parser.parseExpression(<span class="string">"spELVOs[4]"</span>);</span><br><span class="line">    String name = expression.getValue(arrayLists, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"result : "</span> + name);</span><br><span class="line">    System.out.println(arrayLists.getSpELVOs().size());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="템플릿"><a href="#템플릿" class="headerlink" title="템플릿"></a>템플릿</h2>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/22/spring-el/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/01/19/spring-databinding2/"
+                            aria-label=": 데이터 바인딩 추상화2"
+                        >
+                            데이터 바인딩 추상화2
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-19T09:27:07+09:00">
+	
+		    Jan 19, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="데이터-바인딩-추사황-Converter와-Formatter"><a href="#데이터-바인딩-추사황-Converter와-Formatter" class="headerlink" title="데이터 바인딩 추사황 : Converter와 Formatter"></a>데이터 바인딩 추사황 : Converter와 Formatter</h2><p>초기 스프링에서는 PropertyEditor를 사용하였습니다. 이후 이를 대체할 Converter, Formatter 인터페이스가 등장하였습니다.</p>
+<h4 id="Converter"><a href="#Converter" class="headerlink" title="Converter"></a>Converter</h4><p>Converter는 S타입을 T타입으로 변환할수 있습니다. PropertyEditor와는 다르게 상태정보가 없기 때문에 쓰레드 세이프합니다. 이로 인하여 빈으로 등록 후 사용하여도 문제가 없습니다.</p>
+<h4 id="xml을-이용한-Custom-Converter-등록하기"><a href="#xml을-이용한-Custom-Converter-등록하기" class="headerlink" title="xml을 이용한 Custom Converter 등록하기"></a>xml을 이용한 Custom Converter 등록하기</h4><h6 id="Converter-만들기"><a href="#Converter-만들기" class="headerlink" title="Converter 만들기"></a>Converter 만들기</h6><p>Conterver를 만드는 방법은 간단합니다. Converter&lt;&gt;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventConverter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StringToEventConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">String</span>, <span class="title">Event</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Event <span class="title">convert</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">            Event event = <span class="keyword">new</span> Event();</span><br><span class="line">            event.setId(Integer.parseInt(source));</span><br><span class="line">            <span class="keyword">return</span> event;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">EventToStringConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">Event</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">convert</span><span class="params">(Event source)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"convert : "</span> + source.getId();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/19/spring-databinding2/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/01/14/spring-property-load/"
                             aria-label=": 프로퍼티 파일 가져오기"
                         >
@@ -906,181 +1094,6 @@
                         <p>
                             <a
                                 href="/2019/12/26/spring-component-scan/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/24/spring-postconstruct/"
-                            aria-label=": PostConstruct 어노테이션"
-                        >
-                            PostConstruct 어노테이션
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-24T11:53:23+09:00">
-	
-		    Dec 24, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>IoC 컨테이너는 Bean 라이프 사이클을 관리하여 주고 특정한 시점에 Bean에게 이를 알려줄수 있는 메커니즘을 제공합니다. 스프링에서는 주로 init와 destroy 이벤트를 제공합니다.</p>
-<h5 id="InitializingBean와-DisposableBean-인터페이스"><a href="#InitializingBean와-DisposableBean-인터페이스" class="headerlink" title="InitializingBean와 DisposableBean 인터페이스"></a>InitializingBean와 DisposableBean 인터페이스</h5><p>InitializingBean 인터페이스를 활용해서 Bean의 초기화 작업을 진행할수 있습니다. 해당 인터페이스에서 제공하는 afterPropertiesSet메소드를 구현하면 Spring이 Bean의 생성 후에 해당 메소드를 호출해 줍니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    BeanFactory beanFactory;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Bean이 등록되었습니다."</span>);</span><br><span class="line">        System.out.println(beanFactory.getBean(<span class="string">"book"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Bean이 등록되었습니다.</span><br><span class="line">kr.co.spring.Book@3745e5c6</span><br></pre></td></tr></table></figure>
-
-<p>DisposableBean 인터페이스에서 제공하는 destroy메소드를 구현하면 Bean의 소멸 직전에 해당 메소드를 호출해 줍니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> <span class="keyword">implements</span> <span class="title">DisposableBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    BeanFactory beanFactory;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Bean이 삭제됩니다.."</span>);</span><br><span class="line">        System.out.println(beanFactory.getBean(<span class="string">"book"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="xml-빈-등록시-사용자-라이프사이클-메소드-정의"><a href="#xml-빈-등록시-사용자-라이프사이클-메소드-정의" class="headerlink" title="xml 빈 등록시 사용자 라이프사이클 메소드 정의"></a>xml 빈 등록시 사용자 라이프사이클 메소드 정의</h5><p>xml에서 빈을 수동으로 등록시에 위의 InitializingBean, DisposableBean을 사용하지 않고 사용자 메소드를 정의 가능합니다.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"book"</span> <span class="attr">class</span>=<span class="string">"kr.co.spring.Book"</span> <span class="attr">init-method</span>=<span class="string">"initBook"</span> <span class="attr">destroy-method</span>=<span class="string">"destroyBook"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initBook</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"빈이 등록되었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destoryBook</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"빈이 삭제되었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="PostConstruct와-PreDestroy"><a href="#PostConstruct와-PreDestroy" class="headerlink" title="@PostConstruct와 @PreDestroy"></a>@PostConstruct와 @PreDestroy</h5><p>좀 더 간편하게 어노테이션을 이용해서 위와 동일하게 사용할수 있습니다.</p>
-<p>@PostConstruct는 Bean이 생성 된 후에 호출 될 메소드 위에 사용합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    BeanFactory beanFactory;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Bean이 등록되었습니다."</span>);</span><br><span class="line">        System.out.println(beanFactory.getBean(<span class="string">"book"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Bean이 등록되었습니다.</span><br><span class="line">kr.co.spring.Book@644baf4a</span><br></pre></td></tr></table></figure>
-
-<p>@PreDestroy는 Bean이 소멸 직전에 호출 될 메소드 위에 사용합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PreDestroy</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"빈이 삭제되었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="기타"><a href="#기타" class="headerlink" title="기타"></a>기타</h5><p>ApplicationContext 클래스도 Bean으로 등록되어 있기 때문에 의존주입 받을수 있습니다. 이 뿐 아니라 ApplicationContext가 상속하고 있는 BeanFactory, ResourceLoader 등도 Bean으로 등록되어 있기 때문에 ApplicationContext를 의존주입 받지 않고 필요한 기능을 가진 Bean을 의존주입해서 사용하는 것이 가시성에 좋습니다(ex : Bean과 관련된 처리를 할때는 BeanFactory사용).</p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/24/spring-postconstruct/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/24/spring-primary-qualifier/"
-                            aria-label=": Primary, Qualifier 어노테이션"
-                        >
-                            Primary, Qualifier 어노테이션
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-24T11:30:54+09:00">
-	
-		    Dec 24, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h5 id="예제-소스-코드"><a href="#예제-소스-코드" class="headerlink" title="예제 소스 코드"></a>예제 소스 코드</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- BookStore<span class="class">.<span class="keyword">class</span> --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">interface</span> <span class="title">BookStore</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- NobleBookStore<span class="class">.<span class="keyword">class</span> --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">@<span class="title">Service</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">NobleBookStore</span> <span class="keyword">implements</span> <span class="title">BookStore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- EssayBookStore<span class="class">.<span class="keyword">class</span> --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">@<span class="title">Service</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">EssayBookStore</span> <span class="keyword">implements</span> <span class="title">BookStore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="중복된-의존주입"><a href="#중복된-의존주입" class="headerlink" title="중복된 의존주입"></a>중복된 의존주입</h2><p>동일한 타입의 Bean을 의존 주입 받으려고 하면 문제가 발생합니다(동일한 타입의 Bean 등록에는 문제가 없다).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">City</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    BookStore bookStore;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BookStore <span class="title">getBookStore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookStore;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error creating bean with name &#39;city&#39;: Unsatisfied dependency expressed through field &#39;bookStore&#39;</span><br></pre></td></tr></table></figure>
-
-<p>동일한 타입의 Bean이 2개가 존재하기 때문에 위와 같은 에러가 발생합니다.</p>
-<br>
-
-<h2 id="해결방법"><a href="#해결방법" class="headerlink" title="해결방법"></a>해결방법</h2><h5 id="Primary-어노테이션-사용"><a href="#Primary-어노테이션-사용" class="headerlink" title="@Primary 어노테이션 사용"></a>@Primary 어노테이션 사용</h5><p>우선적으로 의존 주입하고 싶은 class에 @Primary 어노테이션을 사용합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NobleBookStore</span> <span class="keyword">implements</span> <span class="title">BookStore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestControllerTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ApplicationContext applicationContext = <span class="keyword">new</span> AnnotationConfigApplicationContext(BeanConfig<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        System.out.println(((City)applicationContext.getBean(<span class="string">"city"</span>)).getBookStore());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kr.co.spring.NobleBookStore@16e7dcfd</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="Qulifier-어노테이션-사용"><a href="#Qulifier-어노테이션-사용" class="headerlink" title="@Qulifier 어노테이션 사용"></a>@Qulifier 어노테이션 사용</h5><p>@Autowired와 함께 사용하며 사용하고자 하는 빈의 아이디를 적어주면 됩니다(빈의 아이디를 따로 설정하지 않으면 default로 class 명에 첫글자가 소문자인 아이디로 설정된다).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">City</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="meta">@Qualifier</span>(<span class="string">"nobleBookStore"</span>)</span><br><span class="line">    BookStore bookStore;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="Qulifier-어노테이션-사용하지-않기"><a href="#Qulifier-어노테이션-사용하지-않기" class="headerlink" title="@Qulifier 어노테이션 사용하지 않기"></a>@Qulifier 어노테이션 사용하지 않기</h5><p>기본적으로 @Autowried는 타입으로 의존주입을 해주지만 타입이 존재하지 않으면 Bean Name으로도 의존주입이 가능합니다. 그래서 굳이 @Qulifier를 사용하지 않아도 사용이 가능합니다. </p>
-<p>아래의 코드를 보면 이해가 가능합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">City</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    BookStore nobleBookStore;   <span class="comment">// 기존에 bookStore 대신 nobleBookStore를 사용하과 있다.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="동일한-타입의-Bean-모두-의존주입-받기"><a href="#동일한-타입의-Bean-모두-의존주입-받기" class="headerlink" title="동일한 타입의 Bean 모두 의존주입 받기"></a>동일한 타입의 Bean 모두 의존주입 받기</h5><p>동일한 타입의 Bean들을 모두 의존주입을 받을수가 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">City</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    List&lt;BookStore&gt; bookRepoitories;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/24/spring-primary-qualifier/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
