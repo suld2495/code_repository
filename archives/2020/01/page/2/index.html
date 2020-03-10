@@ -216,6 +216,75 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/01/10/vue-render-func/"
+                            aria-label=": Render 함수를 이용한 컴포넌트 작성"
+                        >
+                            Render 함수를 이용한 컴포넌트 작성
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-10T14:42:26+09:00">
+	
+		    Jan 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-component/">vue component</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Render-함수를-이용한-컴포넌트-작성"><a href="#Render-함수를-이용한-컴포넌트-작성" class="headerlink" title="Render 함수를 이용한 컴포넌트 작성"></a>Render 함수를 이용한 컴포넌트 작성</h2><p>template을 사용하지 않고 render함수를 이용하여 컴포넌트를 작성 할수 있습니다. 이때 createElement 함수를 사용하여 작성합니다. </p>
+<h6 id="기본-구성"><a href="#기본-구성" class="headerlink" title="기본 구성"></a>기본 구성</h6><p>컴포넌트 작성시의 차이점은 template 속성을 사용 하는 대신에 render 함수를 사용한다는 차이점 뿐입니다. render함수는 return으로 VNode를 반환해주기만 하면 됩니다. VNode 생성은 createElement함수를 호출하면 반환해 줍니다(this.$createElement로도 동일하게 사용 가능).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">''</span>,</span><br><span class="line">    proprs: &#123;&#125;,</span><br><span class="line">    created() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    data() &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// h를 쓰기도 하고 createElement라고 쓰기도 한다.</span></span><br><span class="line">    render(h) &#123;</span><br><span class="line">        <span class="keyword">return</span> h(<span class="string">'div'</span>, [<span class="string">'값'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="createElement-함수-호출"><a href="#createElement-함수-호출" class="headerlink" title="createElement 함수 호출"></a>createElement 함수 호출</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">createElement(</span><br><span class="line">    <span class="comment">// &#123;String | Object | Function&#125;</span></span><br><span class="line">    <span class="comment">// HTML 태그 이름(사용자가 만든 컴포넌트 태그 이름 포함), 컴포넌트 옵션 또는 함수 중</span></span><br><span class="line">    <span class="comment">// 하나를 반환하는 함수. 필수사항</span></span><br><span class="line">    <span class="string">'div'</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#123;Object&#125;</span></span><br><span class="line">    <span class="comment">// 컴포넌트에서 사용할 속성 값을 설정합니다. </span></span><br><span class="line">    <span class="comment">// 해당 값은 선택사항 입니다.</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#123;String | Array&#125;</span></span><br><span class="line">    <span class="comment">// VNode 자식들</span></span><br><span class="line">    <span class="comment">// 하위 태그를 작성할때 사용 합니다.</span></span><br><span class="line">    <span class="comment">// createElement()를 사용하거나, 문자열을 입력 가능합니다.</span></span><br><span class="line">    <span class="comment">// 해당 값은 선택사항 입니다.</span></span><br><span class="line">    [</span><br><span class="line">        <span class="string">'문자열'</span>,</span><br><span class="line">        createElement(<span class="string">'h1'</span>, <span class="string">'옵션 사용 없이 바로 문자열'</span>)</span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">createElement(</span><br><span class="line">    <span class="string">'div'</span>,</span><br><span class="line">    &#123;</span><br><span class="line">        props</span><br><span class="line">    &#125;,</span><br><span class="line">    [</span><br><span class="line">        <span class="string">'문자열'</span></span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>지금까지 확인결과 VNode 자식값을 사용할시에 배열로 넘기자.</p>
+</blockquote>
+<h5 id="데이터-객체"><a href="#데이터-객체" class="headerlink" title="데이터 객체"></a>데이터 객체</h5><p>createElement의 두번째 파라미터로 사용 하는 데이터 객체는 컴포넌트에 속성을 정의 할때 사용하게 됩니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">// v-bind:class와 동일</span></span><br><span class="line">    <span class="string">'class'</span>: &#123;</span><br><span class="line">        foo: <span class="literal">true</span>,</span><br><span class="line">        bar: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// v-bind:style와 동일</span></span><br><span class="line">    style: &#123;</span><br><span class="line">        color: <span class="string">'red'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 일반 HTML 속성을 정의할때 사용</span></span><br><span class="line">    attrs: &#123;</span><br><span class="line">        id: <span class="string">'foo'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// DOM 속성을 정의할때 사용</span></span><br><span class="line">    domProps: &#123;</span><br><span class="line">        innerHTML: <span class="string">'baz'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// v-on:click 등과 같은 역할을 합니다.</span></span><br><span class="line">    on: &#123;</span><br><span class="line">        click: <span class="keyword">this</span>.handlerClcik</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 다른 컴포넌트의 slot으로 들어가는 컴포넌트인 경우 슬롯의 이름을 여기에 적어줍니다.</span></span><br><span class="line">    slot: <span class="string">'slot-name'</span>,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ref를 지정하고 싶으면 해당 key를 사용합니다.</span></span><br><span class="line">    ref: <span class="string">'refValue'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/10/vue-render-func/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/01/10/vue-render/"
                             aria-label=": Vue 컴포넌트 작성 방법"
                         >

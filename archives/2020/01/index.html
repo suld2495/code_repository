@@ -216,6 +216,83 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/01/30/map-circuit/"
+                            aria-label=": Map 순회"
+                        >
+                            Map 순회
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-30T10:42:04+09:00">
+	
+		    Jan 30, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/collection/">collection</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Map-순회"><a href="#Map-순회" class="headerlink" title="Map 순회"></a>Map 순회</h2><p>Map을 사용하다보면 Map에 저장된 모든 데이터를 순회해야할 경우가 발생합니다. 여러가지 방법 중에서 아래의 3가지에 대해서 알아보았습니다.</p>
+<p>Map 순회 방법</p>
+<ol>
+<li>entrySet()</li>
+<li>keySet()</li>
+<li>values()</li>
+</ol>
+<br>
+
+<h4 id="entrySet-사용하기"><a href="#entrySet-사용하기" class="headerlink" title="entrySet 사용하기"></a>entrySet 사용하기</h4><p>entrySet은 key와 value 모두 필요한 경우에 사용하면 좋습니다. 반환값으로 Set을 반환해주기 때문에 for문을 사용해서 순회할수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry: map.entrySet()) &#123;</span><br><span class="line">    String key = entry.getKey();</span><br><span class="line">    Object value = entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="keySet-사용하기"><a href="#keySet-사용하기" class="headerlink" title="keySet 사용하기"></a>keySet 사용하기</h4><p>keySet은 key 값만 필요한 경우에 사용하면 좋습니다. 마찬가지로 반환값은 Set입니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (String key : map.keySet()) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="values-사용하기"><a href="#values-사용하기" class="headerlink" title="values 사용하기"></a>values 사용하기</h4><p>values는 value 값만 필요한 경우에 사용하면 좋습니다. 반환값은 Collection 입니다. Collection 또한 for문으로 순회할수 있습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map &#x3D; new HashMap();</span><br><span class="line"></span><br><span class="line">for (Object value : map.values) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/30/map-circuit/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/01/22/spring-el/"
                             aria-label=": SpEL"
                         >
@@ -312,7 +389,29 @@
 <p>String 뿐 아니라 일반 객체도 자동으로 생성해 줍니다. 이때 자동으로 생성 될 객체는 디폴트 생성자가 존재하여야 합니다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpELVO</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpELVO</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayRefrence</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;SpELVO&gt; spELVOs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;SpELVO&gt; <span class="title">getSpELVOs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> spELVOs;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSpELVOs</span><span class="params">(List&lt;SpELVO&gt; spELVOs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.spELVOs = spELVOs;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test9</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayRefrence arrayLists = <span class="keyword">new</span> ArrayRefrence();</span><br><span class="line"></span><br><span class="line">    SpelParserConfiguration configuration = <span class="keyword">new</span> SpelParserConfiguration(<span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser(configuration);</span><br><span class="line">    Expression expression = parser.parseExpression(<span class="string">"spELVOs[4]"</span>);</span><br><span class="line">    String name = expression.getValue(arrayLists, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"result : "</span> + name);</span><br><span class="line">    System.out.println(arrayLists.getSpELVOs().size());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="템플릿"><a href="#템플릿" class="headerlink" title="템플릿"></a>템플릿</h2>
+<h2 id="빈-정의를-정의하는-표현식"><a href="#빈-정의를-정의하는-표현식" class="headerlink" title="빈 정의를 정의하는 표현식"></a>빈 정의를 정의하는 표현식</h2><p>XML와 어노테이션 기반의 설정 메타데이터와 SpEL 표현식을 함께 사용할수 있습니다. 표현식을 정의 하기 위한 문법은 <code>#{ &lt;expression string&gt; }</code>입니다.</p>
+<h4 id="XML-Configuration"><a href="#XML-Configuration" class="headerlink" title="XML Configuration"></a>XML Configuration</h4><p>표현식을 사용해서 프로퍼티나 생성자의 전달인자에 값을 할당할수 있습니다.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"spelVo"</span> <span class="attr">class</span>=<span class="string">"kr.co.spring.SpELVO"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"hihi"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">xml</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"spring/spring-spel.xml"</span>);</span><br><span class="line">    SpELVO spelVo= (SpELVO) ctx.getBean(<span class="string">"spelVo"</span>);</span><br><span class="line">    System.out.println(spelVo.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hihi</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="어노테이션"><a href="#어노테이션" class="headerlink" title="어노테이션"></a>어노테이션</h4><p><code>@Value</code> 어노테이션을 이용해서 SpEL을 사용할수 있습니다. 어노테이션이 위치할수 있는 곳은 필드, 메소드, 메소드나 생성자의 파라미터입니다.</p>
+<h6 id="필드에서의-사용"><a href="#필드에서의-사용" class="headerlink" title="필드에서의 사용"></a>필드에서의 사용</h6><p>아래의 클래스는 Value 어노테이션을 사용하는 예제로 사용이 됩니다. 아래에서 보듯이 일반 문자열 및 빈으로 등록 된 객체의 메소드도 사용이 가능합니다(빈으로 등록되지 않으면 사용이 안됨).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValueSpEL</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"hi"</span>)</span><br><span class="line">    <span class="keyword">private</span> String hello;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"#&#123;seplVo.getName()&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hello;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>SpELVO와 ValueSpEL 클래스를 빈으로 등록합니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SpELVO <span class="title">seplVo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SpELVO(<span class="string">"sara"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ValueSpEL <span class="title">valueSpEL</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ValueSpEL();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">annotationField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(WebConfiguration<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    ValueSpEL valueSpEL = (ValueSpEL) ctx.getBean(<span class="string">"valueSpEL"</span>);</span><br><span class="line">    System.out.println(valueSpEL.getHello());</span><br><span class="line">    System.out.println(valueSpEL.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hi</span><br><span class="line">sara</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>주의를 할 점은 xml이나 어노테이션 등에서 사용 되는 $와 #의 차이점을 구분할줄 알아야 한다. $는 프로퍼티 문법이고,<br> #는 SpEL 문법이다.</p>
+</blockquote>
+
                     
                         
 
@@ -902,75 +1001,6 @@
                         <p>
                             <a
                                 href="/2020/01/10/vue-functional/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/01/10/vue-render-func/"
-                            aria-label=": Render 함수를 이용한 컴포넌트 작성"
-                        >
-                            Render 함수를 이용한 컴포넌트 작성
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-01-10T14:42:26+09:00">
-	
-		    Jan 10, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-component/">vue component</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Render-함수를-이용한-컴포넌트-작성"><a href="#Render-함수를-이용한-컴포넌트-작성" class="headerlink" title="Render 함수를 이용한 컴포넌트 작성"></a>Render 함수를 이용한 컴포넌트 작성</h2><p>template을 사용하지 않고 render함수를 이용하여 컴포넌트를 작성 할수 있습니다. 이때 createElement 함수를 사용하여 작성합니다. </p>
-<h6 id="기본-구성"><a href="#기본-구성" class="headerlink" title="기본 구성"></a>기본 구성</h6><p>컴포넌트 작성시의 차이점은 template 속성을 사용 하는 대신에 render 함수를 사용한다는 차이점 뿐입니다. render함수는 return으로 VNode를 반환해주기만 하면 됩니다. VNode 생성은 createElement함수를 호출하면 반환해 줍니다(this.$createElement로도 동일하게 사용 가능).</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">''</span>,</span><br><span class="line">    proprs: &#123;&#125;,</span><br><span class="line">    created() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    data() &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// h를 쓰기도 하고 createElement라고 쓰기도 한다.</span></span><br><span class="line">    render(h) &#123;</span><br><span class="line">        <span class="keyword">return</span> h(<span class="string">'div'</span>, [<span class="string">'값'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="createElement-함수-호출"><a href="#createElement-함수-호출" class="headerlink" title="createElement 함수 호출"></a>createElement 함수 호출</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">createElement(</span><br><span class="line">    <span class="comment">// &#123;String | Object | Function&#125;</span></span><br><span class="line">    <span class="comment">// HTML 태그 이름(사용자가 만든 컴포넌트 태그 이름 포함), 컴포넌트 옵션 또는 함수 중</span></span><br><span class="line">    <span class="comment">// 하나를 반환하는 함수. 필수사항</span></span><br><span class="line">    <span class="string">'div'</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#123;Object&#125;</span></span><br><span class="line">    <span class="comment">// 컴포넌트에서 사용할 속성 값을 설정합니다. </span></span><br><span class="line">    <span class="comment">// 해당 값은 선택사항 입니다.</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#123;String | Array&#125;</span></span><br><span class="line">    <span class="comment">// VNode 자식들</span></span><br><span class="line">    <span class="comment">// 하위 태그를 작성할때 사용 합니다.</span></span><br><span class="line">    <span class="comment">// createElement()를 사용하거나, 문자열을 입력 가능합니다.</span></span><br><span class="line">    <span class="comment">// 해당 값은 선택사항 입니다.</span></span><br><span class="line">    [</span><br><span class="line">        <span class="string">'문자열'</span>,</span><br><span class="line">        createElement(<span class="string">'h1'</span>, <span class="string">'옵션 사용 없이 바로 문자열'</span>)</span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">createElement(</span><br><span class="line">    <span class="string">'div'</span>,</span><br><span class="line">    &#123;</span><br><span class="line">        props</span><br><span class="line">    &#125;,</span><br><span class="line">    [</span><br><span class="line">        <span class="string">'문자열'</span></span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>지금까지 확인결과 VNode 자식값을 사용할시에 배열로 넘기자.</p>
-</blockquote>
-<h5 id="데이터-객체"><a href="#데이터-객체" class="headerlink" title="데이터 객체"></a>데이터 객체</h5><p>createElement의 두번째 파라미터로 사용 하는 데이터 객체는 컴포넌트에 속성을 정의 할때 사용하게 됩니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">// v-bind:class와 동일</span></span><br><span class="line">    <span class="string">'class'</span>: &#123;</span><br><span class="line">        foo: <span class="literal">true</span>,</span><br><span class="line">        bar: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// v-bind:style와 동일</span></span><br><span class="line">    style: &#123;</span><br><span class="line">        color: <span class="string">'red'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 일반 HTML 속성을 정의할때 사용</span></span><br><span class="line">    attrs: &#123;</span><br><span class="line">        id: <span class="string">'foo'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// DOM 속성을 정의할때 사용</span></span><br><span class="line">    domProps: &#123;</span><br><span class="line">        innerHTML: <span class="string">'baz'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// v-on:click 등과 같은 역할을 합니다.</span></span><br><span class="line">    on: &#123;</span><br><span class="line">        click: <span class="keyword">this</span>.handlerClcik</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 다른 컴포넌트의 slot으로 들어가는 컴포넌트인 경우 슬롯의 이름을 여기에 적어줍니다.</span></span><br><span class="line">    slot: <span class="string">'slot-name'</span>,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ref를 지정하고 싶으면 해당 key를 사용합니다.</span></span><br><span class="line">    ref: <span class="string">'refValue'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/01/10/vue-render-func/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

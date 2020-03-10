@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="">
+    <title>Category: jest - null</title>
+    <meta name="author" content="Moon Star">
+    
+    
+    
+    <script type="application/ld+json">{}</script>
+    <meta name="description" content="개발 정리 블로그">
+<meta property="og:type" content="blog">
+<meta property="og:title">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;categories&#x2F;javascript&#x2F;TDD&#x2F;jest&#x2F;index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="개발 정리 블로그">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Moon Star">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="2">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="2">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/%20"
+                            
+                            title="홈"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="카테고리"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="태그"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="아카이브"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="검색"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="2"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+    <section class="postShorten-group main-content-wrap">
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/09/jest-setup/"
+                            aria-label=": 테스트 Setup"
+                        >
+                            테스트 Setup
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-09T21:47:15+09:00">
+	
+		    Mar 09, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><p>테스트 코드를 작성하다 보면 테스트마다 공통적으로 사용이 되는 코드가 존재한다. 그중에서 테스트 코드 로직을 실행 하기 이전에 실행이 되어야 하는 공통 코드가 있다. 이때는 사용되는 함수가 <code>beforeEach</code> 함수이다.<br>해당하는 함수는 각 테스트 코드가 실행되기 이전에 호출된다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 보통 변수의 초기화 등의 코드가 들어가거나 테스트 코드 전에 실행되어야 할 로직이 들어간다.</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="테스트-종료시-호출"><a href="#테스트-종료시-호출" class="headerlink" title="테스트 종료시 호출"></a>테스트 종료시 호출</h2><p>각 테스트가 종료 후에 호출이 되는 함수도 존재한다. 이는 <code>afterEach</code> 함수이다. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">afterEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 테스트 종류 후에 작업 해야 할 로직이 들어간다.</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/09/jest-setup/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/07/vue-test-utils-wrapper/"
+                            aria-label=": Vue Test Utils의 Wrapper 객체"
+                        >
+                            Vue Test Utils의 Wrapper 객체
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-07T11:07:40+09:00">
+	
+		    Mar 07, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="프로퍼티"><a href="#프로퍼티" class="headerlink" title="프로퍼티"></a>프로퍼티</h2><h4 id="1-vm"><a href="#1-vm" class="headerlink" title="1. vm"></a>1. vm</h4><p><code>vm</code>은 Vue 인스턴스이며, wrapper.vm으로 vm의 모든 메소드와 프로퍼티에 접근이 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wrapper.vm.count;</span><br><span class="line">wrapper.vm.method();</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="메소드"><a href="#메소드" class="headerlink" title="메소드"></a>메소드</h2><h4 id="1-html"><a href="#1-html" class="headerlink" title="1. html"></a>1. html</h4><p>Wrapper DOM 노드의 HTML을 문자열로 반환을 해줍니다. 그래서 태그를 포함한 결과를 반환합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.html()).toBe(<span class="string">'&lt;div&gt;&lt;/div&gt;'</span>);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="2-text"><a href="#2-text" class="headerlink" title="2. text"></a>2. text</h4><p>Wrapper의 text만을 반환해줍니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.text()).toBe(<span class="string">'문자열'</span>);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="3-find"><a href="#3-find" class="headerlink" title="3. find"></a>3. find</h4><p>선택자에 해당하는 DOM 노드 또는 해당하는 뷰 컴포넌트 중에 선번째 Wrapper를 반환해줍니다.</p>
+<ul>
+<li><p>Arguments:</p>
+<ul>
+<li>{string | Component} selector</li>
+</ul>
+</li>
+<li><p>Returns: {Wrapper}</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wrapper.find(<span class="string">'div'</span>);</span><br><span class="line">wrapper.find(Component);</span><br></pre></td></tr></table></figure>
+<br>
+
+<h4 id="3-findAll"><a href="#3-findAll" class="headerlink" title="3. findAll"></a>3. findAll</h4><p>해당 하는 모든 Wrapper를 반환해줍니다.</p>
+<ul>
+<li><p>Arguments:</p>
+<ul>
+<li>{string | Component} selector</li>
+</ul>
+</li>
+<li><p>Returns: {WrapperArray}</p>
+</li>
+</ul>
+<br>
+
+<h4 id="4-exists"><a href="#4-exists" class="headerlink" title="4. exists"></a>4. exists</h4><p>해당 Wrapper가 존재하는지 여부를 반환해줍니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.exists()).toBeTruthy();</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="5-contains"><a href="#5-contains" class="headerlink" title="5. contains"></a>5. contains</h4><p>Wrapper가 매칭되는 element 또는 컴포넌트를 포함하고 있는지 여부를 반환해줍니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.contains(<span class="string">'div'</span>)).toBeTruthy();</span><br><span class="line">expect(wrapper.contains(Component)).toBeFalsy();</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="6-setData"><a href="#6-setData" class="headerlink" title="6. setData"></a>6. setData</h4><p>data에 값을 할당 할수있습니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrapper.setData(&#123; data키:값 &#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="7-setProps"><a href="#7-setProps" class="headerlink" title="7. setProps"></a>7. setProps</h4><p>props에 값을 할당 할수있습니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrapper.setProps(&#123; prop키:값 &#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="8-trigger"><a href="#8-trigger" class="headerlink" title="8. trigger"></a>8. trigger</h4><p>trigger는 wrapper의 이벤트를 발동시켜줍니다. trigger는 추가적으로 option을 줄수 있습니다.<br>그리고 trigger의 결과를 테스트 할 때는 wrapper.vm.$nextTick를 이용하여 이벤트가 처리 된 후에 테스트 할수 있습니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wrapper.trigger(<span class="string">'click'</span>);</span><br><span class="line">wrapper.trigger(<span class="string">'click'</span>, &#123;</span><br><span class="line">    ctrlKey: <span class="literal">true</span>   <span class="comment">// @click.ctrl을 테스트 할수 있다.</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="9-emitted"><a href="#9-emitted" class="headerlink" title="9. emitted"></a>9. emitted</h4><p>wrapper의 vm에 의해 발동되어진 커스텀 이벤트를 포함하는 객체를 반환해 줍니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wrapper.vm.$emit(<span class="string">'custom'</span>);</span><br><span class="line">wrapper.vm.$emit(<span class="string">'custom'</span>, <span class="number">123</span>);</span><br><span class="line">wrapper.emitted();</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">        custom: [[], [123]]</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/07/vue-test-utils-wrapper/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/06/vue-test-component/"
+                            aria-label=": Vue 컴포넌트 테스트 하기"
+                        >
+                            Vue 컴포넌트 테스트 하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-06T20:59:52+09:00">
+	
+		    Mar 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/06/vue-test-component/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/06/vue-jest-component/"
+                            aria-label=": Vue Test Utils 이용한 컴포넌트 테스트"
+                        >
+                            Vue Test Utils 이용한 컴포넌트 테스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-06T20:41:54+09:00">
+	
+		    Mar 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="new-Vue를-이용한-컴포넌트-테스트"><a href="#new-Vue를-이용한-컴포넌트-테스트" class="headerlink" title="new Vue를 이용한 컴포넌트 테스트"></a>new Vue를 이용한 컴포넌트 테스트</h2><p>아래의 방법은 실제로 컴포넌트를 생성하여 테스트 하는 방법입니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- HelloWorld.js --&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; message &#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      message: &quot;Hello&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// helloworld.test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">'../components/HelloWorld.vue'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="function">(<span class="params"><span class="string">'HelloWorld'</span></span>), <span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    it(<span class="string">'new Vue를 이용한 테스트'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> helloWorld = <span class="keyword">new</span> Vue(HelloWorld).$mount();</span><br><span class="line">        <span class="keyword">const</span> message = <span class="string">'Hello'</span>;</span><br><span class="line">        expect(helloWorld.message).toBe(message);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Vue-Test-Utils-이용한-컴포넌트-테스트"><a href="#Vue-Test-Utils-이용한-컴포넌트-테스트" class="headerlink" title="Vue Test Utils 이용한 컴포넌트 테스트"></a>Vue Test Utils 이용한 컴포넌트 테스트</h2><p>Vue Test Utils에서 제공 하는 mount 함수를 이용해서 좀더 간편 하게 테스트를 할수 있습니다.<br>message에 접근 하기 위해서 vm 프로퍼티를 이용한다는게 다릅니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// helloworld.test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; mount &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">'../components/HelloWorld.vue'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="function">(<span class="params"><span class="string">'HelloWorld'</span></span>), <span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    it(<span class="string">'new Vue를 이용한 테스트'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> wrapper = mount(HelloWorld);</span><br><span class="line">        <span class="keyword">const</span> message = <span class="string">'Hello'</span>;</span><br><span class="line">        expect(wrapper.vm.message).toBe(message);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/06/vue-jest-component/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/06/vue-jest-error/"
+                            aria-label=": Vue Jest 에러"
+                        >
+                            Vue Jest 에러
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-06T20:06:39+09:00">
+	
+		    Mar 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="파일-import-불가"><a href="#파일-import-불가" class="headerlink" title="파일 import 불가"></a>파일 import 불가</h2><p>Jest에서 Import를 사용 하는 경우 아래와 같이 에러가 발생한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Test suite failed to run</span><br><span class="line"></span><br><span class="line">Jest encountered an unexpected token</span><br><span class="line"></span><br><span class="line">This usually means that you are trying to <span class="keyword">import</span> a file which Jest cannot parse, e.g. it<span class="string">'s not plain JavaScript.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">By default, if Jest sees a Babel config, it will use that to transform your files, ignoring "node_modules".</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Here'</span>s what you can <span class="keyword">do</span>:</span><br><span class="line">    • To have some <span class="keyword">of</span> your <span class="string">"node_modules"</span> files transformed, you can specify a custom <span class="string">"transformIgnorePatterns"</span> <span class="keyword">in</span> your config.</span><br><span class="line">    • If you need a custom transformation specify a <span class="string">"transform"</span> option <span class="keyword">in</span> your config.</span><br><span class="line">    • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out <span class="keyword">with</span> the <span class="string">"moduleNameMapper"</span> config option.        </span><br><span class="line"></span><br><span class="line">You<span class="string">'ll find more details and examples of these config options in the docs:</span></span><br><span class="line"><span class="string">https://jestjs.io/docs/en/configuration.html</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Details:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">D:\GIT 소스코드 저장소\TDD\JEST\vue-jest\vue-jest-start\src\test\helloworld.test.js:1</span></span><br><span class="line"><span class="string">(&#123;"Object.&lt;anonymous&gt;":function(module,exports,require,__dirname,__filename,global,jest)&#123;import &#123; mount &#125; from '</span>@vue/test-utils<span class="string">';</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다"><a href="#1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다" class="headerlink" title="1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다."></a>1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다.</h4><p>1) jest<br>2) vue-jest<br>3) @babel/core<br>4) @babel/preest-env<br>5) babel-jest</p>
+<br>
+
+<h4 id="2-jest-config-js"><a href="#2-jest-config-js" class="headerlink" title="2. jest.config.js"></a>2. jest.config.js</h4><p>package.json 또는 jest.config.js에 아래와 같이 입력 한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.export = &#123;</span><br><span class="line">    <span class="string">"moduleFileExtensions"</span>: [</span><br><span class="line">      <span class="string">"js"</span>,</span><br><span class="line">      <span class="string">"json"</span>,</span><br><span class="line">      <span class="string">"vue"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"transform"</span>: &#123;</span><br><span class="line">      <span class="string">"^.+\\.js$"</span>: <span class="string">"babel-jest"</span>,</span><br><span class="line">      <span class="string">"^.+\\.vue$"</span>: <span class="string">"vue-jest"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-babel-config-js"><a href="#3-babel-config-js" class="headerlink" title="3. babel.config.js"></a>3. babel.config.js</h4><p>package.json 또는 babel.config.js에 아래와 같이 입력 한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    presets: [</span><br><span class="line">        [</span><br><span class="line">        <span class="string">'@babel/preset-env'</span>,</span><br><span class="line">        &#123;</span><br><span class="line">            targets: &#123;</span><br><span class="line">            node: <span class="string">'current'</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        ],</span><br><span class="line">    ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h4><p>구글링 결과 Jest에서 Import를 사용하기 위해서는 Babel을 설치해야 하는 듯하다.<br>그리고 babel 7 이상을 사용 한다면 <code>babel-core@^7.0.0-bridge.0</code>를 설치해 주어야 한다.</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/06/vue-jest-error/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/02/jest-start/"
+                            aria-label=": JEST 시작"
+                        >
+                            JEST 시작
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-02T19:19:42+09:00">
+	
+		    Mar 02, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="JEST란"><a href="#JEST란" class="headerlink" title="JEST란"></a>JEST란</h2><p>JEST는 페이스북에서 개발한 ‘테스트 프레임워크’ 이다. JEST 이전에는 테스트 라이브러리를 조합해서 사용하였으나 JEST는 이름도 프레임워크인만큼 Test Runner와 Test Mathcher 그리고 Test Mock까지 모두 지원하고 있다.</p>
+<br>
+
+<h2 id="JEST-설치"><a href="#JEST-설치" class="headerlink" title="JEST 설치"></a>JEST 설치</h2><p>아래의 명령어를 통해서 jest를 설치 할수 있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i jest</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="첫-테스트-코드-작성"><a href="#첫-테스트-코드-작성" class="headerlink" title="첫 테스트 코드 작성"></a>첫 테스트 코드 작성</h2><p>test.js라는 파일을 만들고 아래의 코드를 추가한다. JEST에서 테스트 코드 작성은 아래와 같다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'테스트 정의'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 테스트할 로직 구현</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'문자열은 Hello이다.'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> str = <span class="string">'Hello'</span></span><br><span class="line">    expect(<span class="string">'Hello'</span>).toBe(str);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="package-json에서-scripts-수정"><a href="#package-json에서-scripts-수정" class="headerlink" title="package.json에서 scripts 수정"></a>package.json에서 scripts 수정</h2><p>package.json을 아래와 같이 수정한후에 npm run test라고 실행하면 테스트를 시작한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"scripts"</span> : &#123;</span><br><span class="line">        <span class="string">"test"</span>: <span class="string">"jest"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="describe와-it을-이용한-테스트-코드-작성"><a href="#describe와-it을-이용한-테스트-코드-작성" class="headerlink" title="describe와 it을 이용한 테스트 코드 작성"></a>describe와 it을 이용한 테스트 코드 작성</h2><p>위에서는 test 함수를 통해서 테스트 코드를 작성하는 방법에 대해서 알아보았다. Jest에서는 이 뿐 아니라 describe와 it을 통해서도 작성 가능하다. describe은 일종의 테스트 그룹이고, it은 작은 단위의 테스트이다. it이 위의 test와 같은 단위이다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">''</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">''</span>, () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 테스트 코드 작성</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/02/jest-start/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    <div class="pagination-bar">
+    <ul class="pagination">
+        
+        
+        <li class="pagination-number">page 1 of 1</li>
+    </ul>
+</div>
+
+</section>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Moon Star. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Moon Star</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+
+
+
+    </body>
+</html>

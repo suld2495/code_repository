@@ -1,0 +1,585 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="">
+    <title>뷰 비동기 - null</title>
+    <meta name="author" content="Moon Star">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"비동기 갱신 큐Vue는 비동기 적으로 DOM을 업데이트 합니다. 데이터의 변경이 발견 되면 큐를 열고 같은 이벤트 루프에서 발생한 변경된 모든 데이터를 버퍼에 담습니다. 같은 wather가 여러번 호출 되더라도 큐에서 한번만 푸시 됩니다. 이러한 동작은 불필요한 계산과 렌더링을 방지해줍니다. 그리고 다음 이벤트 루프인 “tick”에서 큐를 모두 비우고 실제 행동을 수행합니다.예를 들어 vm.someData = &#39;new value&#39; 라고 설정 할때, Vue는 바로 렌더링을 수행하지 않고 큐가 비워진 후인 다음 “tick”에서 업데이트 됩니다. 대부분의 상황에서는 이러한 작업이 영향을 받지 않지만, DOM state가 업데이트 된 후 작업을 수행하려는 겨우 신경을 써야 할수 있습니다. 데이터가 변경 된 후, DOM에 업데이가 완료되는 것을 기다리려면 데이터가 변경된 직후에 Vue.nextTick(callback)을 사용하면 됩니다. 콜백은 DOM이 업데이트 된 후 호출이 됩니다. \n\n\nnextTick 사용하기아래의 코드를 실행해보면 data가 변경 되더라도 실제로 바로 렌더링되지 않는 다는 것을 확인 할수 있습니다.그리고 nextTic 메소드의 콜백함수가 DOM 업데이트가 완료 된 후 실행되었음을 확인할수 있습니다.\n1&lt;div id=\"example\"&gt;&#123;&#123; message &#125;&#125;&lt;/div&gt;\n\n1234567891011var vm = new Vue(&#123;    el: '#example',    data: &#123;        message: '123'    &#125;&#125;)vm.message = 'new message' vm.$el.textContent === 'new message'        // falseVue.nextTick(function () &#123;    vm.$el.textContent === 'new message'    // true&#125;)\n\n\nhttps://vuejs.org/v2/guide/reactivity.html를 참조하였습니다.\n\n","dateCreated":"2020-03-06T21:30:32+09:00","dateModified":"2020-03-07T11:03:01+09:00","datePublished":"2020-03-06T21:30:32+09:00","description":"","headline":"뷰 비동기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2020/03/06/vue-asynchronous/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2020/03/06/vue-asynchronous/","keywords":"vue-async"}</script>
+    <meta name="description" content="비동기 갱신 큐Vue는 비동기 적으로 DOM을 업데이트 합니다. 데이터의 변경이 발견 되면 큐를 열고 같은 이벤트 루프에서 발생한 변경된 모든 데이터를 버퍼에 담습니다. 같은 wather가 여러번 호출 되더라도 큐에서 한번만 푸시 됩니다. 이러한 동작은 불필요한 계산과 렌더링을 방지해줍니다. 그리고 다음 이벤트 루프인 “tick”에서 큐를 모두 비우고 실제">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="뷰 비동기">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2020&#x2F;03&#x2F;06&#x2F;vue-asynchronous&#x2F;index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="비동기 갱신 큐Vue는 비동기 적으로 DOM을 업데이트 합니다. 데이터의 변경이 발견 되면 큐를 열고 같은 이벤트 루프에서 발생한 변경된 모든 데이터를 버퍼에 담습니다. 같은 wather가 여러번 호출 되더라도 큐에서 한번만 푸시 됩니다. 이러한 동작은 불필요한 계산과 렌더링을 방지해줍니다. 그리고 다음 이벤트 루프인 “tick”에서 큐를 모두 비우고 실제">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-06T12:30:32.000Z">
+<meta property="article:modified_time" content="2020-03-07T02:03:01.943Z">
+<meta property="article:author" content="Moon Star">
+<meta property="article:tag" content="vue-async">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/%20"
+                            
+                            title="홈"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="카테고리"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="태그"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="아카이브"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="검색"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            뷰 비동기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-03-06T21:30:32+09:00">
+	
+		    Mar 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%ED%8C%81/">vue 팁</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="비동기-갱신-큐"><a href="#비동기-갱신-큐" class="headerlink" title="비동기 갱신 큐"></a>비동기 갱신 큐</h2><p>Vue는 비동기 적으로 DOM을 업데이트 합니다. 데이터의 변경이 발견 되면 큐를 열고 같은 이벤트 루프에서 발생한 변경된 모든 데이터를 버퍼에 담습니다. 같은 wather가 여러번 호출 되더라도 큐에서 한번만 푸시 됩니다. 이러한 동작은 불필요한 계산과 렌더링을 방지해줍니다. 그리고 다음 이벤트 루프인 “tick”에서 큐를 모두 비우고 실제 행동을 수행합니다.<br><br><br>예를 들어 <code>vm.someData = &#39;new value&#39;</code> 라고 설정 할때, Vue는 바로 렌더링을 수행하지 않고 큐가 비워진 후인 다음 “tick”에서 업데이트 됩니다. 대부분의 상황에서는 이러한 작업이 영향을 받지 않지만, DOM state가 업데이트 된 후 작업을 수행하려는 겨우 신경을 써야 할수 있습니다. 데이터가 변경 된 후, DOM에 업데이가 완료되는 것을 기다리려면 데이터가 변경된 직후에 Vue.nextTick(callback)을 사용하면 됩니다. 콜백은 DOM이 업데이트 된 후 호출이 됩니다. </p>
+<br>
+
+<h4 id="nextTick-사용하기"><a href="#nextTick-사용하기" class="headerlink" title="nextTick 사용하기"></a>nextTick 사용하기</h4><p>아래의 코드를 실행해보면 data가 변경 되더라도 실제로 바로 렌더링되지 않는 다는 것을 확인 할수 있습니다.<br>그리고 nextTic 메소드의 콜백함수가 DOM 업데이트가 완료 된 후 실행되었음을 확인할수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">'#example'</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        message: <span class="string">'123'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vm.message = <span class="string">'new message'</span> </span><br><span class="line">vm.$el.textContent === <span class="string">'new message'</span>        <span class="comment">// false</span></span><br><span class="line">Vue.nextTick(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    vm.$el.textContent === <span class="string">'new message'</span>    <span class="comment">// true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="https://vuejs.org/v2/guide/reactivity.html를" target="_blank" rel="noopener">https://vuejs.org/v2/guide/reactivity.html를</a> 참조하였습니다.</p>
+</blockquote>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/vue-async/" rel="tag">vue-async</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/07/vue-test-utils-wrapper/"
+                    data-tooltip="Vue Test Utils의 Wrapper 객체"
+                    aria-label="PREVIOUS: Vue Test Utils의 Wrapper 객체"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/06/vue-test-component/"
+                    data-tooltip="Vue 컴포넌트 테스트 하기"
+                    aria-label="NEXT: Vue 컴포넌트 테스트 하기"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/06/vue-asynchronous/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/06/vue-asynchronous/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/06/vue-asynchronous/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Moon Star. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/07/vue-test-utils-wrapper/"
+                    data-tooltip="Vue Test Utils의 Wrapper 객체"
+                    aria-label="PREVIOUS: Vue Test Utils의 Wrapper 객체"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/06/vue-test-component/"
+                    data-tooltip="Vue 컴포넌트 테스트 하기"
+                    aria-label="NEXT: Vue 컴포넌트 테스트 하기"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/06/vue-asynchronous/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/06/vue-asynchronous/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/06/vue-asynchronous/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/06/vue-asynchronous/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/06/vue-asynchronous/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/06/vue-asynchronous/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Moon Star</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

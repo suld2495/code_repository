@@ -216,6 +216,83 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/01/30/map-circuit/"
+                            aria-label=": Map 순회"
+                        >
+                            Map 순회
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-01-30T10:42:04+09:00">
+	
+		    Jan 30, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/collection/">collection</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Map-순회"><a href="#Map-순회" class="headerlink" title="Map 순회"></a>Map 순회</h2><p>Map을 사용하다보면 Map에 저장된 모든 데이터를 순회해야할 경우가 발생합니다. 여러가지 방법 중에서 아래의 3가지에 대해서 알아보았습니다.</p>
+<p>Map 순회 방법</p>
+<ol>
+<li>entrySet()</li>
+<li>keySet()</li>
+<li>values()</li>
+</ol>
+<br>
+
+<h4 id="entrySet-사용하기"><a href="#entrySet-사용하기" class="headerlink" title="entrySet 사용하기"></a>entrySet 사용하기</h4><p>entrySet은 key와 value 모두 필요한 경우에 사용하면 좋습니다. 반환값으로 Set을 반환해주기 때문에 for문을 사용해서 순회할수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry: map.entrySet()) &#123;</span><br><span class="line">    String key = entry.getKey();</span><br><span class="line">    Object value = entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="keySet-사용하기"><a href="#keySet-사용하기" class="headerlink" title="keySet 사용하기"></a>keySet 사용하기</h4><p>keySet은 key 값만 필요한 경우에 사용하면 좋습니다. 마찬가지로 반환값은 Set입니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (String key : map.keySet()) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="values-사용하기"><a href="#values-사용하기" class="headerlink" title="values 사용하기"></a>values 사용하기</h4><p>values는 value 값만 필요한 경우에 사용하면 좋습니다. 반환값은 Collection 입니다. Collection 또한 for문으로 순회할수 있습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map &#x3D; new HashMap();</span><br><span class="line"></span><br><span class="line">for (Object value : map.values) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/01/30/map-circuit/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2019/12/20/java-datasourceutils/"
                             aria-label=": DataSourceUtils"
                         >
