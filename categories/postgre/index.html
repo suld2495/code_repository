@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="">
-    <title>Tag: wrapper객체 - null</title>
+    <title>Category: postgre - null</title>
     <meta name="author" content="Moon Star">
     
     
@@ -15,7 +15,7 @@
     <meta name="description" content="개발 정리 블로그">
 <meta property="og:type" content="blog">
 <meta property="og:title">
-<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;tags&#x2F;wrapper%EA%B0%9D%EC%B2%B4&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;categories&#x2F;postgre&#x2F;index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="개발 정리 블로그">
 <meta property="og:locale" content="en_US">
@@ -216,23 +216,23 @@
                     
                         <a
                             class="link-unstyled"
-                            href="/2020/03/07/vue-test-utils-wrapper/"
-                            aria-label=": Vue Test Utils의 Wrapper 객체"
+                            href="/2020/02/18/postgre-%EB%AA%A8%EB%93%A0%ED%85%8C%EC%9D%B4%EB%B8%94%EC%82%AD%EC%A0%9C/"
+                            aria-label=": POSTGRE 모든 테이블 삭제"
                         >
-                            Vue Test Utils의 Wrapper 객체
+                            POSTGRE 모든 테이블 삭제
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2020-03-07T11:07:40+09:00">
+    <time datetime="2020-02-18T11:09:38+09:00">
 	
-		    Mar 07, 2020
+		    Feb 18, 2020
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/vue/">vue</a>
+    <a class="category-link" href="/categories/postgre/">postgre</a>
 
 
     
@@ -241,73 +241,7 @@
             </div>
             
                 <div class="postShorten-content">
-                    <h2 id="프로퍼티"><a href="#프로퍼티" class="headerlink" title="프로퍼티"></a>프로퍼티</h2><h4 id="1-vm"><a href="#1-vm" class="headerlink" title="1. vm"></a>1. vm</h4><p><code>vm</code>은 Vue 인스턴스이며, wrapper.vm으로 vm의 모든 메소드와 프로퍼티에 접근이 가능하다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wrapper.vm.count;</span><br><span class="line">wrapper.vm.method();</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="메소드"><a href="#메소드" class="headerlink" title="메소드"></a>메소드</h2><h4 id="1-html"><a href="#1-html" class="headerlink" title="1. html"></a>1. html</h4><p>Wrapper DOM 노드의 HTML을 문자열로 반환을 해줍니다. 그래서 태그를 포함한 결과를 반환합니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.html()).toBe(<span class="string">'&lt;div&gt;&lt;/div&gt;'</span>);</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="2-text"><a href="#2-text" class="headerlink" title="2. text"></a>2. text</h4><p>Wrapper의 text만을 반환해줍니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.text()).toBe(<span class="string">'문자열'</span>);</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="3-find"><a href="#3-find" class="headerlink" title="3. find"></a>3. find</h4><p>선택자에 해당하는 DOM 노드 또는 해당하는 뷰 컴포넌트 중에 선번째 Wrapper를 반환해줍니다.</p>
-<ul>
-<li><p>Arguments:</p>
-<ul>
-<li>{string | Component} selector</li>
-</ul>
-</li>
-<li><p>Returns: {Wrapper}</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wrapper.find(<span class="string">'div'</span>);</span><br><span class="line">wrapper.find(Component);</span><br></pre></td></tr></table></figure>
-<br>
-
-<h4 id="3-findAll"><a href="#3-findAll" class="headerlink" title="3. findAll"></a>3. findAll</h4><p>해당 하는 모든 Wrapper를 반환해줍니다.</p>
-<ul>
-<li><p>Arguments:</p>
-<ul>
-<li>{string | Component} selector</li>
-</ul>
-</li>
-<li><p>Returns: {WrapperArray}</p>
-</li>
-</ul>
-<br>
-
-<h4 id="4-exists"><a href="#4-exists" class="headerlink" title="4. exists"></a>4. exists</h4><p>해당 Wrapper가 존재하는지 여부를 반환해줍니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.exists()).toBeTruthy();</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="5-contains"><a href="#5-contains" class="headerlink" title="5. contains"></a>5. contains</h4><p>Wrapper가 매칭되는 element 또는 컴포넌트를 포함하고 있는지 여부를 반환해줍니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.contains(<span class="string">'div'</span>)).toBeTruthy();</span><br><span class="line">expect(wrapper.contains(Component)).toBeFalsy();</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="6-setData"><a href="#6-setData" class="headerlink" title="6. setData"></a>6. setData</h4><p>data에 값을 할당 할수있습니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrapper.setData(&#123; data키:값 &#125;)</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="7-setProps"><a href="#7-setProps" class="headerlink" title="7. setProps"></a>7. setProps</h4><p>props에 값을 할당 할수있습니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrapper.setProps(&#123; prop키:값 &#125;)</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="8-trigger"><a href="#8-trigger" class="headerlink" title="8. trigger"></a>8. trigger</h4><p>trigger는 wrapper의 이벤트를 발동시켜줍니다. trigger는 추가적으로 option을 줄수 있습니다.<br>그리고 trigger의 결과를 테스트 할 때는 wrapper.vm.$nextTick를 이용하여 이벤트가 처리 된 후에 테스트 할수 있습니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wrapper.trigger(<span class="string">'click'</span>);</span><br><span class="line">wrapper.trigger(<span class="string">'click'</span>, &#123;</span><br><span class="line">    ctrlKey: <span class="literal">true</span>   <span class="comment">// @click.ctrl을 테스트 할수 있다.</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="9-emitted"><a href="#9-emitted" class="headerlink" title="9. emitted"></a>9. emitted</h4><p>wrapper의 vm에 의해 발동되어진 커스텀 이벤트를 포함하는 객체를 반환해 줍니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wrapper.vm.$emit(<span class="string">'custom'</span>);</span><br><span class="line">wrapper.vm.$emit(<span class="string">'custom'</span>, <span class="number">123</span>);</span><br><span class="line">wrapper.emitted();</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">        custom: [[], [123]]</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+                    <h3 id="모든-테이블-삭제-쿼리"><a href="#모든-테이블-삭제-쿼리" class="headerlink" title="모든 테이블 삭제 쿼리"></a>모든 테이블 삭제 쿼리</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DO</span> $$ <span class="keyword">DECLARE</span></span><br><span class="line">    r <span class="built_in">RECORD</span>;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    <span class="comment">-- if the schema you operate on is not "current", you will want to</span></span><br><span class="line">    <span class="comment">-- replace current_schema() in query with 'schematodeletetablesfrom'</span></span><br><span class="line">    <span class="comment">-- *and* update the generate 'DROP...' accordingly.</span></span><br><span class="line">    <span class="keyword">FOR</span> r <span class="keyword">IN</span> (<span class="keyword">SELECT</span> tablename <span class="keyword">FROM</span> pg_tables <span class="keyword">WHERE</span> schemaname = current_schema()) <span class="keyword">LOOP</span></span><br><span class="line">        <span class="keyword">EXECUTE</span> <span class="string">'DROP TABLE IF EXISTS '</span> || quote_ident(r.tablename) || <span class="string">' CASCADE'</span>;</span><br><span class="line">    <span class="keyword">END</span> <span class="keyword">LOOP</span>;</span><br><span class="line"><span class="keyword">END</span> $$;</span><br></pre></td></tr></table></figure>
                     
                         
 
@@ -316,7 +250,72 @@
                     
                         <p>
                             <a
-                                href="/2020/03/07/vue-test-utils-wrapper/#post-footer"
+                                href="/2020/02/18/postgre-%EB%AA%A8%EB%93%A0%ED%85%8C%EC%9D%B4%EB%B8%94%EC%82%AD%EC%A0%9C/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/02/18/postgre-%EC%9C%A0%EC%A0%80%EC%83%9D%EC%84%B1%EB%B0%8FDB%EA%B6%8C%ED%95%9C%EB%B6%80%EC%97%AC/"
+                            aria-label=": 유저 생성 및 DB 권한 부여까지"
+                        >
+                            유저 생성 및 DB 권한 부여까지
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-02-18T11:07:31+09:00">
+	
+		    Feb 18, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/postgre/">postgre</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h3 id="유저-생성"><a href="#유저-생성" class="headerlink" title="유저 생성"></a>유저 생성</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> 유저명 <span class="keyword">PASSWORD</span> <span class="string">'유저비밀번호'</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="데이터베이스-생성"><a href="#데이터베이스-생성" class="headerlink" title="데이터베이스 생성"></a>데이터베이스 생성</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> 데이터베이스명</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="유저에게-데이터베이스-권한-부여"><a href="#유저에게-데이터베이스-권한-부여" class="headerlink" title="유저에게 데이터베이스 권한 부여"></a>유저에게 데이터베이스 권한 부여</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> <span class="keyword">database</span> 데이터베이스명 <span class="keyword">TO</span> 유저명</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/02/18/postgre-%EC%9C%A0%EC%A0%80%EC%83%9D%EC%84%B1%EB%B0%8FDB%EA%B6%8C%ED%95%9C%EB%B6%80%EC%97%AC/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
@@ -339,6 +338,7 @@
 </div>
 
 </section>
+
 
 
                 <footer id="footer" class="main-content-wrap">
