@@ -216,6 +216,145 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/03/13/typescript-vue-test/"
+                            aria-label=": 타입스크립트로 vue 테스트 하기"
+                        >
+                            타입스크립트로 vue 테스트 하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-13T16:58:50+09:00">
+	
+		    Mar 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>, <a class="category-link" href="/categories/javascript/TDD/jest/typescript/">typescript</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="데이터-테스트-하기"><a href="#데이터-테스트-하기" class="headerlink" title="데이터 테스트 하기"></a>데이터 테스트 하기</h2><p>js에서는 데이터를 검증 할때 아래와 같이 작성한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.vm.message).toBe(<span class="string">'message'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>ts에서도 위와 같은 코드를 작성한 후에 테스트를 돌리니 아래와 같은 에러가 발생하였다. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TypeScript diagnostics (customize using <span class="string">`[jest-config].globals.ts-jest.diagnostics`</span> option):</span><br><span class="line">    src/components/__tests__/HelloWorld.test.ts:<span class="number">12</span>:<span class="number">23</span> - error TS2339: Property <span class="string">'message'</span> does not exist on type <span class="string">'CombinedVueInstance&lt;Vue, object, object, object, Record&lt;never, any&gt;&gt;'</span>.</span><br></pre></td></tr></table></figure>
+
+<p>그래서 정상적으로 테스트 하기 위한 방법은 두가지 정도 인거 같다.</p>
+<br>
+
+<h4 id="1-vm-data-사용하기"><a href="#1-vm-data-사용하기" class="headerlink" title="1. vm.$data 사용하기"></a>1. vm.$data 사용하기</h4><p>vm에는 data값을 가지고 있는 $data 객체가 존재한다. 해당 객체를 통해서 검증을 하면 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.vm.$data.message).toBe(<span class="string">'message'</span>);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="2-jest-config-js-수정하기"><a href="#2-jest-config-js-수정하기" class="headerlink" title="2. jest.config.js 수정하기"></a>2. jest.config.js 수정하기</h4><p>ts-jest를 사용하면 diagnostics옵션의 디폴트값이 true인데 위 코드 처럼 사용할 경우 에러를 발생시킨다. 이를 false로 설정하면 정상적으로 테스트가 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">/// ...</span></span><br><span class="line">    globals: &#123;</span><br><span class="line">      <span class="string">'ts-jest'</span>: &#123;</span><br><span class="line">        diagnostics: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/13/typescript-vue-test/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/12/vue-typescript-test/"
+                            aria-label=": 뷰 타입스크립트로 사용할때 테스트를 위한 설치 방법"
+                        >
+                            뷰 타입스크립트로 사용할때 테스트를 위한 설치 방법
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-12T22:00:53+09:00">
+	
+		    Mar 12, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>, <a class="category-link" href="/categories/javascript/TDD/jest/typescript/">typescript</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="타입스크립트를-사용할때-추가적으로-설치해야할-라이브러리"><a href="#타입스크립트를-사용할때-추가적으로-설치해야할-라이브러리" class="headerlink" title="타입스크립트를 사용할때 추가적으로 설치해야할 라이브러리"></a>타입스크립트를 사용할때 추가적으로 설치해야할 라이브러리</h2><p>뷰를 jest를 통해서 테스트 하고자 할때 설치해야할 라이브러리 목록은 <a href="https://suld2495.github.io/2020/03/06/vue-jest-error">here</a>를 통해서 확인이 가능하다.</p>
+<ol>
+<li>ts-jest</li>
+<li>@types/jest</li>
+</ol>
+<h2 id="jest-config-js"><a href="#jest-config-js" class="headerlink" title="jest.config.js"></a>jest.config.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.export = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="string">"moduleFileExtensions"</span>: [</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="string">"ts"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"transform"</span>: &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="string">"^.+\\.tsx?$"</span>: <span class="string">"ts-jest"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// jest는 기본적으로 js만을 테스트 파일로 찾기 때문에 .ts 파일도 테스트 파일로 찾을수 있도록 설정 해준다.</span></span><br><span class="line">    <span class="string">"testRegex"</span>: <span class="string">"(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="tsconfig-json"><a href="#tsconfig-json" class="headerlink" title="tsconfig.json"></a>tsconfig.json</h2><p>types에 jest를 추가해준다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"compilerOptions"</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="string">"types"</span>: [</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="string">"jest"</span></span><br><span class="line">        ],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/12/vue-typescript-test/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/03/09/jest-setup/"
                             aria-label=": 테스트 Setup"
                         >
@@ -399,9 +538,9 @@
                         <a
                             class="link-unstyled"
                             href="/2020/03/06/vue-jest-error/"
-                            aria-label=": Vue Jest 에러"
+                            aria-label=": Vue Jest 에러 및 테스트를 위한 기본 라이브러리 정보"
                         >
-                            Vue Jest 에러
+                            Vue Jest 에러 및 테스트를 위한 기본 라이브러리 정보
                         </a>
                     
                 </h1>
@@ -428,7 +567,7 @@
 
 <br>
 
-<h4 id="1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다"><a href="#1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다" class="headerlink" title="1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다."></a>1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다.</h4><p>1) jest<br>2) vue-jest<br>3) @babel/core<br>4) @babel/preset-env<br>5) babel-jest</p>
+<h4 id="1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다"><a href="#1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다" class="headerlink" title="1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다."></a>1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다.</h4><p>1) jest<br>2) vue-jest<br>3) @babel/core<br>4) @babel/preset-env<br>5) babel-jest<br>6) @vue/test-utils<br>7) babel-core@^7.0.0-bridge.0 (바벨이 7.0 이상 사용중일때)</p>
 <br>
 
 <h4 id="2-jest-config-js"><a href="#2-jest-config-js" class="headerlink" title="2. jest.config.js"></a>2. jest.config.js</h4><p>package.json 또는 jest.config.js에 아래와 같이 입력 한다.</p>

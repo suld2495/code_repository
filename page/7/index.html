@@ -215,6 +215,361 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2019/12/19/java-text-inoutput/"
+                            aria-label=": 텍스트파일 입출력"
+                        >
+                            텍스트파일 입출력
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-19T00:54:42+09:00">
+	
+		    Dec 19, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/java/">java</a>, <a class="category-link" href="/categories/java/input-output/">input / output</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="1-텍스트-파일-출력"><a href="#1-텍스트-파일-출력" class="headerlink" title="1. 텍스트 파일 출력"></a>1. 텍스트 파일 출력</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">String path = <span class="string">"./test.txt"</span>,</span><br><span class="line">       text = <span class="string">"안녕하세요\n"</span></span><br><span class="line">            + <span class="string">"어서오세요\n"</span></span><br><span class="line">            + <span class="string">"인사합니다"</span>;</span><br><span class="line"></span><br><span class="line">BufferedWriter writer = <span class="keyword">new</span> BufferedWriter(</span><br><span class="line">    <span class="keyword">new</span> OutputStreamWriter(<span class="keyword">new</span> FileOutputStream(path), <span class="string">"UTF-8"</span>));</span><br><span class="line"></span><br><span class="line">writer.write(text);</span><br><span class="line">writer.close();</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-텍스트-파일-입력"><a href="#2-텍스트-파일-입력" class="headerlink" title="2. 텍스트 파일 입력"></a>2. 텍스트 파일 입력</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String path = <span class="string">"./test.txt"</span>,</span><br><span class="line">       str  = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"></span><br><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(</span><br><span class="line">    <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(path), <span class="string">"UTF-8"</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>((str = reader.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">    sb.append(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>FileReader/FileWriter는 인코딩 설정이 불가능 하므로 FileInputStream/FileOuputStream을 쓰자<br>많은 양의 데이터를 입출력 할시에 Buffer를 쓰는것과 안 쓰는것의 차이가 크다 =&gt; 버퍼를 쓰자<br>InputStream/OutputStream은 단위가 바이트단위라서 한글이 깨지므로 InputStreamReader/OutputStreamReader를 쓰자</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/19/java-text-inoutput/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/12/19/java-list/"
+                            aria-label=": 리스트(List)"
+                        >
+                            리스트(List)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-19T00:51:14+09:00">
+	
+		    Dec 19, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/java/">java</a>, <a class="category-link" href="/categories/java/collection/">collection</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="1-리스트의-메서드"><a href="#1-리스트의-메서드" class="headerlink" title="1. 리스트의 메서드"></a>1. 리스트의 메서드</h2><h3 id="retainAll-Collection"><a href="#retainAll-Collection" class="headerlink" title=".retainAll(Collection)"></a>.retainAll(Collection)</h3><p>List와 Collection에서 중복되는 값만 남기고 모두 삭제한다. 결과는 바로 List에 적용 된다</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">List list1 &#x3D; new ArrayList();</span><br><span class="line">List list2 &#x3D; new ArrayList();</span><br><span class="line"></span><br><span class="line">list1.add(&quot;아이언맨&quot;);</span><br><span class="line">list1.add(&quot;헐크&quot;);</span><br><span class="line"></span><br><span class="line">list2.add(&quot;아이언맨&quot;);</span><br><span class="line">list2.add(&quot;윈터솔져&quot;);</span><br><span class="line"></span><br><span class="line">list1.retainAll(list2);</span><br><span class="line"></span><br><span class="line">System.out.println(list1);  &#x2F;&#x2F; [아이언맨]</span><br></pre></td></tr></table></figure>
+
+<h3 id="removeAll"><a href="#removeAll" class="headerlink" title=".removeAll()"></a>.removeAll()</h3><p>List와 Collection에서 중복되는 내용을 모두 삭제한다. 결과는 바로 List에 적용 된다</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">List list1 &#x3D; new ArrayList();</span><br><span class="line">List list2 &#x3D; new ArrayList();</span><br><span class="line"></span><br><span class="line">list1.add(&quot;아이언맨&quot;);</span><br><span class="line">list1.add(&quot;헐크&quot;);</span><br><span class="line"></span><br><span class="line">list2.add(&quot;아이언맨&quot;);</span><br><span class="line">list2.add(&quot;윈터솔져&quot;);</span><br><span class="line"></span><br><span class="line">list1.removeAll(list2);</span><br><span class="line"></span><br><span class="line">System.out.println(list1);  &#x2F;&#x2F; [헐크]</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-List와-Array-변환"><a href="#2-List와-Array-변환" class="headerlink" title="2. List와 Array 변환"></a>2. List와 Array 변환</h2><h3 id="List-gt-Array로-변환"><a href="#List-gt-Array로-변환" class="headerlink" title="List =&gt; Array로 변환"></a>List =&gt; Array로 변환</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list &#x3D; new ArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">String[] array &#x3D; list.toArray();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Array-gt-List로-변환"><a href="#Array-gt-List로-변환" class="headerlink" title="Array =&gt; List로 변환"></a>Array =&gt; List로 변환</h3><p>이건 배열 자체적인 기능은 제공하지 않아서 배열 util인 Arrays의 asList메서드를 활용한다</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String[] array &#x3D; new String[3];</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; list &#x3D; Arrays.asList(array);</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/19/java-list/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/12/19/mybatis-foreach/"
+                            aria-label=": 마이바티스에서 foreach 사용하기"
+                        >
+                            마이바티스에서 foreach 사용하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-19T00:48:16+09:00">
+	
+		    Dec 19, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/mybatis/">mybatis</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="foreach-확장"><a href="#foreach-확장" class="headerlink" title="foreach 확장"></a>foreach 확장</h1><h2 id="1-foreach에서-배열사용하기"><a href="#1-foreach에서-배열사용하기" class="headerlink" title="1. foreach에서 배열사용하기"></a>1. foreach에서 배열사용하기</h2><p>기존에는 foreach에서는 List만 사용이 가능하다고 알고 있었는데 배열도 사용가능하다.</p>
+<h3 id="List-사용방법"><a href="#List-사용방법" class="headerlink" title="List 사용방법"></a>List 사용방법</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- JAVA --&gt;</span><br><span class="line">List list &#x3D; new ArrayList();</span><br><span class="line">list.add(&quot;value1&quot;);</span><br><span class="line">list.add(&quot;value2&quot;);</span><br><span class="line"></span><br><span class="line">Map map &#x3D; new Map();</span><br><span class="line">map.put(&quot;list&quot;, list);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!-- MYBATIS --&gt;</span><br><span class="line">&lt;foreach collection&#x3D;&quot;list&quot; item&#x3D;&quot;item&quot;&gt;</span><br><span class="line">    #&#123;item&#125;</span><br><span class="line">&lt;&#x2F;foreach&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="배열-사용방법"><a href="#배열-사용방법" class="headerlink" title="배열 사용방법"></a>배열 사용방법</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- JAVA --&gt;</span><br><span class="line">String[] array &#x3D; &#123;</span><br><span class="line">    &quot;value1&quot;,</span><br><span class="line">    &quot;value2&quot;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Map map &#x3D; new Map();</span><br><span class="line">map.put(&quot;array&quot;, array);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!-- MYBATIS --&gt;</span><br><span class="line">&lt;foreach collection&#x3D;&quot;array&quot; item&#x3D;&quot;item&quot;&gt;</span><br><span class="line">    #&#123;item&#125;</span><br><span class="line">&lt;&#x2F;foreach&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>배열이나 리스트나 사용방법은 동일 하다</p>
+</blockquote>
+<h2 id="2-foreach에서-Map-사용하기"><a href="#2-foreach에서-Map-사용하기" class="headerlink" title="2. foreach에서 Map 사용하기"></a>2. foreach에서 Map 사용하기</h2><p>foreach에서 Map을 지원하는건 아니다. Map의 메서드들 중 하나인 entrySet을 이용하여 작성한다</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- JAVA --&gt;</span><br><span class="line">Map paramMap &#x3D; new Map();</span><br><span class="line">paramMap.put(&quot;id&quot;, &quot;value&quot;);</span><br><span class="line">paramMap.put(&quot;name&quot;, &quot;value&quot;);</span><br><span class="line"></span><br><span class="line">Map map &#x3D; new Map();</span><br><span class="line">map.put(&quot;paramMap&quot;, paramMap);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!-- MYBATIS --&gt;</span><br><span class="line">&lt;foreach collection&#x3D;&quot;paramMap.entrySet()&quot; index&#x3D;&quot;key&quot; item&#x3D;&quot;value&quot;&gt;</span><br><span class="line">    #&#123;value&#125;</span><br><span class="line">&lt;&#x2F;foreach&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- WHERE 절에서 사용 --&gt;</span><br><span class="line">Map paramMap &#x3D; new Map();</span><br><span class="line">paramMap.put(&quot;id&quot;, &quot;value&quot;);</span><br><span class="line">paramMap.put(&quot;name&quot;, &quot;value&quot;);</span><br><span class="line"></span><br><span class="line">SELECT *</span><br><span class="line">  FROM TABLE</span><br><span class="line"> WHERE </span><br><span class="line">&lt;!-- WHERE 절에 사용 --&gt;</span><br><span class="line">&lt;foreach collection&#x3D;&quot;paramMap.entrySet()&quot; index&#x3D;&quot;key&quot; item&#x3D;&quot;value&quot;&gt;</span><br><span class="line">    $&#123;key&#125; &#x3D; #&#123;value&#125;</span><br><span class="line">&lt;&#x2F;foreach&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- UPDATE문에서 활용 --&gt;</span><br><span class="line">Map paramMap &#x3D; new Map();</span><br><span class="line">paramMap.put(&quot;id&quot;, &quot;value&quot;);</span><br><span class="line">paramMap.put(&quot;name&quot;, &quot;value&quot;);</span><br><span class="line"></span><br><span class="line">UPDATE TABLE</span><br><span class="line">   SET</span><br><span class="line">&lt;foreach collection&#x3D;&quot;paramMap.entrySet()&quot; index&#x3D;&quot;key&quot; item&#x3D;&quot;value&quot;&gt;</span><br><span class="line">    $&#123;key&#125; &#x3D; #&#123;value&#125;</span><br><span class="line">&lt;&#x2F;foreach&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Map을 활용해서 where 조건을 걸때나 update시에 값 변경할때 동적으로 사용가능하다</p>
+</blockquote>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/19/mybatis-foreach/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/12/19/vue-single-file-component/"
+                            aria-label=": 뷰 싱글파일 컴포넌트 체계(7)"
+                        >
+                            뷰 싱글파일 컴포넌트 체계(7)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-19T00:46:09+09:00">
+	
+		    Dec 19, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EA%B8%B0%EB%B3%B8%EB%AC%B8%EB%B2%95/">vue 기본문법</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>Vue.component를 사용하는 전역 컴포넌트로는 구조 파악이나 스타일 적용등에 있어서 어려움이 많아서 복잡한 뷰 프로젝트에서 사용하기가 힘듭니다. 그래서 .vue 파일로 프로젝트를 구성하는 방식인 싱글파일컴포넌트를 사용합니다. 1개의 .vue파일은 1개의 컴포넌트가 됩니다.</p>
+<h2 id="구조"><a href="#구조" class="headerlink" title="구조"></a>구조</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> defualt &#123;</span></span><br><span class="line">    data() &#123;</span><br><span class="line"><span class="actionscript">        <span class="keyword">return</span> &#123;</span></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    methods: &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    created() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span></span></span><br><span class="line"></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span></span></span><br><span class="line"></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span></span><br></pre></td></tr></table></figure>
+
+<p>template 영역은 HTML 요소가 들어가는 부분입니다. script 영역은 컴포넌트에 대한 속성이 들어가는 부분입니다. style은 HTML 요소에 대한 스타일을 적용 할수 있습니다.</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/19/vue-single-file-component/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/12/19/vue-cli-project-create/"
+                            aria-label=": CLI를 통한 프로젝트 생성(6)"
+                        >
+                            CLI를 통한 프로젝트 생성(6)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-19T00:16:35+09:00">
+	
+		    Dec 19, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EA%B8%B0%EB%B3%B8%EB%AC%B8%EB%B2%95/">vue 기본문법</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>CLI는 .vue파일을 웹브라우저가 인식할수 있는 형태의 파일로 변환해주는 웹팩이나 브라우저리파이 같은 도구들이 적용된 초기 프로젝트 구조를 쉽게 구성하게 해주는 역할을 합니다.</p>
+<h3 id="설치-방법"><a href="#설치-방법" class="headerlink" title="설치 방법"></a>설치 방법</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-cli -global</span><br></pre></td></tr></table></figure>
+
+<h3 id="사용방법"><a href="#사용방법" class="headerlink" title="사용방법"></a>사용방법</h3><ol>
+<li>고급 웹팩 기능을 활용한 구성입니다.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init webpack</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>웹팩의 최소 기능만을 구성합니다.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init webpack-simple</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>고급 브라우저리파이 기능을 활용합니다.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init browserify</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>브라우저리아피의 최소기능만을 구성합니다.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init browserify-simple</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>최소 뷰 기능만이 들어간 HTML 파일 1개를 생성합니다.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init simple</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>웹팩 기반의 프로그래시브 웹앱기능을 지원합니다.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init pwa</span><br></pre></td></tr></table></figure>
+
+<h4 id="기타"><a href="#기타" class="headerlink" title="기타"></a>기타</h4><p>고급기능들은 테스팅, 문법 검사등도 지원합니다.<br>CLI를 통해 설치 후에 <code>npm install</code>을 통해 뷰 애플리케이션 구동을 위한 라이브러리를 다운 받아야 합니다.<br>웹팩은 자체 서버(노드 서버)를 제공해 주기 때문에 npm run dev를 통해서 실행 가능합니다. </p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/19/vue-cli-project-create/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2019/12/18/vue-directive/"
                             aria-label=": 뷰 디렉티브(5)"
                         >
@@ -661,58 +1016,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/17/index/"
-                            aria-label=": index"
-                        >
-                            index
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-17T22:36:50+09:00">
-	
-		    Dec 17, 2019
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>인덱스 페이지</p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/17/index/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -728,7 +1031,18 @@
           </li>
         
         
-        <li class="pagination-number">page 7 of 7</li>
+          <li class="pagination-next">
+            <a
+                class="btn btn--default btn--small"
+                href="/page/8/"
+                aria-label="OLDER POSTS"
+            >
+              <span>OLDER POSTS</span>
+              <i class="fa fa-angle-right text-base icon-ml"></i>
+            </a>
+          </li>
+        
+        <li class="pagination-number">page 7 of 8</li>
     </ul>
 </div>
 

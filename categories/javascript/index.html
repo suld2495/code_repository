@@ -216,6 +216,418 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/03/24/es6-spread/"
+                            aria-label=": 전개 연산자의 사용"
+                        >
+                            전개 연산자의 사용
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-24T20:29:16+09:00">
+	
+		    Mar 24, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/ES6/">ES6</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="전개-연산자"><a href="#전개-연산자" class="headerlink" title="전개 연산자"></a>전개 연산자</h2><p>전개 연산자는 ES6에서 추가된 문법이다. 사용 방법은 <code>...값</code>으로 사용이다. 이 문법을 사용하면, 객체 혹은 배열을 펼칠수있다. 설명만으로는 제대로 이해가 가지 않기 때문에 아래의 예제를 기억하도록 하자.</p>
+<br>
+
+<h4 id="배열에서-전개연산자-사용"><a href="#배열에서-전개연산자-사용" class="headerlink" title="배열에서 전개연산자 사용"></a>배열에서 전개연산자 사용</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="built_in">console</span>.log(...arr); <span class="comment">// 1, 2, 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> arr2 = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>];</span><br><span class="line"></span><br><span class="line">arr.push(...arr2;)</span><br></pre></td></tr></table></figure>
+
+<p>위의 예제에서 arr3를 만들려면 기존에는 아래와 같은 코드를 사용해야 했다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> arr2 = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">Array</span>.prototype.push.apply(arr, arr2);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>함수의 매개변수로도 전달이 가능하다</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">i, j , k</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i, j, k);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fn(...arr);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="객체에서-사용하기"><a href="#객체에서-사용하기" class="headerlink" title="객체에서 사용하기"></a>객체에서 사용하기</h4><p>전개연산자를 통해서 아와 같이 새로운 객체를 생성할수 있다.이를 사용하면JSON.parse(JSON.stringify()))를 더이상 사용할 필요가 없어보인다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span> : <span class="string">'Jone'</span>, <span class="attr">age</span> : <span class="number">24</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> obj2 = &#123;...obj&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj2);</span><br></pre></td></tr></table></figure>
+
+<p>아래와 같인 특정 key의 값만 가져올수가 있다. 이때 key가 정확히 일치 할때만 가져올수 있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span> : <span class="string">'Jone'</span>, <span class="attr">age</span> : <span class="number">24</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> &#123; name &#125; = obj;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(name);</span><br></pre></td></tr></table></figure>
+
+<p>아래와 같이 작성 하면 Object.assign을 대체 할수 있다. 중복된 key를 가지고 있으면 뒤에 오는 객체의 value로 덮어 씌워진다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span> : <span class="string">'Jone'</span>, <span class="attr">age</span> : <span class="number">24</span>&#125;;</span><br><span class="line"><span class="keyword">const</span> obj2 = &#123; <span class="attr">name</span> : <span class="string">'Jane'</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> obj3 = &#123; <span class="attr">school</span> : <span class="string">'high school'</span>, <span class="attr">born</span> : <span class="string">'SEOUL'</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj4 = &#123;...obj, ...obj2, ...obj3, <span class="attr">born</span> : <span class="string">'ULSAN'</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="나머지-연산자"><a href="#나머지-연산자" class="headerlink" title="나머지 연산자"></a>나머지 연산자</h4><p>전개 연산자와 나머지 연산자는 다른 연산자 이지만 모양이 동일하다. 나머지 연산자는 앞에 오는 변수에 값을 할당 한 뒤 남은 모든 값을 하나의 배열로 변수에 저장해준다.<br>나머지 연산자가 중간에 올수 없으며, 나머지 연산자는 항상 하나만 사용이 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [head, ...tail] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(head);  <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(tail);  <span class="comment">// [2, 3]</span></span><br></pre></td></tr></table></figure>
+
+<p>함수의 파라미터로도 사용이 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">a, b, ...c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">    <span class="built_in">console</span>.log(b)</span><br><span class="line">    <span class="built_in">console</span>.log(c)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fn(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/24/es6-spread/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/14/vuex-test-md/"
+                            aria-label=": Vuex를 사용한 테스트"
+                        >
+                            Vuex를 사용한 테스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-14T11:35:32+09:00">
+	
+		    Mar 14, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/vue-test-utils/">vue-test-utils</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Vuex를-사용하는-컴포넌트-테스트"><a href="#Vuex를-사용하는-컴포넌트-테스트" class="headerlink" title="Vuex를 사용하는 컴포넌트 테스트"></a>Vuex를 사용하는 컴포넌트 테스트</h2><h4 id="actions를-mock-하기"><a href="#actions를-mock-하기" class="headerlink" title="actions를 mock 하기"></a>actions를 mock 하기</h4><p>아래의 컴포넌트는 vuex의 actions를 사용하는 코드이다. Vuex를 사용하는 컴포넌트를 테스트시에 주의해야 할 점은 actions가 어떻게 동작하는지는 중요하지 않다. 우리가 사용하고자 하는 action이 실제로 호출되었는지 여부만 테스트 한다.<br>action이 정확하게 동작하는지 여부는 vuex store 테스트시에 하게 된다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;text-align-center&quot;&gt;</span><br><span class="line">        &lt;input type&#x3D;&quot;text&quot; @input&#x3D;&quot;actionInputIfTrue&quot;&gt;</span><br><span class="line">        &lt;button @click&#x3D;&quot;actionClick()&quot;&gt;Click&lt;&#x2F;button&gt;    </span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script lang&#x3D;&quot;ts&quot;&gt;</span><br><span class="line">import &#123; Component, Vue &#125; from &#39;vue-property-decorator&#39;;</span><br><span class="line">import &#123; mapActions &#125; from &#39;vuex&#39;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">    methods: &#123;</span><br><span class="line">        ...mapActions([&#39;actionClick&#39;])</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">export default class Actions extends Vue &#123;</span><br><span class="line">    actionInputIfTrue(event:any):void &#123;</span><br><span class="line">        const inputValue &#x3D; event.target.value;</span><br><span class="line">        if (inputValue &#x3D;&#x3D;&#x3D; &#39;input&#39;) &#123;</span><br><span class="line">            this.$store.dispatch(&#39;actionInput&#39;, &#123; inputValue &#125;);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue, Wrapper &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"><span class="keyword">import</span> Actions <span class="keyword">from</span> <span class="string">'../Actions.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line"></span><br><span class="line">localVue.use(Vuex);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Actions.vue'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> wrapper:Wrapper&lt;Vue&gt;;</span><br><span class="line">    <span class="keyword">let</span> actions:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> store:<span class="built_in">any</span>;</span><br><span class="line"></span><br><span class="line">    beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        actions = &#123;</span><br><span class="line">            actionClick: jest.fn(),</span><br><span class="line">            actionInput: jest.fn()</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">            actions,</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        wrapper = shallowMount(VuexComponent, &#123; store, localVue &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'dispatches "actionInput" when input event value is "input"'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> input = wrapper.find(<span class="string">'input'</span>);</span><br><span class="line">        input.element.value = <span class="string">'input'</span>;</span><br><span class="line">        input.trigger(<span class="string">'input'</span>);</span><br><span class="line">        expect(actions.actionInput).toHaveBeenCalled();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'does not dispatch "actionInput" when event value is not "input"'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> input = wrapper.find(<span class="string">'input'</span>);</span><br><span class="line">        input.element.value = <span class="string">'no input'</span>;</span><br><span class="line">        input.trigger(<span class="string">'input'</span>);</span><br><span class="line">        expect(actions.actionInput).not.toHaveBeenCalled();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'calls store action "actionClick" when button is clicked'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> button = wrapper.find(<span class="string">'button'</span>);</span><br><span class="line">        button.trigger(<span class="string">'click'</span>);</span><br><span class="line">        expect(actions.actionClick).toHaveBeenCalled();</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><code>첫번째</code> 주의해야 할 점은 테스트 시에는 localVue를 사용해야 한다는 것이다.<br><code>두번째</code> 는 actions를 jest의 mock functions를 사용하여 테스트한다. 이를 이용하면 actions를 실제로 구현하지 않아도 호출되었는지 여부를 확인 할수 있다.<br><code>세번째</code> 는 함수의 호출 여부를 확인 하는 assertion은 <code>toHaveBeenCalled</code>를 사용한다.</p>
+<br>
+
+<h4 id="getters를-mock-하기"><a href="#getters를-mock-하기" class="headerlink" title="getters를 mock 하기"></a>getters를 mock 하기</h4><p>getters도 actions와 마찬가지로 어떻게 동작하는지는 중요하지 않다. getters의 결과가 실제로 렌더링 되는지 여부만 확인 해보면 된다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;p v-if&#x3D;&quot;inputValue&quot;&gt;&#123;&#123;inputValue&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">        &lt;p v-if&#x3D;&quot;clicks&quot;&gt;&#123;&#123;clicks&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    import &#123; mapGetters &#125; from &#39;vuex&#39;</span><br><span class="line"></span><br><span class="line">    @Component(&#123;</span><br><span class="line">        computed: mapGetters([&#39;clicks&#39;, &#39;inputValue&#39;])</span><br><span class="line">    &#125;)</span><br><span class="line">    export default class Getters extends Vue &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue, Wrapper &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"><span class="keyword">import</span> Getters <span class="keyword">from</span> <span class="string">'../Getters.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line"></span><br><span class="line">localVue.use(Vuex);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Getters.vue'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> getters:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> store:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> wrapper:Wrapper&lt;Vue&gt;;</span><br><span class="line"></span><br><span class="line">    beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        getters = &#123;</span><br><span class="line">            clicks: <span class="function"><span class="params">()</span> =&gt;</span> <span class="number">2</span>,</span><br><span class="line">            inputValue: <span class="function"><span class="params">()</span> =&gt;</span> <span class="string">'input'</span></span><br><span class="line">        &#125;;</span><br><span class="line">        store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">            getters</span><br><span class="line">        &#125;);</span><br><span class="line">        wrapper = shallowMount(VuexComponent, &#123; store, localVue &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    it(<span class="string">'Renders "store.getters.inputValue" in first p tag'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        expect(wrapper.find(<span class="string">'.input-value'</span>).text()).toBe(getters.inputValue());</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'Renders "store.getters.clicks" in second p tag'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        expect(wrapper.findAll(<span class="string">'p'</span>).at(<span class="number">1</span>).text()).toBe(getters.clicks().toString());</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><code>첫번째</code> 는 actions와는 달리 getters는 jest의 mock functions를 사용하지 않는다. getters 객체를 작성하지만 로직은 중요하지 않는다.<br><code>두번째</code> 는 getters의 리턴 값이 렌더링되었는지 여부를 확인 하는 건 wrapper의 text 메소드를 이용한다.</p>
+<br>
+
+<h4 id="vuex의-모듈-방식-테스트하기"><a href="#vuex의-모듈-방식-테스트하기" class="headerlink" title="vuex의 모듈 방식 테스트하기"></a>vuex의 모듈 방식 테스트하기</h4><p>vuex의 모듈 방식을 활용한 테스트도 기존의 테스트랑 별 다를게 없다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;button @click&#x3D;&quot;moduleActionClick()&quot;&gt;Click&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;p&gt;&#123;&#123;moduleClicks&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; Vue, Component &#125; from &#39;vue-property-decorator&#39;;</span><br><span class="line">import &#123; mapActions, mapGetters &#125; from &#39;vuex&#39;;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">    methods: &#123;</span><br><span class="line">        ...mapActions([&#39;moduleActionClick&#39;])</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: mapGetters([&#39;moduleClicks&#39;])</span><br><span class="line">&#125;)</span><br><span class="line">export default class MyModuleVuex extends Vue &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue, Wrapper &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"><span class="keyword">import</span> MyModuleVuex <span class="keyword">from</span> <span class="string">'../MyModuleVuex.vue'</span>;</span><br><span class="line"><span class="keyword">import</span> myModule <span class="keyword">from</span> <span class="string">'../../store/myModule'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line"></span><br><span class="line">localVue.use(Vuex);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'MyModuleVuex'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> actions:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> state:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> store:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> wrapper:Wrapper&lt;Vue&gt;;</span><br><span class="line"></span><br><span class="line">    beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        actions = &#123;</span><br><span class="line">            moduleActionClick: jest.fn()</span><br><span class="line">        &#125;;</span><br><span class="line">        state = &#123;</span><br><span class="line">            clicks: <span class="number">2</span></span><br><span class="line">        &#125;;</span><br><span class="line">        store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">            modules: &#123;</span><br><span class="line">                myModule: &#123;</span><br><span class="line">                    state,</span><br><span class="line">                    actions,</span><br><span class="line">                    getters: myModule.getters</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        wrapper = shallowMount(MyModuleVuex, &#123; store, localVue &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'calls store action "moduleActionClick" when button is clicked'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        wrapper.find(<span class="string">'button'</span>).trigger(<span class="string">'click'</span>);</span><br><span class="line">        expect(actions.moduleActionClick).toHaveBeenCalled();</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'renders "state.clicks" in first p tag'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        expect(wrapper.find(<span class="string">'p'</span>).text()).toBe(state.clicks.toString());</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Vuex-Store-테스트하기"><a href="#Vuex-Store-테스트하기" class="headerlink" title="Vuex Store 테스트하기"></a>Vuex Store 테스트하기</h2><p>지금까지는 Vuex를 사용하는 컴포넌트에 대해서 알아보았다. 그렇기 때문에 실제 Vuex의 내부 동작과는 무관한 테스트였다. 이번에는 Vuex가 정확하게 동작하는지 여부를 테스트 하기 위한 방법이다.<br>Vuex Store 테스트는 두가지 방법이 있다. 첫번째는 getters, mutations, actions를 독립적으로 테스트 하는 것이다. 두번째는 실제 Vuex Store를 생성하는 방법이다.<br>아래는 테스트에서 사용할 mutations와 getters 코드이다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    increment(state:<span class="built_in">any</span>) &#123;</span><br><span class="line">        state.count++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    evenOrOdd(state:<span class="built_in">any</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> state.count % <span class="number">2</span> === <span class="number">0</span> ? <span class="string">'even'</span> : <span class="string">'odd'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="getters-mutations-actions를-독립적으로-테스트하기"><a href="#getters-mutations-actions를-독립적으로-테스트하기" class="headerlink" title="getters, mutations, actions를 독립적으로 테스트하기"></a>getters, mutations, actions를 독립적으로 테스트하기</h4><p>독립적으로 테스트 하는 경우에는 좀더 상세하게 테스트를 진행할수 있다. 테스트가 실패하더라도 어디에서 실패했는지 찾기가 쉽다. 단점으로는 commit, dispatch같은 Vuex의 함수들을 mock 해야할 필요가 있다. 이는 유닛 테스트는 성공할지라도 mock이 정확하지 않기 때문에 실제 production 코드는 실패할수도 있다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mutations <span class="keyword">from</span> <span class="string">'../mutations'</span>;</span><br><span class="line"></span><br><span class="line">test(<span class="string">'"increment" increments "state.count" by 1'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> state = &#123; count: <span class="number">1</span> &#125;;</span><br><span class="line">    mutations.increment(state);</span><br><span class="line">    expect(state.count).toBe(<span class="number">2</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> getters <span class="keyword">from</span> <span class="string">'../getters'</span>;</span><br><span class="line"></span><br><span class="line">test(<span class="string">'"evenOrOdd" returns even if "state.count" is even'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> state = &#123; count: <span class="number">2</span> &#125;;</span><br><span class="line">    expect(getters.evenOrOdd(state)).toBe(<span class="string">'even'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">test(<span class="string">'"evenOrOdd" returns odd if "state.count" is odd'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> state = &#123; count: <span class="number">1</span> &#125;;</span><br><span class="line">    expect(getters.evenOrOdd(state)).toBe(<span class="string">'odd'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="store를-사용한-테스트"><a href="#store를-사용한-테스트" class="headerlink" title="store를 사용한 테스트"></a>store를 사용한 테스트</h4><p>실제로 Vuex sotre를 사용한 방법이다. 이 테스트의 장점은 Vuex function들을 mock 할 필요가 없다는 것이다. 하지만 테스트 실패시에 어디에서 문제가 발생했는지 찾기가 어렵다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mutations <span class="keyword">from</span> <span class="string">'./mutations'</span>;</span><br><span class="line"><span class="keyword">import</span> getters <span class="keyword">from</span> <span class="string">'./getters'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        count: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mutations,</span><br><span class="line">    getters</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createLocalVue &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"><span class="keyword">import</span> storeConfig <span class="keyword">from</span> <span class="string">'../store-config'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; cloneDeep &#125; <span class="keyword">from</span> <span class="string">'lodash'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line"><span class="keyword">let</span> store:<span class="built_in">any</span>;</span><br><span class="line">localVue.use(Vuex);</span><br><span class="line"></span><br><span class="line">beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    store = <span class="keyword">new</span> Vuex.Store(cloneDeep(storeConfig));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">test(<span class="string">'increments "count" value when "increment" is committed'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    expect(store.state.count).toBe(<span class="number">0</span>);</span><br><span class="line">    store.commit(<span class="string">'increment'</span>);</span><br><span class="line">    expect(store.state.count).toBe(<span class="number">1</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">test(<span class="string">'updates "evenOrOdd" getter when "increment" is committed'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    expect(store.getters.evenOrOdd).toBe(<span class="string">'even'</span>);</span><br><span class="line">    store.commit(<span class="string">'increment'</span>);</span><br><span class="line">    expect(store.getters.evenOrOdd).toBe(<span class="string">'odd'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>해당 테스트에서는 cloneDeep를 사용하고 있는데 이는 각 테스트에 store를 클린하게 사용하기 위해서 이다.</p>
+<p>그리고 생각해 보았을 때 상황에 맞추어서 하나씩만 적용 하던가 아니면 두개 모두를 적용해서 테스트 코드를 작성 하면 좋을거 같다.</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/14/vuex-test-md/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/13/vue-router-test/"
+                            aria-label=": Vue 라우터 테스트"
+                        >
+                            Vue 라우터 테스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-13T17:14:15+09:00">
+	
+		    Mar 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/vue-test-utils/">vue-test-utils</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="vue-라우터-테스트-시에-주의-할점"><a href="#vue-라우터-테스트-시에-주의-할점" class="headerlink" title="vue 라우터 테스트 시에 주의 할점"></a>vue 라우터 테스트 시에 주의 할점</h2><p>vue 라우터를 테스트 할 시에 global Vue에 직접 추가를 해서는 안된다. vue 라우터를 설치 할 경우에는 $route와 $router가 vue 프로퍼티에 추가되어진다. 이는 $route와 $router를 mock 해서 테스트 하는 경우에 테스트를 실패하게 만든다.<br>vue-test-utils에서 제공하는 createLocalVue을 사용하는 것을 권장한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue()</span><br><span class="line">localVue.use(VueRouter)</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter()</span><br><span class="line"></span><br><span class="line">shallowMount(Component, &#123;</span><br><span class="line">    localVue,</span><br><span class="line">    router</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="router-link-router-view를-사용하는-컴포넌트-테스트-하기"><a href="#router-link-router-view를-사용하는-컴포넌트-테스트-하기" class="headerlink" title="router-link, router-view를 사용하는 컴포넌트 테스트 하기"></a>router-link, router-view를 사용하는 컴포넌트 테스트 하기</h2><p>위 두가지 컴포넌트를 사용하는 컴포넌트를 테스트 하는 방법은 두가지가 존재한다.</p>
+<br>
+
+<h4 id="1-stubs-사용하기"><a href="#1-stubs-사용하기" class="headerlink" title="1. stubs 사용하기"></a>1. stubs 사용하기</h4><p>stubs를 사용해서 자식 컴포넌트를 렌더링하는 것을 피한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"></span><br><span class="line">shallowMount(Component, &#123;</span><br><span class="line">    stubs: [<span class="string">'router-link'</span>, <span class="string">'router-view'</span>]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="2-localVue를-사용하기"><a href="#2-localVue를-사용하기" class="headerlink" title="2. localVue를 사용하기"></a>2. localVue를 사용하기</h4><p>localVue를 이용해서 실제로 VueRouoter를 추가하는 방식이다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line">localVue.use(VueRouter);</span><br><span class="line"></span><br><span class="line">shallowMount(Component, &#123;</span><br><span class="line">    localVue</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="route-router-mock-하기"><a href="#route-router-mock-하기" class="headerlink" title="$route, $router mock 하기"></a>$route, $router mock 하기</h2><p>$route, $router 객체를 가지고 컴포넌트 테스트를 해야 할 경우가 있다. 이때는 $route, $router를 mock 하여 사용한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> $route = &#123;</span><br><span class="line">    path: <span class="string">'/some/path'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> wrapper = shallowMount(Component, &#123;</span><br><span class="line">    mocks: &#123;</span><br><span class="line">        $route</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">wrapper.vm.$route.path  <span class="comment">// 이렇게 접근이 가능해진다.</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/13/vue-router-test/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/13/typescript-vue-test/"
+                            aria-label=": 타입스크립트로 vue 테스트 하기"
+                        >
+                            타입스크립트로 vue 테스트 하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-13T16:58:50+09:00">
+	
+		    Mar 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>, <a class="category-link" href="/categories/javascript/TDD/jest/typescript/">typescript</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="데이터-테스트-하기"><a href="#데이터-테스트-하기" class="headerlink" title="데이터 테스트 하기"></a>데이터 테스트 하기</h2><p>js에서는 데이터를 검증 할때 아래와 같이 작성한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.vm.message).toBe(<span class="string">'message'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>ts에서도 위와 같은 코드를 작성한 후에 테스트를 돌리니 아래와 같은 에러가 발생하였다. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TypeScript diagnostics (customize using <span class="string">`[jest-config].globals.ts-jest.diagnostics`</span> option):</span><br><span class="line">    src/components/__tests__/HelloWorld.test.ts:<span class="number">12</span>:<span class="number">23</span> - error TS2339: Property <span class="string">'message'</span> does not exist on type <span class="string">'CombinedVueInstance&lt;Vue, object, object, object, Record&lt;never, any&gt;&gt;'</span>.</span><br></pre></td></tr></table></figure>
+
+<p>그래서 정상적으로 테스트 하기 위한 방법은 두가지 정도 인거 같다.</p>
+<br>
+
+<h4 id="1-vm-data-사용하기"><a href="#1-vm-data-사용하기" class="headerlink" title="1. vm.$data 사용하기"></a>1. vm.$data 사용하기</h4><p>vm에는 data값을 가지고 있는 $data 객체가 존재한다. 해당 객체를 통해서 검증을 하면 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.vm.$data.message).toBe(<span class="string">'message'</span>);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="2-jest-config-js-수정하기"><a href="#2-jest-config-js-수정하기" class="headerlink" title="2. jest.config.js 수정하기"></a>2. jest.config.js 수정하기</h4><p>ts-jest를 사용하면 diagnostics옵션의 디폴트값이 true인데 위 코드 처럼 사용할 경우 에러를 발생시킨다. 이를 false로 설정하면 정상적으로 테스트가 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">/// ...</span></span><br><span class="line">    globals: &#123;</span><br><span class="line">      <span class="string">'ts-jest'</span>: &#123;</span><br><span class="line">        diagnostics: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/13/typescript-vue-test/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/12/vue-typescript-test/"
+                            aria-label=": 뷰 타입스크립트로 사용할때 테스트를 위한 설치 방법"
+                        >
+                            뷰 타입스크립트로 사용할때 테스트를 위한 설치 방법
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-12T22:00:53+09:00">
+	
+		    Mar 12, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>, <a class="category-link" href="/categories/javascript/TDD/jest/typescript/">typescript</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="타입스크립트를-사용할때-추가적으로-설치해야할-라이브러리"><a href="#타입스크립트를-사용할때-추가적으로-설치해야할-라이브러리" class="headerlink" title="타입스크립트를 사용할때 추가적으로 설치해야할 라이브러리"></a>타입스크립트를 사용할때 추가적으로 설치해야할 라이브러리</h2><p>뷰를 jest를 통해서 테스트 하고자 할때 설치해야할 라이브러리 목록은 <a href="https://suld2495.github.io/2020/03/06/vue-jest-error">here</a>를 통해서 확인이 가능하다.</p>
+<ol>
+<li>ts-jest</li>
+<li>@types/jest</li>
+</ol>
+<h2 id="jest-config-js"><a href="#jest-config-js" class="headerlink" title="jest.config.js"></a>jest.config.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.export = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="string">"moduleFileExtensions"</span>: [</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="string">"ts"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"transform"</span>: &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="string">"^.+\\.tsx?$"</span>: <span class="string">"ts-jest"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// jest는 기본적으로 js만을 테스트 파일로 찾기 때문에 .ts 파일도 테스트 파일로 찾을수 있도록 설정 해준다.</span></span><br><span class="line">    <span class="string">"testRegex"</span>: <span class="string">"(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="tsconfig-json"><a href="#tsconfig-json" class="headerlink" title="tsconfig.json"></a>tsconfig.json</h2><p>types에 jest를 추가해준다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"compilerOptions"</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="string">"types"</span>: [</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="string">"jest"</span></span><br><span class="line">        ],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/12/vue-typescript-test/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/03/09/jest-setup/"
                             aria-label=": 테스트 Setup"
                         >
@@ -522,9 +934,9 @@
                         <a
                             class="link-unstyled"
                             href="/2020/03/06/vue-jest-error/"
-                            aria-label=": Vue Jest 에러"
+                            aria-label=": Vue Jest 에러 및 테스트를 위한 기본 라이브러리 정보"
                         >
-                            Vue Jest 에러
+                            Vue Jest 에러 및 테스트를 위한 기본 라이브러리 정보
                         </a>
                     
                 </h1>
@@ -551,7 +963,7 @@
 
 <br>
 
-<h4 id="1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다"><a href="#1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다" class="headerlink" title="1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다."></a>1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다.</h4><p>1) jest<br>2) vue-jest<br>3) @babel/core<br>4) @babel/preset-env<br>5) babel-jest</p>
+<h4 id="1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다"><a href="#1-해당-라이브러리가-정상적으로-설치-되어-있는지-확인한다" class="headerlink" title="1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다."></a>1. 해당 라이브러리가 정상적으로 설치 되어 있는지 확인한다.</h4><p>1) jest<br>2) vue-jest<br>3) @babel/core<br>4) @babel/preset-env<br>5) babel-jest<br>6) @vue/test-utils<br>7) babel-core@^7.0.0-bridge.0 (바벨이 7.0 이상 사용중일때)</p>
 <br>
 
 <h4 id="2-jest-config-js"><a href="#2-jest-config-js" class="headerlink" title="2. jest.config.js"></a>2. jest.config.js</h4><p>package.json 또는 jest.config.js에 아래와 같이 입력 한다.</p>
@@ -584,380 +996,22 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/03/02/jest-start/"
-                            aria-label=": JEST 시작"
-                        >
-                            JEST 시작
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-03-02T19:19:42+09:00">
-	
-		    Mar 02, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="JEST란"><a href="#JEST란" class="headerlink" title="JEST란"></a>JEST란</h2><p>JEST는 페이스북에서 개발한 ‘테스트 프레임워크’ 이다. JEST 이전에는 테스트 라이브러리를 조합해서 사용하였으나 JEST는 이름도 프레임워크인만큼 Test Runner와 Test Mathcher 그리고 Test Mock까지 모두 지원하고 있다.</p>
-<br>
-
-<h2 id="JEST-설치"><a href="#JEST-설치" class="headerlink" title="JEST 설치"></a>JEST 설치</h2><p>아래의 명령어를 통해서 jest를 설치 할수 있다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i jest</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="첫-테스트-코드-작성"><a href="#첫-테스트-코드-작성" class="headerlink" title="첫 테스트 코드 작성"></a>첫 테스트 코드 작성</h2><p>test.js라는 파일을 만들고 아래의 코드를 추가한다. JEST에서 테스트 코드 작성은 아래와 같다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'테스트 정의'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 테스트할 로직 구현</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'문자열은 Hello이다.'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> str = <span class="string">'Hello'</span></span><br><span class="line">    expect(<span class="string">'Hello'</span>).toBe(str);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="package-json에서-scripts-수정"><a href="#package-json에서-scripts-수정" class="headerlink" title="package.json에서 scripts 수정"></a>package.json에서 scripts 수정</h2><p>package.json을 아래와 같이 수정한후에 npm run test라고 실행하면 테스트를 시작한다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"scripts"</span> : &#123;</span><br><span class="line">        <span class="string">"test"</span>: <span class="string">"jest"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="describe와-it을-이용한-테스트-코드-작성"><a href="#describe와-it을-이용한-테스트-코드-작성" class="headerlink" title="describe와 it을 이용한 테스트 코드 작성"></a>describe와 it을 이용한 테스트 코드 작성</h2><p>위에서는 test 함수를 통해서 테스트 코드를 작성하는 방법에 대해서 알아보았다. Jest에서는 이 뿐 아니라 describe와 it을 통해서도 작성 가능하다. describe은 일종의 테스트 그룹이고, it은 작은 단위의 테스트이다. it이 위의 test와 같은 단위이다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">''</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">''</span>, () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 테스트 코드 작성</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/03/02/jest-start/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/20/vue-webpack-config/"
-                            aria-label=": 웹팩"
-                        >
-                            웹팩
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-20T10:26:25+09:00">
-	
-		    Dec 20, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/webpack/">webpack</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><p>webpack.config.js 파일은 웹팩에 대한 기본적인 설정을 하는 파일입니다.</p>
-<h2 id="심플한-실제-파일-구성"><a href="#심플한-실제-파일-구성" class="headerlink" title="심플한 실제 파일 구성"></a>심플한 실제 파일 구성</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)	<span class="comment">// output 속성에서 사용할 노드 path 라이브러리 저장</span></span><br><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)	<span class="comment">// 웹팩 플러그인에서 사용할 웹팩 라이브러리를 저장</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 아래부터가 실질적인 웹팩의 설정 내용</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/main.js'</span>,	<span class="comment">// 웹팩으로 빌드할 파일 지정(해당 파일의 앱의 첫 시작 파일이 되는 것)</span></span><br><span class="line">    output: &#123;   <span class="comment">// output은 build 후에 생성 될 파일들에 대한 설정</span></span><br><span class="line">        path: path.resolve(__dirname, <span class="string">'./dist'</span>),	<span class="comment">// 빌드후에 결과 파일 저장 될 디렉토리</span></span><br><span class="line">        publicPath: <span class="string">'/dist/'</span>,		<span class="comment">// 이미지 파일 같이 주소의 앞에 prefix로 붙여주어 주소에 접근 하도록 해주는 것</span></span><br><span class="line">        filename : <span class="string">'build.js'</span>		<span class="comment">// 빌드하고 난 후 결과 파일</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">module</span>: &#123;   <span class="comment">// 지금까지는 loader를 사용하는 것 정도만 확인 했음</span></span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.vue$/</span>,	<span class="comment">// 로더가 적용 될 대상 파일 지정(정규식)</span></span><br><span class="line">                loader: <span class="string">'vue-loader'</span> 	<span class="comment">// loader는 사용할 로더 지정</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span></span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_moules/</span>  <span class="comment">// 해당 디렉토리에서의 탐색은 제외하겠다</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    resolve: &#123;</span><br><span class="line">        alias: &#123;	<span class="comment">// 해당 하는 경로를 @로 대신 사용 가능하다, 여러개 편의성있게 등록 가능하다</span></span><br><span class="line">            <span class="string">'@'</span>: path.resolve(__dirname, <span class="string">'src/'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        extensions: [<span class="string">'*'</span>, <span class="string">'.js'</span>, <span class="string">'.vue'</span>, <span class="string">'.json'</span>]	<span class="comment">// 해당하는 확장자들을 import하게 도와주는 역할</span></span><br><span class="line">    &#125;,</span><br><span class="line">    devtool: <span class="string">'#eval-source-map'</span>	<span class="comment">// 웹팩으로 빌드된 파일로 웹앱 구동시에 개발자 도구에서 사용할 디버깅 방식 지정</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="string">``</span><span class="string">`       </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## 웹팩 설정 구성에 사용 되는 용어 정리</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### 1. entry</span></span><br></pre></td></tr></table></figure>
-<p>entry : 웹팩을 통해서 build를 할 대상 파일을 지정하는 속성<br>    - 해당 파일에는 전체 애플리케이션 로직과 필요한 라이브러리를 로딩하는 로직이 들어가게 됩니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 2. output</span><br></pre></td></tr></table></figure>
-<p>output : 웹팩으로 빌드한 결과물의 위치와 파일이름 등 세부옵션을 설정하는 속성</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 3. loader</span><br></pre></td></tr></table></figure>
-<p>loader : 웹팩으로 빌드할때 html, css 파일등을 자바스크립트로 변환하기 위해 필요한 설정을 정의</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 4. plugin</span><br></pre></td></tr></table></figure>
-<p>plugin : 웹팩으로 빌드 하고 나온 결과물에 대해 추가기능을 제공하는 속성<br>    - 한마디로 필수옵션은 아니지만 빌드할때 혹은 결과물에 추가적인 기능을 적용하고 싶을 때 사용</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 5. resolve</span><br></pre></td></tr></table></figure>
-<p>resolve : 웹팩으로 빌드할때 해당 파일이 어떻게 해석되는지 정의하는 속성<br>    - 예) 라이브러리 로딩시 버전은 어떤걸로 하고, 경로는 어디로 하고 등에 관한 것</p>
-<pre><code></code></pre>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/20/vue-webpack-config/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/20/axios/"
-                            aria-label=": axios"
-                        >
-                            axios
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-20T10:12:19+09:00">
-	
-		    Dec 20, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/">라이브러리</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="axios-정의"><a href="#axios-정의" class="headerlink" title="axios 정의"></a>axios 정의</h1><p>axios는 HTTP 클라이언트 라이브러리로써, 비동기 방식으로 HTTP 데이터 요청을 실행한다. 내부적으로 직접 XMLHttpRequest를 사용하지 않고 AJAX 호출을 할수있다.<br>그리고 axios는 Promise 기반 api이다.</p>
-<h2 id="api는-따로-관리한다"><a href="#api는-따로-관리한다" class="headerlink" title="api는 따로 관리한다."></a>api는 따로 관리한다.</h2><p>axios를 사용할 vue 페이지에서 직접 <code>import axios</code>를 통해서 사용하지 않고 api 파일을 따로 작성하여 해당 메소드를 호출 하는 방식으로 설계를 한다.</p>
-<h2 id="api에서는-직접-then-및-catch-작업을-하지-않는다"><a href="#api에서는-직접-then-및-catch-작업을-하지-않는다" class="headerlink" title="api에서는 직접 then 및 catch 작업을 하지 않는다."></a>api에서는 직접 then 및 catch 작업을 하지 않는다.</h2><p>아래와 같이 호출만 하고 Promise를 return 하는 방식으로 작성한다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> axios.get(...);    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="API-작성-방법"><a href="#API-작성-방법" class="headerlink" title="API 작성 방법"></a>API 작성 방법</h2><h6 id="1-기본-HTTP-Request-amp-Response와-관련된-기본설정을-한다"><a href="#1-기본-HTTP-Request-amp-Response와-관련된-기본설정을-한다" class="headerlink" title="1. 기본 HTTP Request &amp; Response와 관련된 기본설정을 한다."></a>1. 기본 HTTP Request &amp; Response와 관련된 기본설정을 한다.</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    baseUrl: <span class="string">'http://127.0.0.1/test/'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="2-API-함수들을-정리한다"><a href="#2-API-함수들을-정리한다" class="headerlink" title="2. API 함수들을 정리한다."></a>2. API 함수들을 정리한다.</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getRoleList = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> axios.get(...);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getUserList = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> axios.get(...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/20/axios/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/19/javascript-number/"
-                            aria-label=": 숫자와 관련된 팁"
-                        >
-                            숫자와 관련된 팁
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-19T01:08:07+09:00">
-	
-		    Dec 19, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/%EC%9C%A0%EC%9A%A9%ED%95%9C%ED%8C%81/">유용한팁</a>, <a class="category-link" href="/categories/javascript/%EC%9C%A0%EC%9A%A9%ED%95%9C%ED%8C%81/number/">number</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="1-숫자를-천자리마다-콤마찍기"><a href="#1-숫자를-천자리마다-콤마찍기" class="headerlink" title="1. 숫자를 천자리마다 콤마찍기"></a>1. 숫자를 천자리마다 콤마찍기</h2><h3 id="사용조건"><a href="#사용조건" class="headerlink" title="사용조건"></a>사용조건</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 숫자만 가능</span><br><span class="line">2. 숫자를 변수에 저장 후 가능</span><br></pre></td></tr></table></figure>
-
-<h3 id="소스코드"><a href="#소스코드" class="headerlink" title="소스코드"></a>소스코드</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> number = <span class="number">123</span></span><br><span class="line"><span class="keyword">var</span> result = number.toLocaleString()</span><br></pre></td></tr></table></figure>
-
-<h4 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h4><ol>
-<li>크롬에서는 작동을 하나 모든 곳에서 통하는 소스코드인지는 아직 확인 불가</li>
-<li>심플하게 만들수 있다는 장점</li>
-<li>숫자값인 문자열로는 사용불가능하고 필히 숫자 타입으로 바꿔줘야 함</li>
-<li>문자열을 대상으로 toLocaleString 메서드를 호출하면 그냥 그대로 나옴</li>
-<li>결과값은 당연하게도 <code>문자열</code></li>
-</ol>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/19/javascript-number/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2019/12/19/javascript-Map/"
-                            aria-label=": Map 타입"
-                        >
-                            Map 타입
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-12-19T01:05:48+09:00">
-	
-		    Dec 19, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/es6/">es6</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="1-Map-생성하기"><a href="#1-Map-생성하기" class="headerlink" title="1. Map 생성하기"></a>1. Map 생성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">    [<span class="string">"key1"</span>, <span class="string">"value1"</span>],</span><br><span class="line">    [<span class="string">"key2"</span>, <span class="string">"value2"</span>],</span><br><span class="line">    [<span class="string">"key3"</span>, <span class="string">"value3"</span>],</span><br><span class="line">    [<span class="string">"key4"</span>, <span class="string">"value4"</span>],</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><code>new Map([{id: 1},{id: 2},{id: 3},{id: 4}])</code>이런식으로 작성하려고 하니까 안됨. Map생성시 파라미터는 이차원배열로 넣어야 할듯</p>
-</blockquote>
-<h2 id="2-Map에-값-추가하기"><a href="#2-Map에-값-추가하기" class="headerlink" title="2. Map에 값 추가하기"></a>2. Map에 값 추가하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(<span class="string">'key'</span>, <span class="string">'value'</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>값을 추가하는 부분에서 Map와 Object의 차이점이 나타남. Map의 경우에는 <strong>Key로 문자열이외에도 모든걸 Key로 가능</strong></p>
-</blockquote>
-<h2 id="3-Map의-값-호출하기"><a href="#3-Map의-값-호출하기" class="headerlink" title="3. Map의 값 호출하기"></a>3. Map의 값 호출하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> key = &#123;<span class="attr">name</span>: <span class="string">'name'</span>&#125;</span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(key, <span class="string">'value'</span>)</span><br><span class="line">map.get(key)</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-Map의-사이즈-확인"><a href="#4-Map의-사이즈-확인" class="headerlink" title="4. Map의 사이즈 확인"></a>4. Map의 사이즈 확인</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> key = &#123;<span class="attr">name</span>: <span class="string">'name'</span>&#125;</span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(key, <span class="string">'value'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(map.size)</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-배열로-만들기"><a href="#5-배열로-만들기" class="headerlink" title="5. 배열로 만들기"></a>5. 배열로 만들기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(<span class="string">'key1'</span>, <span class="string">'value1'</span>)</span><br><span class="line">map.set(<span class="string">'key2'</span>, <span class="string">'value2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> array = [...map]</span><br><span class="line"><span class="built_in">console</span>.log(map)    <span class="comment">// map: [['key1', 'value1'], ['key2', 'value2']]</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Object와는 다르게 Map은 <code>[...map]</code>을 통해서 Array로 만들수 있습니다. 결과값은 <code>[[key, value], [key, value]]</code>의 형태로 만들어 진다.</p>
-</blockquote>
-<h2 id="6-순회하기"><a href="#6-순회하기" class="headerlink" title="6. 순회하기"></a>6. 순회하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="built_in">Map</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [key, value] <span class="keyword">of</span> map) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">map.forEach(<span class="function">(<span class="params">key, value</span>) =&gt;</span> &#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Object와는 다르게 forof와 forEach를 사용할수 있다.<br>Array에서 제공하는 map, filter등에 대한 메서드는 제공하지 않는 것으로 판단된다.</p>
-</blockquote>
-<h2 id="7-Iterator-사용하기"><a href="#7-Iterator-사용하기" class="headerlink" title="7. Iterator 사용하기"></a>7. Iterator 사용하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line"></span><br><span class="line">map.keys()      <span class="comment">// key모음</span></span><br><span class="line">map.values()    <span class="comment">// value모음</span></span><br><span class="line">map.entries()   <span class="comment">// key와 value 한쌍의 모음</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Iterator이다 보니 for문과 함께 사용하면 좋을 듯</p>
-</blockquote>
-<h2 id="기타-메서드"><a href="#기타-메서드" class="headerlink" title="기타 메서드"></a>기타 메서드</h2><h3 id="has-해당-Key-존재-여부"><a href="#has-해당-Key-존재-여부" class="headerlink" title="has : 해당 Key 존재 여부"></a>has : 해당 Key 존재 여부</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">map.set(<span class="string">'key'</span>, <span class="string">'value'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(map.has(<span class="string">'key'</span>)) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="delete-해당-Key의-값-삭제"><a href="#delete-해당-Key의-값-삭제" class="headerlink" title="delete : 해당 Key의 값 삭제"></a>delete : 해당 Key의 값 삭제</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">map.set(<span class="string">'key'</span>, <span class="string">'value'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(map.delete(<span class="string">'key'</span>))  <span class="comment">// true =&gt; 존재했으면 true 없었으면 false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(map.has(<span class="string">'key'</span>)) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="clear-모든-데이터-삭제"><a href="#clear-모든-데이터-삭제" class="headerlink" title="clear : 모든 데이터 삭제"></a>clear : 모든 데이터 삭제</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">map.clear()</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2019/12/19/javascript-Map/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
         
-        <li class="pagination-number">page 1 of 1</li>
+          <li class="pagination-next">
+            <a
+                class="btn btn--default btn--small"
+                href="/categories/javascript/page/2/"
+                aria-label="OLDER POSTS"
+            >
+              <span>OLDER POSTS</span>
+              <i class="fa fa-angle-right text-base icon-ml"></i>
+            </a>
+          </li>
+        
+        <li class="pagination-number">page 1 of 2</li>
     </ul>
 </div>
 
