@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="">
+    <title>Jest로 비동기 테스트 하기 - null</title>
+    <meta name="author" content="Moon Star">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"비동기에서 사용할 함수12345function fetchData(check) &#123;    return new Promise((resolve, reject) =&gt; &#123;        typeof check === 'function' ? check() : check ? resolve('peanut butter') : reject('error');    &#125;);&#125;\n\n콜백을 이용한 비동기 테스트 해보기일반적인 상황에서 비동기를 사용하는 보편적인 방법 중 하나는 콜백을 사용하는 것이다. 하지만 Jest에서 테스트 할때는 의도대로 작동 하지 않는다.Jest 테스트는 콜백을 호출할때까지 기다려주지 않는다. 테스트 함수 내에서 마지막 코드까지 실행을 하게되면 테스트를 완료하게 된다. 그래서 항상 테스트가 통과하게 된다. 테스트 실패하도록 값을 변경하여도 통과하는 것을 확인 할수있다.\n1234567test('비동기를 콜백 활용하기 - 실패', () =&gt; &#123;    function callback(data) &#123;        expect(data).toBe('peanut butter');    &#125;    fetchData(callback);&#125;);\n\n\n\n파라미터 done을 활용한 비동기 테스트done을 파라미터로 받은 경우에는 Jest에서는 done 함수가 호출 될때까지 테스트를 완료하지 않고 기다린다. \n123456789101112test('done을 활용하기', (done) =&gt; &#123;    function callback(data) &#123;        try &#123;            expect(data).toBe('peanut butter');            done();        &#125; catch (e) &#123;            done(error);        &#125;    &#125;    fetchData(callback);&#125;);\n\n\n\nPromise 활용 하기비동기로 promise를 사용하는 경우에는 훨씐 간편하게 작성 할수 있다. promise를 리턴해주면 테스트가 정상적으로 작동하는 것을 확인할수 있다. 이때 promise를 리턴하지 않으면 테스트를 수행하기 전에 끝난다.\n12345test('프로미스 활용하기', () =&gt; &#123;    return fetchData(true).then((data) =&gt; &#123;        expect(data).toBe('peanut butter');    &#125;);&#125;)\n\n\n\nPromise Catch 테스트 하기promise의 reject 또한 테스트 할수 있다. 이경우에는 then 대신에 catch를 활용한다. catch 내부에서 테스트 할 코드를 작성한다. 이때 expect.assertions(에러 발생한 횟수)를 테스트 위에 적어주지 않으면 테스트는 정상적으로 실행되지 못하고 완료되어 버린다.\n1234test('프로미스 catch 테스트하기', () =&gt; &#123;    expect.assertions(1);    return fetchData(false).catch((e) =&gt; expect(e).toMatch('error'));&#125;)\n\n\n\nMatchers인 resolves를 활용하기promise then 대신에 Jest에서 제공하는 Matchers 중에 하나인 resolves를 활용할수도 있다. expect에 promise를 넘겨준다. 이때 여전히 return을 사용하여야 한다.\n123test('resolves 사용하기', () =&gt; &#123;    return expect(fetchData(true)).resolves.toBe('peanut butter');&#125;);\n\n\n\nMatchers인 rejects를 활용하기promise catch 대신에 Jest에서 제공하는 Matchers 중에 하나인 rejects를 활용 할수도 있다. 사용 방법은 resolves와 유사하다. 이때 promise catch와 async와는 달리 expect.assertions를 사용하지 않아도 된다.\n123test('rejects 활용하기', () =&gt; &#123;    return expect(fetchData(false)).rejects.toBe('error');&#125;);\n\n\n\nasync와 await를 활용하기es6에서 제공하는 비동기 방법인 async와 await를 활용해서도 가능하다.\n1234567891011121314test('async와 await를 활용하기', async() =&gt; &#123;    let data = await fetchData(true);    expect(data).toBe('peanut butter');&#125;);test('async와 await를 활용하기', async() =&gt; &#123;    expect.assertions(1);    try &#123;        await fetchData(false);    &#125; catch (e) &#123;        expect(e).toMatch('error');    &#125;&#125;);","dateCreated":"2020-03-26T21:18:04+09:00","dateModified":"2020-03-26T21:40:16+09:00","datePublished":"2020-03-26T21:18:04+09:00","description":"","headline":"Jest로 비동기 테스트 하기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2020/03/26/jest-async/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2020/03/26/jest-async/","keywords":"jest-async"}</script>
+    <meta name="description" content="비동기에서 사용할 함수12345function fetchData(check) &amp;#123;    return new Promise((resolve, reject) &#x3D;&gt; &amp;#123;        typeof check &#x3D;&#x3D;&#x3D; &#39;function&#39; ? check() : check ? resolve(&#39;peanut butter&#39;) : reject(&#39;error&#39;)">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Jest로 비동기 테스트 하기">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2020&#x2F;03&#x2F;26&#x2F;jest-async&#x2F;index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="비동기에서 사용할 함수12345function fetchData(check) &amp;#123;    return new Promise((resolve, reject) &#x3D;&gt; &amp;#123;        typeof check &#x3D;&#x3D;&#x3D; &#39;function&#39; ? check() : check ? resolve(&#39;peanut butter&#39;) : reject(&#39;error&#39;)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-26T12:18:04.000Z">
+<meta property="article:modified_time" content="2020-03-26T12:40:16.666Z">
+<meta property="article:author" content="Moon Star">
+<meta property="article:tag" content="jest-async">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/%20"
+                            
+                            title="홈"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="카테고리"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="태그"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="아카이브"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="검색"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Jest로 비동기 테스트 하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-03-26T21:18:04+09:00">
+	
+		    Mar 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="비동기에서-사용할-함수"><a href="#비동기에서-사용할-함수" class="headerlink" title="비동기에서 사용할 함수"></a>비동기에서 사용할 함수</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params">check</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">typeof</span> check === <span class="string">'function'</span> ? check() : check ? resolve(<span class="string">'peanut butter'</span>) : reject(<span class="string">'error'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="콜백을-이용한-비동기-테스트-해보기"><a href="#콜백을-이용한-비동기-테스트-해보기" class="headerlink" title="콜백을 이용한 비동기 테스트 해보기"></a>콜백을 이용한 비동기 테스트 해보기</h2><p>일반적인 상황에서 비동기를 사용하는 보편적인 방법 중 하나는 콜백을 사용하는 것이다. 하지만 Jest에서 테스트 할때는 의도대로 작동 하지 않는다.<br>Jest 테스트는 콜백을 호출할때까지 기다려주지 않는다. 테스트 함수 내에서 마지막 코드까지 실행을 하게되면 테스트를 완료하게 된다. 그래서 항상 테스트가 통과하게 된다. 테스트 실패하도록 값을 변경하여도 통과하는 것을 확인 할수있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'비동기를 콜백 활용하기 - 실패'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        expect(data).toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fetchData(callback);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="파라미터-done을-활용한-비동기-테스트"><a href="#파라미터-done을-활용한-비동기-테스트" class="headerlink" title="파라미터 done을 활용한 비동기 테스트"></a>파라미터 done을 활용한 비동기 테스트</h2><p>done을 파라미터로 받은 경우에는 Jest에서는 done 함수가 호출 될때까지 테스트를 완료하지 않고 기다린다. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'done을 활용하기'</span>, (done) =&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            expect(data).toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">            done();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            done(error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fetchData(callback);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Promise-활용-하기"><a href="#Promise-활용-하기" class="headerlink" title="Promise 활용 하기"></a>Promise 활용 하기</h2><p>비동기로 promise를 사용하는 경우에는 훨씐 간편하게 작성 할수 있다. promise를 리턴해주면 테스트가 정상적으로 작동하는 것을 확인할수 있다. 이때 promise를 리턴하지 않으면 테스트를 수행하기 전에 끝난다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'프로미스 활용하기'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> fetchData(<span class="literal">true</span>).then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">        expect(data).toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Promise-Catch-테스트-하기"><a href="#Promise-Catch-테스트-하기" class="headerlink" title="Promise Catch 테스트 하기"></a>Promise Catch 테스트 하기</h2><p>promise의 reject 또한 테스트 할수 있다. 이경우에는 then 대신에 catch를 활용한다. catch 내부에서 테스트 할 코드를 작성한다. 이때 <code>expect.assertions(에러 발생한 횟수)</code>를 테스트 위에 적어주지 않으면 테스트는 정상적으로 실행되지 못하고 완료되어 버린다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'프로미스 catch 테스트하기'</span>, () =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> fetchData(<span class="literal">false</span>).catch(<span class="function">(<span class="params">e</span>) =&gt;</span> expect(e).toMatch(<span class="string">'error'</span>));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Matchers인-resolves를-활용하기"><a href="#Matchers인-resolves를-활용하기" class="headerlink" title="Matchers인 resolves를 활용하기"></a>Matchers인 resolves를 활용하기</h2><p>promise then 대신에 Jest에서 제공하는 Matchers 중에 하나인 resolves를 활용할수도 있다. expect에 promise를 넘겨준다. 이때 여전히 return을 사용하여야 한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'resolves 사용하기'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> expect(fetchData(<span class="literal">true</span>)).resolves.toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Matchers인-rejects를-활용하기"><a href="#Matchers인-rejects를-활용하기" class="headerlink" title="Matchers인 rejects를 활용하기"></a>Matchers인 rejects를 활용하기</h2><p>promise catch 대신에 Jest에서 제공하는 Matchers 중에 하나인 rejects를 활용 할수도 있다. 사용 방법은 resolves와 유사하다. 이때 promise catch와 async와는 달리 <code>expect.assertions</code>를 사용하지 않아도 된다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'rejects 활용하기'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> expect(fetchData(<span class="literal">false</span>)).rejects.toBe(<span class="string">'error'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="async와-await를-활용하기"><a href="#async와-await를-활용하기" class="headerlink" title="async와 await를 활용하기"></a>async와 await를 활용하기</h2><p>es6에서 제공하는 비동기 방법인 async와 await를 활용해서도 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'async와 await를 활용하기'</span>, <span class="keyword">async</span>() =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> data = <span class="keyword">await</span> fetchData(<span class="literal">true</span>);</span><br><span class="line">    expect(data).toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">test(<span class="string">'async와 await를 활용하기'</span>, <span class="keyword">async</span>() =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> fetchData(<span class="literal">false</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        expect(e).toMatch(<span class="string">'error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/jest-async/" rel="tag">jest-async</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/26/jest-before-after/"
+                    data-tooltip="Jest에서 Before, After 사용하기"
+                    aria-label="PREVIOUS: Jest에서 Before, After 사용하기"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/24/es6-spread/"
+                    data-tooltip="전개 연산자의 사용"
+                    aria-label="NEXT: 전개 연산자의 사용"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/26/jest-async/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/26/jest-async/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/26/jest-async/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Moon Star. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/26/jest-before-after/"
+                    data-tooltip="Jest에서 Before, After 사용하기"
+                    aria-label="PREVIOUS: Jest에서 Before, After 사용하기"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/24/es6-spread/"
+                    data-tooltip="전개 연산자의 사용"
+                    aria-label="NEXT: 전개 연산자의 사용"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/26/jest-async/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/26/jest-async/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/26/jest-async/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/26/jest-async/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/26/jest-async/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/26/jest-async/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Moon Star</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

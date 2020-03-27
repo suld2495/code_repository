@@ -215,6 +215,126 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/03/06/vue-test-component/"
+                            aria-label=": Vue 컴포넌트 테스트 하기"
+                        >
+                            Vue 컴포넌트 테스트 하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-06T20:59:52+09:00">
+	
+		    Mar 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/06/vue-test-component/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/06/vue-jest-component/"
+                            aria-label=": Vue Test Utils 이용한 컴포넌트 테스트"
+                        >
+                            Vue Test Utils 이용한 컴포넌트 테스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-06T20:41:54+09:00">
+	
+		    Mar 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="new-Vue를-이용한-컴포넌트-테스트"><a href="#new-Vue를-이용한-컴포넌트-테스트" class="headerlink" title="new Vue를 이용한 컴포넌트 테스트"></a>new Vue를 이용한 컴포넌트 테스트</h2><p>아래의 방법은 실제로 컴포넌트를 생성하여 테스트 하는 방법입니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- HelloWorld.js --&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; message &#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      message: &quot;Hello&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// helloworld.test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">'../components/HelloWorld.vue'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="function">(<span class="params"><span class="string">'HelloWorld'</span></span>), <span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    it(<span class="string">'new Vue를 이용한 테스트'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> helloWorld = <span class="keyword">new</span> Vue(HelloWorld).$mount();</span><br><span class="line">        <span class="keyword">const</span> message = <span class="string">'Hello'</span>;</span><br><span class="line">        expect(helloWorld.message).toBe(message);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Vue-Test-Utils-이용한-컴포넌트-테스트"><a href="#Vue-Test-Utils-이용한-컴포넌트-테스트" class="headerlink" title="Vue Test Utils 이용한 컴포넌트 테스트"></a>Vue Test Utils 이용한 컴포넌트 테스트</h2><p>Vue Test Utils에서 제공 하는 mount 함수를 이용해서 좀더 간편 하게 테스트를 할수 있습니다.<br>message에 접근 하기 위해서 vm 프로퍼티를 이용한다는게 다릅니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// helloworld.test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; mount &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">'../components/HelloWorld.vue'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="function">(<span class="params"><span class="string">'HelloWorld'</span></span>), <span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    it(<span class="string">'new Vue를 이용한 테스트'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> wrapper = mount(HelloWorld);</span><br><span class="line">        <span class="keyword">const</span> message = <span class="string">'Hello'</span>;</span><br><span class="line">        expect(wrapper.vm.message).toBe(message);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/06/vue-jest-component/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/03/06/vue-jest-error/"
                             aria-label=": Vue Jest 에러 및 테스트를 위한 기본 라이브러리 정보"
                         >
@@ -811,175 +931,6 @@
                         <p>
                             <a
                                 href="/2020/01/14/spring-property-load/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/01/14/spring-validation/"
-                            aria-label=": 스프링 벨리데이션"
-                        >
-                            스프링 벨리데이션
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-01-14T19:30:17+09:00">
-	
-		    Jan 14, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Validation-추상화"><a href="#Validation-추상화" class="headerlink" title="Validation 추상화"></a>Validation 추상화</h2><p>Validator 인터페이스는 어플리케이션에서 사용하는 객체 검증용 인터페이스 입니다. 어떠한 계층과도 관계가 없이 사용할수 있습니다. 주로 웹에서 많이 사용되지만 서비스, 데이터 어디에서도 사용해도 좋습니다.</p>
-<h4 id="구현해야-하는-메소드"><a href="#구현해야-하는-메소드" class="headerlink" title="구현해야 하는 메소드"></a>구현해야 하는 메소드</h4><p>Validator을 구현하는 클래스는 두개의 메소드를 오버라이딩 해야 합니다.</p>
-<h5 id="1-supports"><a href="#1-supports" class="headerlink" title="1. supports"></a>1. supports</h5><p>객체를 검증 할 때 Validator가 검증 할수 있는 클래스인지를 판단하는 로직을 구현하는 메소드입니다. 반환값이 true 이면 검증할수 있다고 판단합니다.</p>
-<h5 id="2-validate"><a href="#2-validate" class="headerlink" title="2. validate"></a>2. validate</h5><p>실제 검증 로직이 이루어지는 메소드입니다.</p>
-<br>
-
-<h5 id="Validator-클래스-예제"><a href="#Validator-클래스-예제" class="headerlink" title="Validator 클래스 예제"></a>Validator 클래스 예제</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventValidator</span> <span class="keyword">implements</span> <span class="title">Validator</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Event<span class="class">.<span class="keyword">class</span>.<span class="title">equals</span>(<span class="title">clazz</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validate</span><span class="params">(Object target, Errors errors)</span> </span>&#123;</span><br><span class="line">        ValidationUtils.rejectIfEmptyOrWhitespace(errors, <span class="string">"title"</span>, <span class="string">"not empty"</span>, <span class="string">"Title must not be null"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Event</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTitle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTitle</span><span class="params">(String title)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.title = title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<br>
-
-<h5 id="ValidationUtils를-사용해서-검증-로직-구현"><a href="#ValidationUtils를-사용해서-검증-로직-구현" class="headerlink" title="ValidationUtils를 사용해서 검증 로직 구현"></a>ValidationUtils를 사용해서 검증 로직 구현</h5><p>스프링에서 제공하는 검증 유틸인 ValidationUtils를 사용해서 검증을 할수 있습니다.</p>
-<p>아래 코드는 값이 null 이거나 빈값이거나 길이값이 0인 경우 에러로 처리해줍니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ValidationUtils.rejectIfEmptyOrWhitespace(Errors인스턴스, 필드명, 에러코드, 에러발생시 출력할 메시지)</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="ValidationUtils를-사용하지-않고-검증-로직-직접-구현"><a href="#ValidationUtils를-사용하지-않고-검증-로직-직접-구현" class="headerlink" title="ValidationUtils를 사용하지 않고 검증 로직 직접 구현"></a>ValidationUtils를 사용하지 않고 검증 로직 직접 구현</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventValidator</span> <span class="keyword">implements</span> <span class="title">Validator</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Event<span class="class">.<span class="keyword">class</span>.<span class="title">equals</span>(<span class="title">clazz</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validate</span><span class="params">(Object target, Errors errors)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (target == <span class="keyword">null</span> || <span class="string">""</span>.equals(target.getTitle())) &#123;</span><br><span class="line">            errors.reject(필드명, 에러코드명, 에러발생시 출력할 메시지);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h5 id="테스트-코드"><a href="#테스트-코드" class="headerlink" title="테스트 코드"></a>테스트 코드</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidationTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testValidation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Event event = <span class="keyword">new</span> Event();                              <span class="comment">// 타겟 객체</span></span><br><span class="line">        EventValidator eventValidator = <span class="keyword">new</span> EventValidator();   <span class="comment">// 검증 Validator</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// BeanPropertyBindingResult는 Erros와 BindingResult의 구현체로써 보통은 웹에서는 MVC가 해당 객체를 생성하기 때문에 직접 생성할 일은 적다.</span></span><br><span class="line">        Errors errors = <span class="keyword">new</span> BeanPropertyBindingResult(event, <span class="string">"event"</span>);  </span><br><span class="line"></span><br><span class="line">        eventValidator.validate(event, errors);                 <span class="comment">// 타겟 객체를 검증</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (ObjectError error : errors.getAllErrors()) &#123;       <span class="comment">// 타겟 객체에서 Validation을 통과 못한 모든 에러를 가져옴(errors.getAllErrors)</span></span><br><span class="line">            System.out.println(<span class="string">"=== error code ==="</span>);</span><br><span class="line">            System.out.println(Arrays.toString(error.getCodes()));</span><br><span class="line">            System.out.println(error.getDefaultMessage());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventValidator</span> <span class="keyword">implements</span> <span class="title">Validator</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Event<span class="class">.<span class="keyword">class</span>.<span class="title">equals</span>(<span class="title">clazz</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validate</span><span class="params">(Object target, Errors errors)</span> </span>&#123;</span><br><span class="line">        Event event = (Event) target;</span><br><span class="line"></span><br><span class="line">        ValidationUtils.rejectIfEmptyOrWhitespace(errors, <span class="string">"title"</span>, <span class="string">"not empty"</span>, <span class="string">"Title must not be null"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (event.getName() == <span class="keyword">null</span> || <span class="string">""</span>.equals(event.getName())) &#123;</span><br><span class="line">            errors.rejectValue(<span class="string">"name"</span>, <span class="string">"not empty"</span>, <span class="string">"Name must not be null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h3 id="어노테이션을-이용한-검증"><a href="#어노테이션을-이용한-검증" class="headerlink" title="어노테이션을 이용한 검증"></a>어노테이션을 이용한 검증</h3><p>위의 방식은 복잡한 검증 로직을 구현할 때는 사용하나 빈값체크, Max, Min 값 체크 등 간단한 Validation은 어노테이션을 통해서 검증을 할수 있습니다.</p>
-<h5 id="타겟-객체"><a href="#타겟-객체" class="headerlink" title="타겟 객체"></a>타겟 객체</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Event</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Integer id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotEmpty</span></span><br><span class="line">    String title;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTitle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTitle</span><span class="params">(String title)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.title = title;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="테스트-코드-1"><a href="#테스트-코드-1" class="headerlink" title="테스트 코드"></a>테스트 코드</h6><p>직접 Validator를 구현하지 않고 어노테이션을 사용해서 간편한 검증 작업을 진행 할수 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidationTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testValidation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Event event = <span class="keyword">new</span> Event();</span><br><span class="line">        event.setEmail(<span class="string">"aaa2"</span>);</span><br><span class="line"></span><br><span class="line">        Errors errors = <span class="keyword">new</span> BeanPropertyBindingResult(event, <span class="string">"event"</span>);  </span><br><span class="line"></span><br><span class="line">        eventValidator.validate(event, errors);                 </span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (ObjectError error : errors.getAllErrors()) &#123;       </span><br><span class="line">            System.out.println(<span class="string">"=== error code ==="</span>);</span><br><span class="line">            System.out.println(Arrays.toString(error.getCodes()));</span><br><span class="line">            System.out.println(error.getDefaultMessage());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h5><p>Validation 어노테이션을 사용하기 위해서는 아래의 두개의 dependency를 추가해 주어야 합니다.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.validation<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>validation-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.0.Final<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hibernate<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hibernate-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.3.11.Final<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/01/14/spring-validation/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/01/13/server-remote-debugging/"
-                            aria-label=": 원격 서버 디버깅"
-                        >
-                            원격 서버 디버깅
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-01-13T11:23:40+09:00">
-	
-		    Jan 13, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/server/">server</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="톰캣-원격-서버-디버깅"><a href="#톰캣-원격-서버-디버깅" class="headerlink" title="톰캣 원격 서버 디버깅"></a>톰캣 원격 서버 디버깅</h2><p>로컬에서 IDE를 통해서 서버에 접속하면 편하게 디버깅 작업을 진행 할수 있습니다. 하지만 원격 서버에 설치 된 서버를 실행했을 때는 디버깅이 되지 않아 오류가 발생 했을 때 어떤 문제가 발생했는지 정확히 파악하기가 쉽지 않습니다.<br><br><br> 그래서 톰캣 서버를 사용 하는 경우에 원격 서버 디버깅 하는 방법에 대해서 알아보겠습니다. </p>
-<blockquote>
-<p>윈도우 서버를 기준으로 작성되었습니다.</p>
-</blockquote>
-<br>
-
-<h4 id="톰캣-설정"><a href="#톰캣-설정" class="headerlink" title="톰캣 설정"></a>톰캣 설정</h4><p>catalina.bat 파일을 열어서 아래의 코드를 추가 해줍니다. 아래에서 address는 디버깅 때 사용 할 포트로써 사용가능한 포트 번호를 입력해줍니다. 그리고 접속할수 있도록 인바운드/아웃바운드 규칙에 포트를 추가해줍니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set JPDA_OPTS&#x3D;-agentlib:jdwp&#x3D;transport&#x3D;dt_socket,address&#x3D;8888,server&#x3D;y,suspend&#x3D;n</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="톰캣-서버-시작"><a href="#톰캣-서버-시작" class="headerlink" title="톰캣 서버 시작"></a>톰캣 서버 시작</h4><p>디버깅을 하기 위해서는 jpda를 이용해야 하기 때문에 톰캣 서버를 시작 할때 아래의 명령어로 시작 합니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catalina.bat jpda start</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="인텔리제이-설정"><a href="#인텔리제이-설정" class="headerlink" title="인텔리제이 설정"></a>인텔리제이 설정</h4><p>단축키는 Alt + Shift + F10 후에 0번 입력 또는 Run/Debug Configurations 팝업을 오픈합니다.<br><br><br>아래 이미지와 같이 remote를 추가해 줍니다.</p>
-<p><img src="/image/intellij_remote_add.png" alt=""></p>
-<br>
-아래 이미지와 같이 원격 IP와 위에서 톰캣에 작성했었던 디버깅 포트 번호를 입력해 줍니다.
-
-<p><img src="/image/intellij_remote_setting.png" alt=""></p>
-<br>
-
-<h4 id="사용"><a href="#사용" class="headerlink" title="사용"></a>사용</h4><p>디버깅 적용은 로컬에 저장되어 있는 소스코드에 디비깅을 사용합니다. 그렇기 때문에 원격 서버의 소스와 로컬의 소스코드가 일치해야 합니다.</p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/01/13/server-remote-debugging/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

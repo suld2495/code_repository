@@ -215,6 +215,134 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2019/12/18/vue-terms/"
+                            aria-label=": 뷰 기본용어(2)"
+                        >
+                            뷰 기본용어(2)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-18T21:40:08+09:00">
+	
+		    Dec 18, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EA%B8%B0%EB%B3%B8%EB%AC%B8%EB%B2%95/">vue 기본문법</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="1-데이터-바인딩"><a href="#1-데이터-바인딩" class="headerlink" title="1. 데이터 바인딩"></a>1. 데이터 바인딩</h2><p>데이터 바인딩이란 HTML 화면 요소를 뷰 인스턴스의 데이터와 연결하는 것을 말합니다. 데이터 바인딩 방법에는 v-bind, v-model등이 존재 합니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; 변수 &#125;&#125; 또한 바인딩에서 사용</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-디렉티브"><a href="#2-디렉티브" class="headerlink" title="2. 디렉티브"></a>2. 디렉티브</h2><p>디렉티브란 v- 접두사를 가지는 모든 속성들을 의미합니다.</p>
+<h4 id="디렉티브-종류"><a href="#디렉티브-종류" class="headerlink" title="디렉티브 종류"></a>디렉티브 종류</h4><pre><code>1. v-if
+2. v-show 
+3. v-for
+4. v-bind
+5. v-model
+6. v-on</code></pre>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/18/vue-terms/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/12/18/vue-start/"
+                            aria-label=": 뷰 시작하기(1)"
+                        >
+                            뷰 시작하기(1)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-12-18T21:18:37+09:00">
+	
+		    Dec 18, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%EA%B8%B0%EB%B3%B8%EB%AC%B8%EB%B2%95/">vue 기본문법</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>Vue를 구성하는 기본적인 코드이다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span>&#123;&#123;message&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div"</span>&gt;</span>&#123;&#123;message&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/vue"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="actionscript">        el: <span class="string">'#app'</span>,</span></span><br><span class="line">        data: &#123;</span><br><span class="line"><span class="actionscript">            message : <span class="string">'안녕하세요. vue의 세계에 오신걸 환영합니다.'</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<iframe scrolling="no" width="100%" height="300" src="https://jsfiddle.net/suld2495/zh0sn6c3/embedded/result,html/dark" frameborder="0" loading="lazy" allowfullscreen></iframe>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 먼저 new Vue()를 통해서 vue 인스턴스를 생성 할 수 있습니다.</span><br><span class="line">2. vue 인스턴스를 생성시에 옵션을 줄수있습니다</span><br><span class="line">    - el은 vue와 연결할 돔의 타겟을 설정 합니다.</span><br><span class="line">    - data속성은 vue 인스턴스의 데이터를 설정 할수있습니다.</span><br><span class="line">    - &#123;&#123;&#125;&#125;를 이용하여 vue 인스턴스와 HTML을 바인딩 하여 data속성 중 message의 값을 설정하였습니다.  </span><br><span class="line">      그래서 타겟 영역 안에 있는 &#123;&#123;message&#125;&#125;는 &#39;안녕하세요. vue의 세계에 오신걸 환영합니다.&#39;로 바뀐것을 확인 할수 있습니다.</span><br><span class="line">      하지만 타겟 영영 밖에 있는 곳은 데이터 바인딩 처리가 되지 않아 문자 그대로 &#123;&#123;message&#125;&#125;가 출력 된것을 확인 할수 있습니다.</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/12/18/vue-start/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2019/12/17/index/"
                             aria-label=": index"
                         >

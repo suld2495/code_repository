@@ -216,6 +216,180 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/03/26/jest-before-after/"
+                            aria-label=": Jest에서 Before, After 사용하기"
+                        >
+                            Jest에서 Before, After 사용하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-26T21:41:18+09:00">
+	
+		    Mar 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="before-after-사용하기"><a href="#before-after-사용하기" class="headerlink" title="before, after 사용하기"></a>before, after 사용하기</h2><p>Jest에서는 before와 after를 활용해서 테스트 전후에 실행할 코드를 작성 할 수 있습니다.</p>
+<br>
+
+<h2 id="beforeEach와-afterEach"><a href="#beforeEach와-afterEach" class="headerlink" title="beforeEach와 afterEach"></a>beforeEach와 afterEach</h2><p><code>beforeEach</code>는 테스트가 실행 되기전 <code>afterEach</code>는 테스트가 실행 된 후 실행이 됩니다. 단어 Each에서도 유추할수 있듯이 각각의 테스트가 실행되기 전후에 모두 실행이된다. 예를 들어 3개의 테스트가 있으면 beforeEach 또한 3번 호출된다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'테스트 전 실행 됨'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">afterEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'테스트 후 실행 돔'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">    test(<span class="string">`테스트<span class="subst">$&#123;i&#125;</span>`</span>, (<span class="function">(<span class="params">i</span>) =&gt;</span> <span class="function">(<span class="params">(</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`테스트<span class="subst">$&#123;i&#125;</span>`</span>);</span><br><span class="line">    &#125;))(i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="비동기-사용하기"><a href="#비동기-사용하기" class="headerlink" title="비동기 사용하기"></a>비동기 사용하기</h2><p>before, after에서도 비동기를 사용할수 있다. <a href="jest-async.md">Jest 비동기</a>를 통해서 Jest의 비동기 사용법을 알수 있다. 여기에서도 promise를 반환해주면 비동기를 사용할수 있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'비동기 사용'</span>);</span><br><span class="line">            resolve();</span><br><span class="line">        &#125;, <span class="number">500</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> asyncFn();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>async, await를 통해서도 비동기를 사용할수 있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beforeEach(<span class="keyword">async</span>() =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> asyncFn();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="오직-한번만-실행-하기"><a href="#오직-한번만-실행-하기" class="headerlink" title="오직 한번만 실행 하기"></a>오직 한번만 실행 하기</h2><p>before와 after를 테스트 파일에서 오직 한번 만 사용하기 위해서는 <code>beforeAll</code>와 <code>afterAll</code>를 사용하면 된다. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">beforeAll(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'테스트 전 오직 한번만 실행된다.'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">afterAll(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'테스트 후 한번만 호출된다.'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="describe-내부에서의-before-after-사용하기"><a href="#describe-내부에서의-before-after-사용하기" class="headerlink" title="describe 내부에서의 before, after 사용하기"></a>describe 내부에서의 before, after 사용하기</h2><p>describe 내부에서 before와 after를 사용하는 경우에는 describe 내부의 테스트가 호출 될 경우에만 호출된다. 하지만 describe 외부의 before와 after는 describe 내부의 test를 포함한 테스트 파일 전체의 test가 호출 될때 호출이 된다.</p>
+<br>
+
+<h2 id="test-only-사용하기"><a href="#test-only-사용하기" class="headerlink" title="test.only 사용하기"></a>test.only 사용하기</h2><p>테스트가 실패할때 가장 먼저 확인 해봐야 할것은 테스트 케이스가 오직 실패하는 케이스만 실행 했을때에도 실패하는지 이다.<br>이를 위해서 test.only를 사용하면 다른 테스트는 스킵하고 해당 테스트만 실행된다. 이때 스킵되는 테스트는 test.only가 존재하는 테스트 파일에 한해서이다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test.only(<span class="string">''</span>, () =&gt; &#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/26/jest-before-after/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/26/jest-async/"
+                            aria-label=": Jest로 비동기 테스트 하기"
+                        >
+                            Jest로 비동기 테스트 하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-26T21:18:04+09:00">
+	
+		    Mar 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="비동기에서-사용할-함수"><a href="#비동기에서-사용할-함수" class="headerlink" title="비동기에서 사용할 함수"></a>비동기에서 사용할 함수</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params">check</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">typeof</span> check === <span class="string">'function'</span> ? check() : check ? resolve(<span class="string">'peanut butter'</span>) : reject(<span class="string">'error'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="콜백을-이용한-비동기-테스트-해보기"><a href="#콜백을-이용한-비동기-테스트-해보기" class="headerlink" title="콜백을 이용한 비동기 테스트 해보기"></a>콜백을 이용한 비동기 테스트 해보기</h2><p>일반적인 상황에서 비동기를 사용하는 보편적인 방법 중 하나는 콜백을 사용하는 것이다. 하지만 Jest에서 테스트 할때는 의도대로 작동 하지 않는다.<br>Jest 테스트는 콜백을 호출할때까지 기다려주지 않는다. 테스트 함수 내에서 마지막 코드까지 실행을 하게되면 테스트를 완료하게 된다. 그래서 항상 테스트가 통과하게 된다. 테스트 실패하도록 값을 변경하여도 통과하는 것을 확인 할수있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'비동기를 콜백 활용하기 - 실패'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        expect(data).toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fetchData(callback);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="파라미터-done을-활용한-비동기-테스트"><a href="#파라미터-done을-활용한-비동기-테스트" class="headerlink" title="파라미터 done을 활용한 비동기 테스트"></a>파라미터 done을 활용한 비동기 테스트</h2><p>done을 파라미터로 받은 경우에는 Jest에서는 done 함수가 호출 될때까지 테스트를 완료하지 않고 기다린다. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'done을 활용하기'</span>, (done) =&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            expect(data).toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">            done();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            done(error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fetchData(callback);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Promise-활용-하기"><a href="#Promise-활용-하기" class="headerlink" title="Promise 활용 하기"></a>Promise 활용 하기</h2><p>비동기로 promise를 사용하는 경우에는 훨씐 간편하게 작성 할수 있다. promise를 리턴해주면 테스트가 정상적으로 작동하는 것을 확인할수 있다. 이때 promise를 리턴하지 않으면 테스트를 수행하기 전에 끝난다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'프로미스 활용하기'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> fetchData(<span class="literal">true</span>).then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">        expect(data).toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Promise-Catch-테스트-하기"><a href="#Promise-Catch-테스트-하기" class="headerlink" title="Promise Catch 테스트 하기"></a>Promise Catch 테스트 하기</h2><p>promise의 reject 또한 테스트 할수 있다. 이경우에는 then 대신에 catch를 활용한다. catch 내부에서 테스트 할 코드를 작성한다. 이때 <code>expect.assertions(에러 발생한 횟수)</code>를 테스트 위에 적어주지 않으면 테스트는 정상적으로 실행되지 못하고 완료되어 버린다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'프로미스 catch 테스트하기'</span>, () =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> fetchData(<span class="literal">false</span>).catch(<span class="function">(<span class="params">e</span>) =&gt;</span> expect(e).toMatch(<span class="string">'error'</span>));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Matchers인-resolves를-활용하기"><a href="#Matchers인-resolves를-활용하기" class="headerlink" title="Matchers인 resolves를 활용하기"></a>Matchers인 resolves를 활용하기</h2><p>promise then 대신에 Jest에서 제공하는 Matchers 중에 하나인 resolves를 활용할수도 있다. expect에 promise를 넘겨준다. 이때 여전히 return을 사용하여야 한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'resolves 사용하기'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> expect(fetchData(<span class="literal">true</span>)).resolves.toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Matchers인-rejects를-활용하기"><a href="#Matchers인-rejects를-활용하기" class="headerlink" title="Matchers인 rejects를 활용하기"></a>Matchers인 rejects를 활용하기</h2><p>promise catch 대신에 Jest에서 제공하는 Matchers 중에 하나인 rejects를 활용 할수도 있다. 사용 방법은 resolves와 유사하다. 이때 promise catch와 async와는 달리 <code>expect.assertions</code>를 사용하지 않아도 된다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'rejects 활용하기'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> expect(fetchData(<span class="literal">false</span>)).rejects.toBe(<span class="string">'error'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="async와-await를-활용하기"><a href="#async와-await를-활용하기" class="headerlink" title="async와 await를 활용하기"></a>async와 await를 활용하기</h2><p>es6에서 제공하는 비동기 방법인 async와 await를 활용해서도 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'async와 await를 활용하기'</span>, <span class="keyword">async</span>() =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> data = <span class="keyword">await</span> fetchData(<span class="literal">true</span>);</span><br><span class="line">    expect(data).toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">test(<span class="string">'async와 await를 활용하기'</span>, <span class="keyword">async</span>() =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> fetchData(<span class="literal">false</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        expect(e).toMatch(<span class="string">'error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/26/jest-async/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/03/24/es6-spread/"
                             aria-label=": 전개 연산자의 사용"
                         >
@@ -859,126 +1033,6 @@
                         <p>
                             <a
                                 href="/2020/03/06/vue-asynchronous/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/03/06/vue-test-component/"
-                            aria-label=": Vue 컴포넌트 테스트 하기"
-                        >
-                            Vue 컴포넌트 테스트 하기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-03-06T20:59:52+09:00">
-	
-		    Mar 06, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id=""><a href="#" class="headerlink" title=""></a></h2>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/03/06/vue-test-component/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/03/06/vue-jest-component/"
-                            aria-label=": Vue Test Utils 이용한 컴포넌트 테스트"
-                        >
-                            Vue Test Utils 이용한 컴포넌트 테스트
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-03-06T20:41:54+09:00">
-	
-		    Mar 06, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="new-Vue를-이용한-컴포넌트-테스트"><a href="#new-Vue를-이용한-컴포넌트-테스트" class="headerlink" title="new Vue를 이용한 컴포넌트 테스트"></a>new Vue를 이용한 컴포넌트 테스트</h2><p>아래의 방법은 실제로 컴포넌트를 생성하여 테스트 하는 방법입니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- HelloWorld.js --&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; message &#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      message: &quot;Hello&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// helloworld.test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">'../components/HelloWorld.vue'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="function">(<span class="params"><span class="string">'HelloWorld'</span></span>), <span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    it(<span class="string">'new Vue를 이용한 테스트'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> helloWorld = <span class="keyword">new</span> Vue(HelloWorld).$mount();</span><br><span class="line">        <span class="keyword">const</span> message = <span class="string">'Hello'</span>;</span><br><span class="line">        expect(helloWorld.message).toBe(message);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="Vue-Test-Utils-이용한-컴포넌트-테스트"><a href="#Vue-Test-Utils-이용한-컴포넌트-테스트" class="headerlink" title="Vue Test Utils 이용한 컴포넌트 테스트"></a>Vue Test Utils 이용한 컴포넌트 테스트</h2><p>Vue Test Utils에서 제공 하는 mount 함수를 이용해서 좀더 간편 하게 테스트를 할수 있습니다.<br>message에 접근 하기 위해서 vm 프로퍼티를 이용한다는게 다릅니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// helloworld.test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; mount &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">'../components/HelloWorld.vue'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="function">(<span class="params"><span class="string">'HelloWorld'</span></span>), <span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    it(<span class="string">'new Vue를 이용한 테스트'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> wrapper = mount(HelloWorld);</span><br><span class="line">        <span class="keyword">const</span> message = <span class="string">'Hello'</span>;</span><br><span class="line">        expect(wrapper.vm.message).toBe(message);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/03/06/vue-jest-component/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
