@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="">
+    <title>바벨에서 폴리필 사용 - null</title>
+    <meta name="author" content="Moon Star">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"폴리필을 써야 하는 이유바벨의 플러그인인 es5로 변환할수 있는 것만 변경해준다. es5에 이미 존재 했었던 개념은 플러그인으로 변경이 가능하지만 ECMAScript2015+에서 새롭게 등장한 개념은 플러그인을 통해서 변경이 되지 않는다.예를 들어 화살표 함수의 경우에는 일반 함수로 변경이 가능하지만, Promise같은 새로운 개념은 변경이 안된다.그래서 이렇게 새롭게 등장한 개념에 대한 변경이 가능하도록 폴리필이라고 부르는 코드조각을 추가해서 해결하게 된다.폴리필로 사용되는 것중 하나에 core-js가 존재한다.\n12345678910111213141516// babel.config.jsmodule.exports = &#123;    presets: [        ['@babel/preset-env', &#123;            targets: &#123;                chrome: 79,                ie: 11            &#125;,            useBuiltIns: 'usage',    // 폴리필을 쓰겠다.            corejs: &#123;                // 폴리필로 corejs를 쓰겠다.                version: 2            &#125;        &#125;]    ]&#125;\n\n\nuseBuiltIns: 어떠한 방식으로 폴리필을 사용하지에 대한 옵션으로, value에 ‘usage’를 주면 코드상에서 사용이 되는 폴리필만 import 하도록 해준다.\ncorejs: 폴리필시에 사용되는 파일로써 version을 옵션으로 사용하고자 하는 버전을 선택가능하다.\n\n\n\n웹팩에서 바벨 사용하기실무환경에서는 바벨을 따로 사용하지 않고 웹팩을 통해서 사용하게 된다. 보통은 바벨은 로더 형태로 제공된다(babel-loader).\n1npm install -D babel-loader\n\n12345&#123;    test: /\\.js$/,    loader: 'babel-loader',    exclude: /node_modules/     // node_modlues에도 js가 있어서 제외 시켜준다&#125;","dateCreated":"2020-03-30T21:53:42+09:00","dateModified":"2020-03-30T22:24:47+09:00","datePublished":"2020-03-30T21:53:42+09:00","description":"","headline":"바벨에서 폴리필 사용","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/","keywords":"babel, babel-polyfill"}</script>
+    <meta name="description" content="폴리필을 써야 하는 이유바벨의 플러그인인 es5로 변환할수 있는 것만 변경해준다. es5에 이미 존재 했었던 개념은 플러그인으로 변경이 가능하지만 ECMAScript2015+에서 새롭게 등장한 개념은 플러그인을 통해서 변경이 되지 않는다.예를 들어 화살표 함수의 경우에는 일반 함수로 변경이 가능하지만, Promise같은 새로운 개념은 변경이 안된다.그래서">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="바벨에서 폴리필 사용">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2020&#x2F;03&#x2F;30&#x2F;front-setting-babel-polyfill&#x2F;index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="폴리필을 써야 하는 이유바벨의 플러그인인 es5로 변환할수 있는 것만 변경해준다. es5에 이미 존재 했었던 개념은 플러그인으로 변경이 가능하지만 ECMAScript2015+에서 새롭게 등장한 개념은 플러그인을 통해서 변경이 되지 않는다.예를 들어 화살표 함수의 경우에는 일반 함수로 변경이 가능하지만, Promise같은 새로운 개념은 변경이 안된다.그래서">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-30T12:53:42.000Z">
+<meta property="article:modified_time" content="2020-03-30T13:24:47.857Z">
+<meta property="article:author" content="Moon Star">
+<meta property="article:tag" content="babel">
+<meta property="article:tag" content="babel-polyfill">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/%20"
+                            
+                            title="홈"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="카테고리"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="태그"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="아카이브"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="검색"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            바벨에서 폴리필 사용
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-03-30T21:53:42+09:00">
+	
+		    Mar 30, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/front-settings/">front-settings</a>, <a class="category-link" href="/categories/javascript/front-settings/babel/">babel</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="폴리필을-써야-하는-이유"><a href="#폴리필을-써야-하는-이유" class="headerlink" title="폴리필을 써야 하는 이유"></a>폴리필을 써야 하는 이유</h2><p>바벨의 플러그인인 es5로 변환할수 있는 것만 변경해준다. es5에 이미 존재 했었던 개념은 플러그인으로 변경이 가능하지만 ECMAScript2015+에서 새롭게 등장한 개념은 플러그인을 통해서 변경이 되지 않는다.<br>예를 들어 화살표 함수의 경우에는 일반 함수로 변경이 가능하지만, Promise같은 새로운 개념은 변경이 안된다.<br>그래서 이렇게 새롭게 등장한 개념에 대한 변경이 가능하도록 폴리필이라고 부르는 코드조각을 추가해서 해결하게 된다.<br>폴리필로 사용되는 것중 하나에 core-js가 존재한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// babel.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    presets: [</span><br><span class="line">        [<span class="string">'@babel/preset-env'</span>, &#123;</span><br><span class="line">            targets: &#123;</span><br><span class="line">                chrome: <span class="number">79</span>,</span><br><span class="line">                ie: <span class="number">11</span></span><br><span class="line">            &#125;,</span><br><span class="line">            useBuiltIns: <span class="string">'usage'</span>,    <span class="comment">// 폴리필을 쓰겠다.</span></span><br><span class="line">            corejs: &#123;                <span class="comment">// 폴리필로 corejs를 쓰겠다.</span></span><br><span class="line">                version: <span class="number">2</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>useBuiltIns</code>: 어떠한 방식으로 폴리필을 사용하지에 대한 옵션으로, value에 ‘usage’를 주면 코드상에서 사용이 되는 폴리필만 import 하도록 해준다.</li>
+<li><code>corejs</code>: 폴리필시에 사용되는 파일로써 version을 옵션으로 사용하고자 하는 버전을 선택가능하다.</li>
+</ul>
+<br>
+
+<h2 id="웹팩에서-바벨-사용하기"><a href="#웹팩에서-바벨-사용하기" class="headerlink" title="웹팩에서 바벨 사용하기"></a>웹팩에서 바벨 사용하기</h2><p>실무환경에서는 바벨을 따로 사용하지 않고 웹팩을 통해서 사용하게 된다. 보통은 바벨은 로더 형태로 제공된다(babel-loader).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D babel-loader</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">    loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">    exclude: <span class="regexp">/node_modules/</span>     <span class="comment">// node_modlues에도 js가 있어서 제외 시켜준다</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/babel/" rel="tag">babel</a> <a class="tag tag--primary tag--small t-link" href="/tags/babel-polyfill/" rel="tag">babel-polyfill</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/30/front-setting-babel/"
+                    data-tooltip="바벨"
+                    aria-label="NEXT: 바벨"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Moon Star. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/30/front-setting-babel/"
+                    data-tooltip="바벨"
+                    aria-label="NEXT: 바벨"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/30/front-setting-babel-polyfill/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Moon Star</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

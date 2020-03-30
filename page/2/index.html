@@ -215,6 +215,583 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/03/14/vuex-test-md/"
+                            aria-label=": Vuex를 사용한 테스트"
+                        >
+                            Vuex를 사용한 테스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-14T11:35:32+09:00">
+	
+		    Mar 14, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/vue-test-utils/">vue-test-utils</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Vuex를-사용하는-컴포넌트-테스트"><a href="#Vuex를-사용하는-컴포넌트-테스트" class="headerlink" title="Vuex를 사용하는 컴포넌트 테스트"></a>Vuex를 사용하는 컴포넌트 테스트</h2><h4 id="actions를-mock-하기"><a href="#actions를-mock-하기" class="headerlink" title="actions를 mock 하기"></a>actions를 mock 하기</h4><p>아래의 컴포넌트는 vuex의 actions를 사용하는 코드이다. Vuex를 사용하는 컴포넌트를 테스트시에 주의해야 할 점은 actions가 어떻게 동작하는지는 중요하지 않다. 우리가 사용하고자 하는 action이 실제로 호출되었는지 여부만 테스트 한다.<br>action이 정확하게 동작하는지 여부는 vuex store 테스트시에 하게 된다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;text-align-center&quot;&gt;</span><br><span class="line">        &lt;input type&#x3D;&quot;text&quot; @input&#x3D;&quot;actionInputIfTrue&quot;&gt;</span><br><span class="line">        &lt;button @click&#x3D;&quot;actionClick()&quot;&gt;Click&lt;&#x2F;button&gt;    </span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script lang&#x3D;&quot;ts&quot;&gt;</span><br><span class="line">import &#123; Component, Vue &#125; from &#39;vue-property-decorator&#39;;</span><br><span class="line">import &#123; mapActions &#125; from &#39;vuex&#39;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">    methods: &#123;</span><br><span class="line">        ...mapActions([&#39;actionClick&#39;])</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">export default class Actions extends Vue &#123;</span><br><span class="line">    actionInputIfTrue(event:any):void &#123;</span><br><span class="line">        const inputValue &#x3D; event.target.value;</span><br><span class="line">        if (inputValue &#x3D;&#x3D;&#x3D; &#39;input&#39;) &#123;</span><br><span class="line">            this.$store.dispatch(&#39;actionInput&#39;, &#123; inputValue &#125;);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue, Wrapper &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"><span class="keyword">import</span> Actions <span class="keyword">from</span> <span class="string">'../Actions.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line"></span><br><span class="line">localVue.use(Vuex);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Actions.vue'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> wrapper:Wrapper&lt;Vue&gt;;</span><br><span class="line">    <span class="keyword">let</span> actions:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> store:<span class="built_in">any</span>;</span><br><span class="line"></span><br><span class="line">    beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        actions = &#123;</span><br><span class="line">            actionClick: jest.fn(),</span><br><span class="line">            actionInput: jest.fn()</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">            actions,</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        wrapper = shallowMount(VuexComponent, &#123; store, localVue &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'dispatches "actionInput" when input event value is "input"'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> input = wrapper.find(<span class="string">'input'</span>);</span><br><span class="line">        input.element.value = <span class="string">'input'</span>;</span><br><span class="line">        input.trigger(<span class="string">'input'</span>);</span><br><span class="line">        expect(actions.actionInput).toHaveBeenCalled();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'does not dispatch "actionInput" when event value is not "input"'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> input = wrapper.find(<span class="string">'input'</span>);</span><br><span class="line">        input.element.value = <span class="string">'no input'</span>;</span><br><span class="line">        input.trigger(<span class="string">'input'</span>);</span><br><span class="line">        expect(actions.actionInput).not.toHaveBeenCalled();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'calls store action "actionClick" when button is clicked'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> button = wrapper.find(<span class="string">'button'</span>);</span><br><span class="line">        button.trigger(<span class="string">'click'</span>);</span><br><span class="line">        expect(actions.actionClick).toHaveBeenCalled();</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><code>첫번째</code> 주의해야 할 점은 테스트 시에는 localVue를 사용해야 한다는 것이다.<br><code>두번째</code> 는 actions를 jest의 mock functions를 사용하여 테스트한다. 이를 이용하면 actions를 실제로 구현하지 않아도 호출되었는지 여부를 확인 할수 있다.<br><code>세번째</code> 는 함수의 호출 여부를 확인 하는 assertion은 <code>toHaveBeenCalled</code>를 사용한다.</p>
+<br>
+
+<h4 id="getters를-mock-하기"><a href="#getters를-mock-하기" class="headerlink" title="getters를 mock 하기"></a>getters를 mock 하기</h4><p>getters도 actions와 마찬가지로 어떻게 동작하는지는 중요하지 않다. getters의 결과가 실제로 렌더링 되는지 여부만 확인 해보면 된다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;p v-if&#x3D;&quot;inputValue&quot;&gt;&#123;&#123;inputValue&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">        &lt;p v-if&#x3D;&quot;clicks&quot;&gt;&#123;&#123;clicks&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    import &#123; mapGetters &#125; from &#39;vuex&#39;</span><br><span class="line"></span><br><span class="line">    @Component(&#123;</span><br><span class="line">        computed: mapGetters([&#39;clicks&#39;, &#39;inputValue&#39;])</span><br><span class="line">    &#125;)</span><br><span class="line">    export default class Getters extends Vue &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue, Wrapper &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"><span class="keyword">import</span> Getters <span class="keyword">from</span> <span class="string">'../Getters.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line"></span><br><span class="line">localVue.use(Vuex);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Getters.vue'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> getters:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> store:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> wrapper:Wrapper&lt;Vue&gt;;</span><br><span class="line"></span><br><span class="line">    beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        getters = &#123;</span><br><span class="line">            clicks: <span class="function"><span class="params">()</span> =&gt;</span> <span class="number">2</span>,</span><br><span class="line">            inputValue: <span class="function"><span class="params">()</span> =&gt;</span> <span class="string">'input'</span></span><br><span class="line">        &#125;;</span><br><span class="line">        store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">            getters</span><br><span class="line">        &#125;);</span><br><span class="line">        wrapper = shallowMount(VuexComponent, &#123; store, localVue &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    it(<span class="string">'Renders "store.getters.inputValue" in first p tag'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        expect(wrapper.find(<span class="string">'.input-value'</span>).text()).toBe(getters.inputValue());</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'Renders "store.getters.clicks" in second p tag'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        expect(wrapper.findAll(<span class="string">'p'</span>).at(<span class="number">1</span>).text()).toBe(getters.clicks().toString());</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><code>첫번째</code> 는 actions와는 달리 getters는 jest의 mock functions를 사용하지 않는다. getters 객체를 작성하지만 로직은 중요하지 않는다.<br><code>두번째</code> 는 getters의 리턴 값이 렌더링되었는지 여부를 확인 하는 건 wrapper의 text 메소드를 이용한다.</p>
+<br>
+
+<h4 id="vuex의-모듈-방식-테스트하기"><a href="#vuex의-모듈-방식-테스트하기" class="headerlink" title="vuex의 모듈 방식 테스트하기"></a>vuex의 모듈 방식 테스트하기</h4><p>vuex의 모듈 방식을 활용한 테스트도 기존의 테스트랑 별 다를게 없다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;button @click&#x3D;&quot;moduleActionClick()&quot;&gt;Click&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;p&gt;&#123;&#123;moduleClicks&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; Vue, Component &#125; from &#39;vue-property-decorator&#39;;</span><br><span class="line">import &#123; mapActions, mapGetters &#125; from &#39;vuex&#39;;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">    methods: &#123;</span><br><span class="line">        ...mapActions([&#39;moduleActionClick&#39;])</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: mapGetters([&#39;moduleClicks&#39;])</span><br><span class="line">&#125;)</span><br><span class="line">export default class MyModuleVuex extends Vue &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue, Wrapper &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"><span class="keyword">import</span> MyModuleVuex <span class="keyword">from</span> <span class="string">'../MyModuleVuex.vue'</span>;</span><br><span class="line"><span class="keyword">import</span> myModule <span class="keyword">from</span> <span class="string">'../../store/myModule'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line"></span><br><span class="line">localVue.use(Vuex);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'MyModuleVuex'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> actions:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> state:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> store:<span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">let</span> wrapper:Wrapper&lt;Vue&gt;;</span><br><span class="line"></span><br><span class="line">    beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        actions = &#123;</span><br><span class="line">            moduleActionClick: jest.fn()</span><br><span class="line">        &#125;;</span><br><span class="line">        state = &#123;</span><br><span class="line">            clicks: <span class="number">2</span></span><br><span class="line">        &#125;;</span><br><span class="line">        store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">            modules: &#123;</span><br><span class="line">                myModule: &#123;</span><br><span class="line">                    state,</span><br><span class="line">                    actions,</span><br><span class="line">                    getters: myModule.getters</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        wrapper = shallowMount(MyModuleVuex, &#123; store, localVue &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'calls store action "moduleActionClick" when button is clicked'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        wrapper.find(<span class="string">'button'</span>).trigger(<span class="string">'click'</span>);</span><br><span class="line">        expect(actions.moduleActionClick).toHaveBeenCalled();</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'renders "state.clicks" in first p tag'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        expect(wrapper.find(<span class="string">'p'</span>).text()).toBe(state.clicks.toString());</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Vuex-Store-테스트하기"><a href="#Vuex-Store-테스트하기" class="headerlink" title="Vuex Store 테스트하기"></a>Vuex Store 테스트하기</h2><p>지금까지는 Vuex를 사용하는 컴포넌트에 대해서 알아보았다. 그렇기 때문에 실제 Vuex의 내부 동작과는 무관한 테스트였다. 이번에는 Vuex가 정확하게 동작하는지 여부를 테스트 하기 위한 방법이다.<br>Vuex Store 테스트는 두가지 방법이 있다. 첫번째는 getters, mutations, actions를 독립적으로 테스트 하는 것이다. 두번째는 실제 Vuex Store를 생성하는 방법이다.<br>아래는 테스트에서 사용할 mutations와 getters 코드이다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    increment(state:<span class="built_in">any</span>) &#123;</span><br><span class="line">        state.count++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    evenOrOdd(state:<span class="built_in">any</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> state.count % <span class="number">2</span> === <span class="number">0</span> ? <span class="string">'even'</span> : <span class="string">'odd'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="getters-mutations-actions를-독립적으로-테스트하기"><a href="#getters-mutations-actions를-독립적으로-테스트하기" class="headerlink" title="getters, mutations, actions를 독립적으로 테스트하기"></a>getters, mutations, actions를 독립적으로 테스트하기</h4><p>독립적으로 테스트 하는 경우에는 좀더 상세하게 테스트를 진행할수 있다. 테스트가 실패하더라도 어디에서 실패했는지 찾기가 쉽다. 단점으로는 commit, dispatch같은 Vuex의 함수들을 mock 해야할 필요가 있다. 이는 유닛 테스트는 성공할지라도 mock이 정확하지 않기 때문에 실제 production 코드는 실패할수도 있다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mutations <span class="keyword">from</span> <span class="string">'../mutations'</span>;</span><br><span class="line"></span><br><span class="line">test(<span class="string">'"increment" increments "state.count" by 1'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> state = &#123; count: <span class="number">1</span> &#125;;</span><br><span class="line">    mutations.increment(state);</span><br><span class="line">    expect(state.count).toBe(<span class="number">2</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> getters <span class="keyword">from</span> <span class="string">'../getters'</span>;</span><br><span class="line"></span><br><span class="line">test(<span class="string">'"evenOrOdd" returns even if "state.count" is even'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> state = &#123; count: <span class="number">2</span> &#125;;</span><br><span class="line">    expect(getters.evenOrOdd(state)).toBe(<span class="string">'even'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">test(<span class="string">'"evenOrOdd" returns odd if "state.count" is odd'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> state = &#123; count: <span class="number">1</span> &#125;;</span><br><span class="line">    expect(getters.evenOrOdd(state)).toBe(<span class="string">'odd'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="store를-사용한-테스트"><a href="#store를-사용한-테스트" class="headerlink" title="store를 사용한 테스트"></a>store를 사용한 테스트</h4><p>실제로 Vuex sotre를 사용한 방법이다. 이 테스트의 장점은 Vuex function들을 mock 할 필요가 없다는 것이다. 하지만 테스트 실패시에 어디에서 문제가 발생했는지 찾기가 어렵다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mutations <span class="keyword">from</span> <span class="string">'./mutations'</span>;</span><br><span class="line"><span class="keyword">import</span> getters <span class="keyword">from</span> <span class="string">'./getters'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        count: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mutations,</span><br><span class="line">    getters</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createLocalVue &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"><span class="keyword">import</span> storeConfig <span class="keyword">from</span> <span class="string">'../store-config'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; cloneDeep &#125; <span class="keyword">from</span> <span class="string">'lodash'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line"><span class="keyword">let</span> store:<span class="built_in">any</span>;</span><br><span class="line">localVue.use(Vuex);</span><br><span class="line"></span><br><span class="line">beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    store = <span class="keyword">new</span> Vuex.Store(cloneDeep(storeConfig));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">test(<span class="string">'increments "count" value when "increment" is committed'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    expect(store.state.count).toBe(<span class="number">0</span>);</span><br><span class="line">    store.commit(<span class="string">'increment'</span>);</span><br><span class="line">    expect(store.state.count).toBe(<span class="number">1</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">test(<span class="string">'updates "evenOrOdd" getter when "increment" is committed'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    expect(store.getters.evenOrOdd).toBe(<span class="string">'even'</span>);</span><br><span class="line">    store.commit(<span class="string">'increment'</span>);</span><br><span class="line">    expect(store.getters.evenOrOdd).toBe(<span class="string">'odd'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>해당 테스트에서는 cloneDeep를 사용하고 있는데 이는 각 테스트에 store를 클린하게 사용하기 위해서 이다.</p>
+<p>그리고 생각해 보았을 때 상황에 맞추어서 하나씩만 적용 하던가 아니면 두개 모두를 적용해서 테스트 코드를 작성 하면 좋을거 같다.</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/14/vuex-test-md/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/13/vue-router-test/"
+                            aria-label=": Vue 라우터 테스트"
+                        >
+                            Vue 라우터 테스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-13T17:14:15+09:00">
+	
+		    Mar 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/vue-test-utils/">vue-test-utils</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="vue-라우터-테스트-시에-주의-할점"><a href="#vue-라우터-테스트-시에-주의-할점" class="headerlink" title="vue 라우터 테스트 시에 주의 할점"></a>vue 라우터 테스트 시에 주의 할점</h2><p>vue 라우터를 테스트 할 시에 global Vue에 직접 추가를 해서는 안된다. vue 라우터를 설치 할 경우에는 $route와 $router가 vue 프로퍼티에 추가되어진다. 이는 $route와 $router를 mock 해서 테스트 하는 경우에 테스트를 실패하게 만든다.<br>vue-test-utils에서 제공하는 createLocalVue을 사용하는 것을 권장한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue()</span><br><span class="line">localVue.use(VueRouter)</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter()</span><br><span class="line"></span><br><span class="line">shallowMount(Component, &#123;</span><br><span class="line">    localVue,</span><br><span class="line">    router</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="router-link-router-view를-사용하는-컴포넌트-테스트-하기"><a href="#router-link-router-view를-사용하는-컴포넌트-테스트-하기" class="headerlink" title="router-link, router-view를 사용하는 컴포넌트 테스트 하기"></a>router-link, router-view를 사용하는 컴포넌트 테스트 하기</h2><p>위 두가지 컴포넌트를 사용하는 컴포넌트를 테스트 하는 방법은 두가지가 존재한다.</p>
+<br>
+
+<h4 id="1-stubs-사용하기"><a href="#1-stubs-사용하기" class="headerlink" title="1. stubs 사용하기"></a>1. stubs 사용하기</h4><p>stubs를 사용해서 자식 컴포넌트를 렌더링하는 것을 피한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"></span><br><span class="line">shallowMount(Component, &#123;</span><br><span class="line">    stubs: [<span class="string">'router-link'</span>, <span class="string">'router-view'</span>]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="2-localVue를-사용하기"><a href="#2-localVue를-사용하기" class="headerlink" title="2. localVue를 사용하기"></a>2. localVue를 사용하기</h4><p>localVue를 이용해서 실제로 VueRouoter를 추가하는 방식이다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount, createLocalVue &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> localVue = createLocalVue();</span><br><span class="line">localVue.use(VueRouter);</span><br><span class="line"></span><br><span class="line">shallowMount(Component, &#123;</span><br><span class="line">    localVue</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="route-router-mock-하기"><a href="#route-router-mock-하기" class="headerlink" title="$route, $router mock 하기"></a>$route, $router mock 하기</h2><p>$route, $router 객체를 가지고 컴포넌트 테스트를 해야 할 경우가 있다. 이때는 $route, $router를 mock 하여 사용한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> $route = &#123;</span><br><span class="line">    path: <span class="string">'/some/path'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> wrapper = shallowMount(Component, &#123;</span><br><span class="line">    mocks: &#123;</span><br><span class="line">        $route</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">wrapper.vm.$route.path  <span class="comment">// 이렇게 접근이 가능해진다.</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/13/vue-router-test/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/13/typescript-vue-test/"
+                            aria-label=": 타입스크립트로 vue 테스트 하기"
+                        >
+                            타입스크립트로 vue 테스트 하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-13T16:58:50+09:00">
+	
+		    Mar 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>, <a class="category-link" href="/categories/javascript/TDD/jest/typescript/">typescript</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="데이터-테스트-하기"><a href="#데이터-테스트-하기" class="headerlink" title="데이터 테스트 하기"></a>데이터 테스트 하기</h2><p>js에서는 데이터를 검증 할때 아래와 같이 작성한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.vm.message).toBe(<span class="string">'message'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>ts에서도 위와 같은 코드를 작성한 후에 테스트를 돌리니 아래와 같은 에러가 발생하였다. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TypeScript diagnostics (customize using <span class="string">`[jest-config].globals.ts-jest.diagnostics`</span> option):</span><br><span class="line">    src/components/__tests__/HelloWorld.test.ts:<span class="number">12</span>:<span class="number">23</span> - error TS2339: Property <span class="string">'message'</span> does not exist on type <span class="string">'CombinedVueInstance&lt;Vue, object, object, object, Record&lt;never, any&gt;&gt;'</span>.</span><br></pre></td></tr></table></figure>
+
+<p>그래서 정상적으로 테스트 하기 위한 방법은 두가지 정도 인거 같다.</p>
+<br>
+
+<h4 id="1-vm-data-사용하기"><a href="#1-vm-data-사용하기" class="headerlink" title="1. vm.$data 사용하기"></a>1. vm.$data 사용하기</h4><p>vm에는 data값을 가지고 있는 $data 객체가 존재한다. 해당 객체를 통해서 검증을 하면 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.vm.$data.message).toBe(<span class="string">'message'</span>);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="2-jest-config-js-수정하기"><a href="#2-jest-config-js-수정하기" class="headerlink" title="2. jest.config.js 수정하기"></a>2. jest.config.js 수정하기</h4><p>ts-jest를 사용하면 diagnostics옵션의 디폴트값이 true인데 위 코드 처럼 사용할 경우 에러를 발생시킨다. 이를 false로 설정하면 정상적으로 테스트가 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">/// ...</span></span><br><span class="line">    globals: &#123;</span><br><span class="line">      <span class="string">'ts-jest'</span>: &#123;</span><br><span class="line">        diagnostics: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/13/typescript-vue-test/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/12/vue-typescript-test/"
+                            aria-label=": 뷰 타입스크립트로 사용할때 테스트를 위한 설치 방법"
+                        >
+                            뷰 타입스크립트로 사용할때 테스트를 위한 설치 방법
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-12T22:00:53+09:00">
+	
+		    Mar 12, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>, <a class="category-link" href="/categories/javascript/TDD/jest/typescript/">typescript</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="타입스크립트를-사용할때-추가적으로-설치해야할-라이브러리"><a href="#타입스크립트를-사용할때-추가적으로-설치해야할-라이브러리" class="headerlink" title="타입스크립트를 사용할때 추가적으로 설치해야할 라이브러리"></a>타입스크립트를 사용할때 추가적으로 설치해야할 라이브러리</h2><p>뷰를 jest를 통해서 테스트 하고자 할때 설치해야할 라이브러리 목록은 <a href="https://suld2495.github.io/2020/03/06/vue-jest-error">here</a>를 통해서 확인이 가능하다.</p>
+<ol>
+<li>ts-jest</li>
+<li>@types/jest</li>
+</ol>
+<h2 id="jest-config-js"><a href="#jest-config-js" class="headerlink" title="jest.config.js"></a>jest.config.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.export = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="string">"moduleFileExtensions"</span>: [</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="string">"ts"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"transform"</span>: &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="string">"^.+\\.tsx?$"</span>: <span class="string">"ts-jest"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// jest는 기본적으로 js만을 테스트 파일로 찾기 때문에 .ts 파일도 테스트 파일로 찾을수 있도록 설정 해준다.</span></span><br><span class="line">    <span class="string">"testRegex"</span>: <span class="string">"(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="tsconfig-json"><a href="#tsconfig-json" class="headerlink" title="tsconfig.json"></a>tsconfig.json</h2><p>types에 jest를 추가해준다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"compilerOptions"</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="string">"types"</span>: [</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="string">"jest"</span></span><br><span class="line">        ],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/12/vue-typescript-test/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/09/jest-setup/"
+                            aria-label=": 테스트 Setup"
+                        >
+                            테스트 Setup
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-09T21:47:15+09:00">
+	
+		    Mar 09, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><p>테스트 코드를 작성하다 보면 테스트마다 공통적으로 사용이 되는 코드가 존재한다. 그중에서 테스트 코드 로직을 실행 하기 이전에 실행이 되어야 하는 공통 코드가 있다. 이때는 사용되는 함수가 <code>beforeEach</code> 함수이다.<br>해당하는 함수는 각 테스트 코드가 실행되기 이전에 호출된다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 보통 변수의 초기화 등의 코드가 들어가거나 테스트 코드 전에 실행되어야 할 로직이 들어간다.</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="테스트-종료시-호출"><a href="#테스트-종료시-호출" class="headerlink" title="테스트 종료시 호출"></a>테스트 종료시 호출</h2><p>각 테스트가 종료 후에 호출이 되는 함수도 존재한다. 이는 <code>afterEach</code> 함수이다. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">afterEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 테스트 종류 후에 작업 해야 할 로직이 들어간다.</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/09/jest-setup/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/07/vue-test-utils-wrapper/"
+                            aria-label=": Vue Test Utils의 Wrapper 객체"
+                        >
+                            Vue Test Utils의 Wrapper 객체
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-07T11:07:40+09:00">
+	
+		    Mar 07, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/vue/">vue</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="프로퍼티"><a href="#프로퍼티" class="headerlink" title="프로퍼티"></a>프로퍼티</h2><h4 id="1-vm"><a href="#1-vm" class="headerlink" title="1. vm"></a>1. vm</h4><p><code>vm</code>은 Vue 인스턴스이며, wrapper.vm으로 vm의 모든 메소드와 프로퍼티에 접근이 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wrapper.vm.count;</span><br><span class="line">wrapper.vm.method();</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="메소드"><a href="#메소드" class="headerlink" title="메소드"></a>메소드</h2><h4 id="1-html"><a href="#1-html" class="headerlink" title="1. html"></a>1. html</h4><p>Wrapper DOM 노드의 HTML을 문자열로 반환을 해줍니다. 그래서 태그를 포함한 결과를 반환합니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.html()).toBe(<span class="string">'&lt;div&gt;&lt;/div&gt;'</span>);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="2-text"><a href="#2-text" class="headerlink" title="2. text"></a>2. text</h4><p>Wrapper의 text만을 반환해줍니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.text()).toBe(<span class="string">'문자열'</span>);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="3-find"><a href="#3-find" class="headerlink" title="3. find"></a>3. find</h4><p>선택자에 해당하는 DOM 노드 또는 해당하는 뷰 컴포넌트 중에 선번째 Wrapper를 반환해줍니다.</p>
+<ul>
+<li><p>Arguments:</p>
+<ul>
+<li>{string | Component} selector</li>
+</ul>
+</li>
+<li><p>Returns: {Wrapper}</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wrapper.find(<span class="string">'div'</span>);</span><br><span class="line">wrapper.find(Component);</span><br></pre></td></tr></table></figure>
+<br>
+
+<h4 id="3-findAll"><a href="#3-findAll" class="headerlink" title="3. findAll"></a>3. findAll</h4><p>해당 하는 모든 Wrapper를 반환해줍니다.</p>
+<ul>
+<li><p>Arguments:</p>
+<ul>
+<li>{string | Component} selector</li>
+</ul>
+</li>
+<li><p>Returns: {WrapperArray}</p>
+</li>
+</ul>
+<br>
+
+<h4 id="4-exists"><a href="#4-exists" class="headerlink" title="4. exists"></a>4. exists</h4><p>해당 Wrapper가 존재하는지 여부를 반환해줍니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.exists()).toBeTruthy();</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="5-contains"><a href="#5-contains" class="headerlink" title="5. contains"></a>5. contains</h4><p>Wrapper가 매칭되는 element 또는 컴포넌트를 포함하고 있는지 여부를 반환해줍니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper.contains(<span class="string">'div'</span>)).toBeTruthy();</span><br><span class="line">expect(wrapper.contains(Component)).toBeFalsy();</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="6-setData"><a href="#6-setData" class="headerlink" title="6. setData"></a>6. setData</h4><p>data에 값을 할당 할수있습니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrapper.setData(&#123; data키:값 &#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="7-setProps"><a href="#7-setProps" class="headerlink" title="7. setProps"></a>7. setProps</h4><p>props에 값을 할당 할수있습니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrapper.setProps(&#123; prop키:값 &#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="8-trigger"><a href="#8-trigger" class="headerlink" title="8. trigger"></a>8. trigger</h4><p>trigger는 wrapper의 이벤트를 발동시켜줍니다. trigger는 추가적으로 option을 줄수 있습니다.<br>그리고 trigger의 결과를 테스트 할 때는 wrapper.vm.$nextTick를 이용하여 이벤트가 처리 된 후에 테스트 할수 있습니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wrapper.trigger(<span class="string">'click'</span>);</span><br><span class="line">wrapper.trigger(<span class="string">'click'</span>, &#123;</span><br><span class="line">    ctrlKey: <span class="literal">true</span>   <span class="comment">// @click.ctrl을 테스트 할수 있다.</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="9-emitted"><a href="#9-emitted" class="headerlink" title="9. emitted"></a>9. emitted</h4><p>wrapper의 vm에 의해 발동되어진 커스텀 이벤트를 포함하는 객체를 반환해 줍니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wrapper.vm.$emit(<span class="string">'custom'</span>);</span><br><span class="line">wrapper.vm.$emit(<span class="string">'custom'</span>, <span class="number">123</span>);</span><br><span class="line">wrapper.emitted();</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">        custom: [[], [123]]</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/07/vue-test-utils-wrapper/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/03/06/vue-asynchronous/"
+                            aria-label=": 뷰 비동기"
+                        >
+                            뷰 비동기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-03-06T21:30:32+09:00">
+	
+		    Mar 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/vue/">vue</a>, <a class="category-link" href="/categories/vue/vue-%ED%8C%81/">vue 팁</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="비동기-갱신-큐"><a href="#비동기-갱신-큐" class="headerlink" title="비동기 갱신 큐"></a>비동기 갱신 큐</h2><p>Vue는 비동기 적으로 DOM을 업데이트 합니다. 데이터의 변경이 발견 되면 큐를 열고 같은 이벤트 루프에서 발생한 변경된 모든 데이터를 버퍼에 담습니다. 같은 wather가 여러번 호출 되더라도 큐에서 한번만 푸시 됩니다. 이러한 동작은 불필요한 계산과 렌더링을 방지해줍니다. 그리고 다음 이벤트 루프인 “tick”에서 큐를 모두 비우고 실제 행동을 수행합니다.<br><br><br>예를 들어 <code>vm.someData = &#39;new value&#39;</code> 라고 설정 할때, Vue는 바로 렌더링을 수행하지 않고 큐가 비워진 후인 다음 “tick”에서 업데이트 됩니다. 대부분의 상황에서는 이러한 작업이 영향을 받지 않지만, DOM state가 업데이트 된 후 작업을 수행하려는 겨우 신경을 써야 할수 있습니다. 데이터가 변경 된 후, DOM에 업데이가 완료되는 것을 기다리려면 데이터가 변경된 직후에 Vue.nextTick(callback)을 사용하면 됩니다. 콜백은 DOM이 업데이트 된 후 호출이 됩니다. </p>
+<br>
+
+<h4 id="nextTick-사용하기"><a href="#nextTick-사용하기" class="headerlink" title="nextTick 사용하기"></a>nextTick 사용하기</h4><p>아래의 코드를 실행해보면 data가 변경 되더라도 실제로 바로 렌더링되지 않는 다는 것을 확인 할수 있습니다.<br>그리고 nextTic 메소드의 콜백함수가 DOM 업데이트가 완료 된 후 실행되었음을 확인할수 있습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">'#example'</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        message: <span class="string">'123'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vm.message = <span class="string">'new message'</span> </span><br><span class="line">vm.$el.textContent === <span class="string">'new message'</span>        <span class="comment">// false</span></span><br><span class="line">Vue.nextTick(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    vm.$el.textContent === <span class="string">'new message'</span>    <span class="comment">// true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="https://vuejs.org/v2/guide/reactivity.html를" target="_blank" rel="noopener">https://vuejs.org/v2/guide/reactivity.html를</a> 참조하였습니다.</p>
+</blockquote>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/03/06/vue-asynchronous/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/03/06/vue-test-component/"
                             aria-label=": Vue 컴포넌트 테스트 하기"
                         >
@@ -385,552 +962,6 @@
                         <p>
                             <a
                                 href="/2020/03/06/vue-jest-error/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/03/02/jest-start/"
-                            aria-label=": JEST 시작"
-                        >
-                            JEST 시작
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-03-02T19:19:42+09:00">
-	
-		    Mar 02, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/TDD/">TDD</a>, <a class="category-link" href="/categories/javascript/TDD/jest/">jest</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="JEST란"><a href="#JEST란" class="headerlink" title="JEST란"></a>JEST란</h2><p>JEST는 페이스북에서 개발한 ‘테스트 프레임워크’ 이다. JEST 이전에는 테스트 라이브러리를 조합해서 사용하였으나 JEST는 이름도 프레임워크인만큼 Test Runner와 Test Mathcher 그리고 Test Mock까지 모두 지원하고 있다.</p>
-<br>
-
-<h2 id="JEST-설치"><a href="#JEST-설치" class="headerlink" title="JEST 설치"></a>JEST 설치</h2><p>아래의 명령어를 통해서 jest를 설치 할수 있다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i jest</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="첫-테스트-코드-작성"><a href="#첫-테스트-코드-작성" class="headerlink" title="첫 테스트 코드 작성"></a>첫 테스트 코드 작성</h2><p>test.js라는 파일을 만들고 아래의 코드를 추가한다. JEST에서 테스트 코드 작성은 아래와 같다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'테스트 정의'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 테스트할 로직 구현</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'문자열은 Hello이다.'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> str = <span class="string">'Hello'</span></span><br><span class="line">    expect(<span class="string">'Hello'</span>).toBe(str);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="package-json에서-scripts-수정"><a href="#package-json에서-scripts-수정" class="headerlink" title="package.json에서 scripts 수정"></a>package.json에서 scripts 수정</h2><p>package.json을 아래와 같이 수정한후에 npm run test라고 실행하면 테스트를 시작한다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"scripts"</span> : &#123;</span><br><span class="line">        <span class="string">"test"</span>: <span class="string">"jest"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="describe와-it을-이용한-테스트-코드-작성"><a href="#describe와-it을-이용한-테스트-코드-작성" class="headerlink" title="describe와 it을 이용한 테스트 코드 작성"></a>describe와 it을 이용한 테스트 코드 작성</h2><p>위에서는 test 함수를 통해서 테스트 코드를 작성하는 방법에 대해서 알아보았다. Jest에서는 이 뿐 아니라 describe와 it을 통해서도 작성 가능하다. describe은 일종의 테스트 그룹이고, it은 작은 단위의 테스트이다. it이 위의 test와 같은 단위이다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">''</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">''</span>, () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 테스트 코드 작성</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/03/02/jest-start/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/02/18/postgre-%EB%AA%A8%EB%93%A0%ED%85%8C%EC%9D%B4%EB%B8%94%EC%82%AD%EC%A0%9C/"
-                            aria-label=": POSTGRE 모든 테이블 삭제"
-                        >
-                            POSTGRE 모든 테이블 삭제
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-02-18T11:09:38+09:00">
-	
-		    Feb 18, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/postgre/">postgre</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h3 id="모든-테이블-삭제-쿼리"><a href="#모든-테이블-삭제-쿼리" class="headerlink" title="모든 테이블 삭제 쿼리"></a>모든 테이블 삭제 쿼리</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DO</span> $$ <span class="keyword">DECLARE</span></span><br><span class="line">    r <span class="built_in">RECORD</span>;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    <span class="comment">-- if the schema you operate on is not "current", you will want to</span></span><br><span class="line">    <span class="comment">-- replace current_schema() in query with 'schematodeletetablesfrom'</span></span><br><span class="line">    <span class="comment">-- *and* update the generate 'DROP...' accordingly.</span></span><br><span class="line">    <span class="keyword">FOR</span> r <span class="keyword">IN</span> (<span class="keyword">SELECT</span> tablename <span class="keyword">FROM</span> pg_tables <span class="keyword">WHERE</span> schemaname = current_schema()) <span class="keyword">LOOP</span></span><br><span class="line">        <span class="keyword">EXECUTE</span> <span class="string">'DROP TABLE IF EXISTS '</span> || quote_ident(r.tablename) || <span class="string">' CASCADE'</span>;</span><br><span class="line">    <span class="keyword">END</span> <span class="keyword">LOOP</span>;</span><br><span class="line"><span class="keyword">END</span> $$;</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/02/18/postgre-%EB%AA%A8%EB%93%A0%ED%85%8C%EC%9D%B4%EB%B8%94%EC%82%AD%EC%A0%9C/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/02/18/postgre-%EC%9C%A0%EC%A0%80%EC%83%9D%EC%84%B1%EB%B0%8FDB%EA%B6%8C%ED%95%9C%EB%B6%80%EC%97%AC/"
-                            aria-label=": 유저 생성 및 DB 권한 부여까지"
-                        >
-                            유저 생성 및 DB 권한 부여까지
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-02-18T11:07:31+09:00">
-	
-		    Feb 18, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/postgre/">postgre</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h3 id="유저-생성"><a href="#유저-생성" class="headerlink" title="유저 생성"></a>유저 생성</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> 유저명 <span class="keyword">PASSWORD</span> <span class="string">'유저비밀번호'</span></span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h3 id="데이터베이스-생성"><a href="#데이터베이스-생성" class="headerlink" title="데이터베이스 생성"></a>데이터베이스 생성</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> 데이터베이스명</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h3 id="유저에게-데이터베이스-권한-부여"><a href="#유저에게-데이터베이스-권한-부여" class="headerlink" title="유저에게 데이터베이스 권한 부여"></a>유저에게 데이터베이스 권한 부여</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> <span class="keyword">database</span> 데이터베이스명 <span class="keyword">TO</span> 유저명</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/02/18/postgre-%EC%9C%A0%EC%A0%80%EC%83%9D%EC%84%B1%EB%B0%8FDB%EA%B6%8C%ED%95%9C%EB%B6%80%EC%97%AC/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/01/30/map-circuit/"
-                            aria-label=": Map 순회"
-                        >
-                            Map 순회
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-01-30T10:42:04+09:00">
-	
-		    Jan 30, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/collection/">collection</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Map-순회"><a href="#Map-순회" class="headerlink" title="Map 순회"></a>Map 순회</h2><p>Map을 사용하다보면 Map에 저장된 모든 데이터를 순회해야할 경우가 발생합니다. 여러가지 방법 중에서 아래의 3가지에 대해서 알아보았습니다.</p>
-<p>Map 순회 방법</p>
-<ol>
-<li>entrySet()</li>
-<li>keySet()</li>
-<li>values()</li>
-</ol>
-<br>
-
-<h4 id="entrySet-사용하기"><a href="#entrySet-사용하기" class="headerlink" title="entrySet 사용하기"></a>entrySet 사용하기</h4><p>entrySet은 key와 value 모두 필요한 경우에 사용하면 좋습니다. 반환값으로 Set을 반환해주기 때문에 for문을 사용해서 순회할수 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry: map.entrySet()) &#123;</span><br><span class="line">    String key = entry.getKey();</span><br><span class="line">    Object value = entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="keySet-사용하기"><a href="#keySet-사용하기" class="headerlink" title="keySet 사용하기"></a>keySet 사용하기</h4><p>keySet은 key 값만 필요한 경우에 사용하면 좋습니다. 마찬가지로 반환값은 Set입니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (String key : map.keySet()) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="values-사용하기"><a href="#values-사용하기" class="headerlink" title="values 사용하기"></a>values 사용하기</h4><p>values는 value 값만 필요한 경우에 사용하면 좋습니다. 반환값은 Collection 입니다. Collection 또한 for문으로 순회할수 있습니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map &#x3D; new HashMap();</span><br><span class="line"></span><br><span class="line">for (Object value : map.values) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/01/30/map-circuit/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/01/22/spring-el/"
-                            aria-label=": SpEL"
-                        >
-                            SpEL
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-01-22T20:16:31+09:00">
-	
-		    Jan 22, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Spring-Expression-language-란"><a href="#Spring-Expression-language-란" class="headerlink" title="Spring Expression language 란?"></a>Spring Expression language 란?</h2><p>SpEL이란 런타임시에 객체 그래프를 조회하고 조작하는 표현언어입니다. 스프링 3.0이상부터 지원하여 EL과 비슷하지만 메소드 호출 지원, 문자열 템플릿 기능까지 제공해 줍니다.</p>
-<h2 id="SpEL에서-지원하는-기능"><a href="#SpEL에서-지원하는-기능" class="headerlink" title="SpEL에서 지원하는 기능"></a>SpEL에서 지원하는 기능</h2><ol>
-<li>Literal expressions</li>
-<li>Boolean and relational operators</li>
-<li>Regular expressions</li>
-<li>Class expressions</li>
-<li>Accessing properties, arrays, lists, and maps</li>
-<li>Method invocation</li>
-<li>Relational operators</li>
-<li>Assignment</li>
-<li>Calling constructors</li>
-<li>Bean references</li>
-<li>Array construction</li>
-<li>Inline lists</li>
-<li>Inline maps</li>
-<li>Ternary operator</li>
-<li>Variables</li>
-<li>User-defined functions</li>
-<li>Collection projection</li>
-<li>Collection selection</li>
-<li>Templated expressions</li>
-</ol>
-<br>
-
-<h2 id="SpelExpressionParser"><a href="#SpelExpressionParser" class="headerlink" title="SpelExpressionParser"></a>SpelExpressionParser</h2><p><code>SpelExpressionParser</code> 클래스를 사용해서 리터럴 문자열 표현식을 파싱할수 있습니다. 싱글 쿼테이션으로 둘러싸인 문자열을 파싱 해줍니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"'Hello World'"</span>);</span><br><span class="line">    String message = (String) exp.getValue();</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello World</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<p>SpEL은 메소드를 호출하거나 프로퍼티에 접근하거나 생성자를 호출할수 있습니다. 아래의 예제는 String 메소드 중 하나인 concat을 호출하고 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"'Hello World'.concat('!')"</span>);</span><br><span class="line">    String message = (String) exp.getValue();</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<p>SpEL을 사용해서 객체(rootObject라고 부름)의 필드의 값을 가져 올수 있습니다. 그리고 Expression의 getValue의 파라미터 중에 하나인 desiredResultType에 반환받은 타입을 입력하면 위의 예제 처럼 캐스팅을 하지 않아도 됩니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpELVO</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpELVO</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    SpELVO spELVO = <span class="keyword">new</span> SpELVO(<span class="string">"intelli"</span>);</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"name"</span>);</span><br><span class="line">    String message = (String) exp.getValue(spELVO, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">intelli</span><br></pre></td></tr></table></figure>
-
-<h2 id="EvaluationContext"><a href="#EvaluationContext" class="headerlink" title="EvaluationContext"></a>EvaluationContext</h2><p><code>EvaluationContext</code> 인터페이스는 프로퍼티, 메소드, 필드를 처리하고 타입변환을 수행하는 표현식을 평가할때 사용합니다. 스프링에서는 두개의 구현체를 제공합니다.</p>
-<br>
-
-<p><strong>1. SimpleEvaluationContext</strong> : SpEL에서 필수적인 기능만 제공합니다.(4.3.15 버전부터 지원)<br><strong>2. StandardEvaluationContext</strong> : SpEL의 모든 기능을 사용할수 있습니다.</p>
-<p>지금까지의 예제에서도 내부에서는 EvaluationContext를 사용하고 있습니다. 아래처럼 EvaluationContext를 직접 생성 후에 사용할수도 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    SpELVO spELVO = <span class="keyword">new</span> SpELVO(<span class="string">"intelli"</span>);</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"name"</span>);</span><br><span class="line">    EvaluationContext evaluationContext = <span class="keyword">new</span> StandardEvaluationContext();</span><br><span class="line">    String message = exp.getValue(evaluationContext, spELVO, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p>SpEL을 이용해서 배열에 접근 할수 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; names;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getNames</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> names;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNames</span><span class="params">(List&lt;String&gt; names)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.names = names;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test5</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayList arrayList = <span class="keyword">new</span> ArrayList();</span><br><span class="line">    arrayList.setNames(Arrays.asList(<span class="string">"woman"</span>, <span class="string">"man"</span>));</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"names[0]"</span>);</span><br><span class="line">    EvaluationContext evaluationContext = <span class="keyword">new</span> StandardEvaluationContext(arrayList); <span class="comment">// rootObject를 여기에 바로 쓸수도 있다.</span></span><br><span class="line">    String message = exp.getValue(evaluationContext, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">woman</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<p>값을 가져오는 것 말고도 값을 변경할수도 있습니다. 유의 해야할 점은 값을 추가해주는게 아닌 변경해주는 것입니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test6</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayLists arrayLists = <span class="keyword">new</span> ArrayLists();</span><br><span class="line">    arrayLists.setNames(Arrays.asList(<span class="string">"man"</span>));</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"names[0]"</span>);</span><br><span class="line">    EvaluationContext evaluationContext = <span class="keyword">new</span> StandardEvaluationContext(arrayLists);</span><br><span class="line">    exp.setValue(evaluationContext, <span class="string">"woman"</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(arrayLists.getNames().get(<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>값을 변경해주는 기능은 배열 뿐 아니라 일반 객체에서도 사용 가능합니다. 이때 필드는 public 이거나 setter 메소드가 구현되어 있어야 합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test7</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    SpELVO spELVO = <span class="keyword">new</span> SpELVO(<span class="string">"jesi"</span>);</span><br><span class="line"></span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">    Expression exp = parser.parseExpression(<span class="string">"name"</span>);</span><br><span class="line">    EvaluationContext evaluationContext = <span class="keyword">new</span> StandardEvaluationContext(spELVO);</span><br><span class="line">    exp.setValue(evaluationContext, <span class="string">"sara"</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(spELVO.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="SpelParserConfiguration"><a href="#SpelParserConfiguration" class="headerlink" title="SpelParserConfiguration"></a>SpelParserConfiguration</h2><p><code>SpelParserConfiguration</code>를 사용 하면 Collection에서 index가 null일 경우에 자동으로 생성해주는 기능을 활성화 할수 있습니다. </p>
-<p>아래의 예제에서는 배열에서 index가 null인 요소에 접근하려고 할때 자동으로 배열에 빈값이 추가된것을 확인 할수 있습니다. SpelParserConfiguration 생성자의 두번째 파라미터를 true로 전달하면 기능을 활성화 할수 있습니다(기본값은 두개 모두 false).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test8</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayLists arrayLists = <span class="keyword">new</span> ArrayLists();</span><br><span class="line"></span><br><span class="line">    SpelParserConfiguration configuration = <span class="keyword">new</span> SpelParserConfiguration(<span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser(configuration);</span><br><span class="line">    Expression expression = parser.parseExpression(<span class="string">"names[4]"</span>);</span><br><span class="line">    String name = expression.getValue(arrayLists, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"result : "</span> + name);</span><br><span class="line">    System.out.println(arrayLists.getNames().size());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result : </span><br><span class="line">5</span><br></pre></td></tr></table></figure>
-
-<p>String 뿐 아니라 일반 객체도 자동으로 생성해 줍니다. 이때 자동으로 생성 될 객체는 디폴트 생성자가 존재하여야 합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpELVO</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpELVO</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayRefrence</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;SpELVO&gt; spELVOs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;SpELVO&gt; <span class="title">getSpELVOs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> spELVOs;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSpELVOs</span><span class="params">(List&lt;SpELVO&gt; spELVOs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.spELVOs = spELVOs;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test9</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayRefrence arrayLists = <span class="keyword">new</span> ArrayRefrence();</span><br><span class="line"></span><br><span class="line">    SpelParserConfiguration configuration = <span class="keyword">new</span> SpelParserConfiguration(<span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">    ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser(configuration);</span><br><span class="line">    Expression expression = parser.parseExpression(<span class="string">"spELVOs[4]"</span>);</span><br><span class="line">    String name = expression.getValue(arrayLists, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"result : "</span> + name);</span><br><span class="line">    System.out.println(arrayLists.getSpELVOs().size());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="빈-정의를-정의하는-표현식"><a href="#빈-정의를-정의하는-표현식" class="headerlink" title="빈 정의를 정의하는 표현식"></a>빈 정의를 정의하는 표현식</h2><p>XML와 어노테이션 기반의 설정 메타데이터와 SpEL 표현식을 함께 사용할수 있습니다. 표현식을 정의 하기 위한 문법은 <code>#{ &lt;expression string&gt; }</code>입니다.</p>
-<h4 id="XML-Configuration"><a href="#XML-Configuration" class="headerlink" title="XML Configuration"></a>XML Configuration</h4><p>표현식을 사용해서 프로퍼티나 생성자의 전달인자에 값을 할당할수 있습니다.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"spelVo"</span> <span class="attr">class</span>=<span class="string">"kr.co.spring.SpELVO"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"hihi"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">xml</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"spring/spring-spel.xml"</span>);</span><br><span class="line">    SpELVO spelVo= (SpELVO) ctx.getBean(<span class="string">"spelVo"</span>);</span><br><span class="line">    System.out.println(spelVo.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hihi</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="어노테이션"><a href="#어노테이션" class="headerlink" title="어노테이션"></a>어노테이션</h4><p><code>@Value</code> 어노테이션을 이용해서 SpEL을 사용할수 있습니다. 어노테이션이 위치할수 있는 곳은 필드, 메소드, 메소드나 생성자의 파라미터입니다.</p>
-<h6 id="필드에서의-사용"><a href="#필드에서의-사용" class="headerlink" title="필드에서의 사용"></a>필드에서의 사용</h6><p>아래의 클래스는 Value 어노테이션을 사용하는 예제로 사용이 됩니다. 아래에서 보듯이 일반 문자열 및 빈으로 등록 된 객체의 메소드도 사용이 가능합니다(빈으로 등록되지 않으면 사용이 안됨).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValueSpEL</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"hi"</span>)</span><br><span class="line">    <span class="keyword">private</span> String hello;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"#&#123;seplVo.getName()&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hello;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>SpELVO와 ValueSpEL 클래스를 빈으로 등록합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SpELVO <span class="title">seplVo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SpELVO(<span class="string">"sara"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ValueSpEL <span class="title">valueSpEL</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ValueSpEL();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">annotationField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(WebConfiguration<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    ValueSpEL valueSpEL = (ValueSpEL) ctx.getBean(<span class="string">"valueSpEL"</span>);</span><br><span class="line">    System.out.println(valueSpEL.getHello());</span><br><span class="line">    System.out.println(valueSpEL.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hi</span><br><span class="line">sara</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>주의를 할 점은 xml이나 어노테이션 등에서 사용 되는 $와 #의 차이점을 구분할줄 알아야 한다. $는 프로퍼티 문법이고,<br> #는 SpEL 문법이다.</p>
-</blockquote>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/01/22/spring-el/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/01/19/spring-databinding2/"
-                            aria-label=": 데이터 바인딩 추상화2"
-                        >
-                            데이터 바인딩 추상화2
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-01-19T09:27:07+09:00">
-	
-		    Jan 19, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/spring/">spring</a>, <a class="category-link" href="/categories/spring/IoC-Container/">IoC Container</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="데이터-바인딩-추사황-Converter와-Formatter"><a href="#데이터-바인딩-추사황-Converter와-Formatter" class="headerlink" title="데이터 바인딩 추사황 : Converter와 Formatter"></a>데이터 바인딩 추사황 : Converter와 Formatter</h2><p>초기 스프링에서는 PropertyEditor를 사용하였습니다. 이후 이를 대체할 Converter, Formatter 인터페이스가 등장하였습니다.</p>
-<h4 id="Converter"><a href="#Converter" class="headerlink" title="Converter"></a>Converter</h4><p>Converter는 S타입을 T타입으로 변환할수 있습니다. PropertyEditor와는 다르게 상태정보가 없기 때문에 쓰레드 세이프합니다. 이로 인하여 빈으로 등록 후 사용하여도 문제가 없습니다.</p>
-<h4 id="xml을-이용한-Custom-Converter-등록하기"><a href="#xml을-이용한-Custom-Converter-등록하기" class="headerlink" title="xml을 이용한 Custom Converter 등록하기"></a>xml을 이용한 Custom Converter 등록하기</h4><h6 id="Converter-만들기"><a href="#Converter-만들기" class="headerlink" title="Converter 만들기"></a>Converter 만들기</h6><p>Conterver를 만드는 방법은 간단합니다. Converter&lt;&gt;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventConverter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StringToEventConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">String</span>, <span class="title">Event</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Event <span class="title">convert</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">            Event event = <span class="keyword">new</span> Event();</span><br><span class="line">            event.setId(Integer.parseInt(source));</span><br><span class="line">            <span class="keyword">return</span> event;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">EventToStringConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">Event</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">convert</span><span class="params">(Event source)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"convert : "</span> + source.getId();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/01/19/spring-databinding2/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/01/14/spring-property-load/"
-                            aria-label=": 프로퍼티 파일 가져오기"
-                        >
-                            프로퍼티 파일 가져오기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-01-14T21:26:41+09:00">
-	
-		    Jan 14, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/spring/">spring</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="프로퍼티-파일-가져오기"><a href="#프로퍼티-파일-가져오기" class="headerlink" title="프로퍼티 파일 가져오기"></a>프로퍼티 파일 가져오기</h2><h5 id="스프링을-이용해서-프러퍼티-가져오기"><a href="#스프링을-이용해서-프러퍼티-가져오기" class="headerlink" title="스프링을 이용해서 프러퍼티 가져오기"></a>스프링을 이용해서 프러퍼티 가져오기</h5><p>스프링에서 제공하는 Resource와 PropertySource를 통해서 쉽게 프로퍼티 파일을 가져 올수 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PropertiesTest</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"클래스패스 경로"</span>);   <span class="comment">// prefix로 classpath:를 붙이지 않는다.</span></span><br><span class="line">        PropertySource propertySource = <span class="keyword">new</span> ResourcePropertySource(resource);</span><br><span class="line"></span><br><span class="line">        propertySource.getProperty(<span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/01/14/spring-property-load/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

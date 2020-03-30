@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="">
+    <title>웹팩 플러그인 - null</title>
+    <meta name="author" content="Moon Star">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"articleBody":"플러그인로더가 파일단위로 처리하는 반면 플러그인은 번들된 결과물을 처리할때 사용한다. 번들된 자바스크립트를 난독화 하거나 특정 텍스트를 추출할하는 용도로도 사용이 가능하다.\n\n\n커스텀 플러그인 만들기로더는 함수 기반이었지만 플러그인은 클래스 기반으로 작성한다.\n12345678910111213141516171819202122232425262728293031// plugin.jsclass MyPlugin &#123;    apply(compiler) &#123;        // 플러그인이 완료 된 후 실행될 콜백함수를 지정한다.        compiler.hooks.done.tap('My Plugin', stats =&gt; &#123;            console.log('MyPlugin: done');        &#125;);        // 실제로 플러그인이 처리할 코드가 들어가는 부분이다.        compiler.plugin('emit', (compliation, callback) =&gt; &#123;            // compliation.assets['main.js'].source();를 통해서 번들링 된 파일을 가져올수 있다.            const source = compliation.assets['main.js'].source();            // source 메소드를 재정의 하고 있다.            compliation.assets['main.js'].source = () =&gt; &#123;                const banner = [                    '/**',                    ' * 이것은 BannerPlugin이 처리한 결과입니다.',                    ' * Build Date: 2019-10-10',                    ' */'                ].join('\\n');                return banner + '\\n\\n' + source;            &#125;            callback();        &#125;);    &#125;&#125;module.exports = MyPlugin;\n\n12345678910// webpack.config.jsconst MyPlugin = require('./plugin.js');module.exports = &#123;    // ...     plugins: [        new MyPlugin()    ]&#125;\n\n웹팩에 plugins 배열에 등록해준다. 직접 클래스를 생성후에 넣어준다.\n\n플러그인 또한 로더처럼 커스텀 플러그인을 만들 일을 거의 없다.\n\n\n\n자주사용되는 플러그인BannerPlugin결과물에 빌드 정보다 커밋 버전 등을 추가할때 주로 사용한다. 말그대로 배너를 추가할때 사용한다.웹팩이 기본적으로 제공해주기 때문에 따로 설치할 필요가 없다.\n123456789101112// webpack.config.jsconst webpack = require('webpack');plugins: [    new webpack.BannerPlugin(&#123;        banner: `            Build Date: $&#123;new Date().toLocaleString()&#125;            Commit Version: $&#123;childProcess.execSync('git config user.name')&#125;        `    &#125;)]\n\n\n\nDefinePlugin웹팩에서 제공하는 DefinePlugin은 모든 자바스크립트 코드에서 접근이 가능한 전역 변수를 선언하기 위해서 사용되는 플러그인이다. 사용방법은 webpack.DefinePlugin의 생성자에 전역 변수로 사용할 값을 객체 형태로 넘겨준다.\n1234567891011// webpack.config.jsconst webpack = require('webpack');plugins: [    new webpack.DefinePlugin(&#123;        TWO: '1+1',        TWO2: JSON.stringify('1+1'),        'api.domian': JSON.stringify('http://naver.com')    &#125;)]\n\n주의 할 점은 값이 문자열이 아니라 계산식이라는 것이다. 첫번째 값이 ‘1+1’은 문자열이 아니라 계산되어 2라는 값이 TWO에 저장된다. ‘1+1’이라는 문자열을 사용하고 싶으면 JSON.stringify를 사용하여야 한다.키가 api.domian 이런식으로 등록하면 실제 사용할때는 객체 형식으로 접근이 가능하다.\n12345// main.jsconsole.log(TWO);   // 2console.log(TWO2);  // 1+1console.log(api.domain); // http://naver.com\n\n노드의 process 객체는 기본적으로 전역적으로 사용할수 있도록 등록이 되어 있다.\n123// main.jsconsole.log(process.env);\n\n\n\nHtmlWebpackPlugin서드파티로 제공하는 HtmlWebpackPlugin는 HTML 파일을 후처할때 사용한다. 이 플러그인을 사용하면 HTML도 빌드의 과정에 포함 시킬수 있다. \n1npm install -D html-webpack-plugin\n\n12345678910111213141516// webpack.config.jsconst HtmlWebpackPlugin = requrie('html-webpack-plugin');plugins: [    new HtmlWebpackPlugin(&#123;        template: './src/index.html',        templateParameters: &#123;            'param': 'value'        &#125;,        minify: &#123;            collapseWhitespace: true,            removeComments: true        &#125;    &#125;)]\n\n\ntemplate : index.html의 경로를 적어준다. 빌드 후에 output 경로에 index.html 생성이 된다. 번들링된 자바스크립트 경로도 자동으로 index.html에 추가되기때문에 수동으로 작성할 필요가 없어진다.\ntemplateParameters: index.html에 파라미터를 전달할수 있다. &lt;%= 파라미터명 %&gt; 으로 값을 가져올수 있다.  123&lt;html&gt;    &lt;%= param %&gt;&lt;html&gt;\nminify: 말그대로 코드를 경량화 하기 위한 옵션이다.\ncollapseWhitespace: value가 true로 설정 하면 모든 빈칸을 제거해준다.\nremoveComments: value가 true이면 모든 주석을 제거해준다.\n\n\n\n\n\nCleanWebpackPlugin서드파티로 제공하는 CleanWebpackPlugin는 빌드 이전 결과물을 모두 제거해 주는 플러그인다(output 폴더를 모두 삭제 후에 빌드가 된다). 해당 플러그인은 export시에 객체로 감싸기 때문에 { CleanWebpackPlugin }으로 사용해야 한다.  \n1npm install -D clean-webpack-plugin\n\n1234567// webpack.config.jsconst &#123; CleanWebpackPlugin &#125; = require('clean-webpack-plugin');plugins: [    new CleanWebpackPlugin()]\n\n\n\nMiniCssExtractPlugin스타일 시트의 양이 많을때 자바스크립트 하나로 결과물을 모두 번들링 하게 되면 부담이 커진다. 번들 결과에서 스타일시트 코드만 뽑아서 별도의 css 파일로 관리 할수 있다. 최종 결과물이 css 파일하나, js 파일 하나가 된다(물론 그 이상도 만들수 있다).개발 모드일때는 하나의 js로 하는게 작업에 좋다고 한다. 배포시에만 설정하도록 해보자.\n1npm install mini-css-extract-plugin\n\n12345678910111213141516171819202122// webpack.config.jsconst MiniCssExtracPlugin = require('mini-css-extract-plugin');module: &#123;    rules: [        &#123;            test: /\\.css$/,            use: [                process.env.NODE_ENV === 'development'                    ? MiniCssExtracPlugin.loader                    : 'style-loader',                'css-loader'                ]        &#125;    ]&#125;,plugins: [    ...(        process.env.NODE_ENV === 'development'             ? [new MiniCssExtracPlugin(&#123; filename: '[name].css' &#125;)]             : []    )]\n\n위에 코드에서도 확인 할수 있듯이 MiniCssExtracPlugin를 사용하려면 loader 또한 MiniCssExtracPlugin.loader를 사용하여야 한다.\n","dateCreated":"2020-03-29T12:49:41+09:00","dateModified":"2020-03-30T20:50:36+09:00","datePublished":"2020-03-29T12:49:41+09:00","description":"","headline":"웹팩 플러그인","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"},"publisher":{"@type":"Organization","name":"Moon Star","sameAs":["https://github.com/","https://facebook.com/"]},"url":"https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/","keywords":"webpack, webpack-plugin"}</script>
+    <meta name="description" content="플러그인로더가 파일단위로 처리하는 반면 플러그인은 번들된 결과물을 처리할때 사용한다. 번들된 자바스크립트를 난독화 하거나 특정 텍스트를 추출할하는 용도로도 사용이 가능하다.   커스텀 플러그인 만들기로더는 함수 기반이었지만 플러그인은 클래스 기반으로 작성한다. 12345678910111213141516171819202122232425262728293031&#x2F;">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="웹팩 플러그인">
+<meta property="og:url" content="https:&#x2F;&#x2F;suld2495.github.io&#x2F;2020&#x2F;03&#x2F;29&#x2F;front-setting-webpack-plugin&#x2F;index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="플러그인로더가 파일단위로 처리하는 반면 플러그인은 번들된 결과물을 처리할때 사용한다. 번들된 자바스크립트를 난독화 하거나 특정 텍스트를 추출할하는 용도로도 사용이 가능하다.   커스텀 플러그인 만들기로더는 함수 기반이었지만 플러그인은 클래스 기반으로 작성한다. 12345678910111213141516171819202122232425262728293031&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-29T03:49:41.000Z">
+<meta property="article:modified_time" content="2020-03-30T11:50:36.970Z">
+<meta property="article:author" content="Moon Star">
+<meta property="article:tag" content="webpack">
+<meta property="article:tag" content="webpack-plugin">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/%20"
+                            
+                            title="홈"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="카테고리"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="태그"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="아카이브"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="검색"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            웹팩 플러그인
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-03-29T12:49:41+09:00">
+	
+		    Mar 29, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/javascript/">javascript</a>, <a class="category-link" href="/categories/javascript/front-settings/">front-settings</a>, <a class="category-link" href="/categories/javascript/front-settings/webpack/">webpack</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="플러그인"><a href="#플러그인" class="headerlink" title="플러그인"></a>플러그인</h2><p>로더가 파일단위로 처리하는 반면 플러그인은 번들된 결과물을 처리할때 사용한다. 번들된 자바스크립트를 난독화 하거나 특정 텍스트를 추출할하는 용도로도 사용이 가능하다.</p>
+<br>
+
+<h2 id="커스텀-플러그인-만들기"><a href="#커스텀-플러그인-만들기" class="headerlink" title="커스텀 플러그인 만들기"></a>커스텀 플러그인 만들기</h2><p>로더는 함수 기반이었지만 플러그인은 클래스 기반으로 작성한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// plugin.js</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPlugin</span> </span>&#123;</span><br><span class="line">    apply(compiler) &#123;</span><br><span class="line">        <span class="comment">// 플러그인이 완료 된 후 실행될 콜백함수를 지정한다.</span></span><br><span class="line">        compiler.hooks.done.tap(<span class="string">'My Plugin'</span>, stats =&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'MyPlugin: done'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 실제로 플러그인이 처리할 코드가 들어가는 부분이다.</span></span><br><span class="line">        compiler.plugin(<span class="string">'emit'</span>, (compliation, callback) =&gt; &#123;</span><br><span class="line">            <span class="comment">// compliation.assets['main.js'].source();를 통해서 번들링 된 파일을 가져올수 있다.</span></span><br><span class="line">            <span class="keyword">const</span> source = compliation.assets[<span class="string">'main.js'</span>].source();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// source 메소드를 재정의 하고 있다.</span></span><br><span class="line">            compliation.assets[<span class="string">'main.js'</span>].source = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">const</span> banner = [</span><br><span class="line">                    <span class="string">'/**'</span>,</span><br><span class="line">                    <span class="string">' * 이것은 BannerPlugin이 처리한 결과입니다.'</span>,</span><br><span class="line">                    <span class="string">' * Build Date: 2019-10-10'</span>,</span><br><span class="line">                    <span class="string">' */'</span></span><br><span class="line">                ].join(<span class="string">'\n'</span>);</span><br><span class="line">                <span class="keyword">return</span> banner + <span class="string">'\n\n'</span> + source;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            callback();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = MyPlugin;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> MyPlugin = <span class="built_in">require</span>(<span class="string">'./plugin.js'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">// ... </span></span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> MyPlugin()</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>웹팩에 plugins 배열에 등록해준다. 직접 클래스를 생성후에 넣어준다.</p>
+<blockquote>
+<p>플러그인 또한 로더처럼 커스텀 플러그인을 만들 일을 거의 없다.</p>
+</blockquote>
+<br>
+
+<h2 id="자주사용되는-플러그인"><a href="#자주사용되는-플러그인" class="headerlink" title="자주사용되는 플러그인"></a>자주사용되는 플러그인</h2><h4 id="BannerPlugin"><a href="#BannerPlugin" class="headerlink" title="BannerPlugin"></a>BannerPlugin</h4><p>결과물에 빌드 정보다 커밋 버전 등을 추가할때 주로 사용한다. 말그대로 배너를 추가할때 사용한다.<br>웹팩이 기본적으로 제공해주기 때문에 따로 설치할 필요가 없다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.BannerPlugin(&#123;</span><br><span class="line">        banner: <span class="string">`</span></span><br><span class="line"><span class="string">            Build Date: <span class="subst">$&#123;<span class="keyword">new</span> <span class="built_in">Date</span>().toLocaleString()&#125;</span></span></span><br><span class="line"><span class="string">            Commit Version: <span class="subst">$&#123;childProcess.execSync(<span class="string">'git config user.name'</span>)&#125;</span></span></span><br><span class="line"><span class="string">        `</span></span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="DefinePlugin"><a href="#DefinePlugin" class="headerlink" title="DefinePlugin"></a>DefinePlugin</h4><p>웹팩에서 제공하는 DefinePlugin은 모든 자바스크립트 코드에서 접근이 가능한 전역 변수를 선언하기 위해서 사용되는 플러그인이다. 사용방법은 <code>webpack.DefinePlugin</code>의 생성자에 전역 변수로 사용할 값을 객체 형태로 넘겨준다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.DefinePlugin(&#123;</span><br><span class="line">        TWO: <span class="string">'1+1'</span>,</span><br><span class="line">        TWO2: <span class="built_in">JSON</span>.stringify(<span class="string">'1+1'</span>),</span><br><span class="line">        <span class="string">'api.domian'</span>: <span class="built_in">JSON</span>.stringify(<span class="string">'http://naver.com'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>주의 할 점은 값이 문자열이 아니라 계산식이라는 것이다. 첫번째 값이 ‘1+1’은 문자열이 아니라 계산되어 2라는 값이 TWO에 저장된다. ‘1+1’이라는 문자열을 사용하고 싶으면 <code>JSON.stringify</code>를 사용하여야 한다.<br>키가 <code>api.domian</code> 이런식으로 등록하면 실제 사용할때는 객체 형식으로 접근이 가능하다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(TWO);   <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(TWO2);  <span class="comment">// 1+1</span></span><br><span class="line"><span class="built_in">console</span>.log(api.domain); <span class="comment">// http://naver.com</span></span><br></pre></td></tr></table></figure>
+
+<p>노드의 process 객체는 기본적으로 전역적으로 사용할수 있도록 등록이 되어 있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(process.env);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="HtmlWebpackPlugin"><a href="#HtmlWebpackPlugin" class="headerlink" title="HtmlWebpackPlugin"></a>HtmlWebpackPlugin</h4><p>서드파티로 제공하는 HtmlWebpackPlugin는 HTML 파일을 후처할때 사용한다. 이 플러그인을 사용하면 HTML도 빌드의 과정에 포함 시킬수 있다. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D html-webpack-plugin</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = requrie(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">        template: <span class="string">'./src/index.html'</span>,</span><br><span class="line">        templateParameters: &#123;</span><br><span class="line">            <span class="string">'param'</span>: <span class="string">'value'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        minify: &#123;</span><br><span class="line">            collapseWhitespace: <span class="literal">true</span>,</span><br><span class="line">            removeComments: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>template</code> : index.html의 경로를 적어준다. 빌드 후에 output 경로에 index.html 생성이 된다. 번들링된 자바스크립트 경로도 자동으로 index.html에 추가되기때문에 수동으로 작성할 필요가 없어진다.</li>
+<li><code>templateParameters</code>: index.html에 파라미터를 전달할수 있다. <code>&lt;%= 파라미터명 %&gt;</code> 으로 값을 가져올수 있다.  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%=</span> <span class="attr">param</span> %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><code>minify</code>: 말그대로 코드를 경량화 하기 위한 옵션이다.<ul>
+<li><strong>collapseWhitespace</strong>: value가 true로 설정 하면 모든 빈칸을 제거해준다.</li>
+<li><strong>removeComments</strong>: value가 true이면 모든 주석을 제거해준다.</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h4 id="CleanWebpackPlugin"><a href="#CleanWebpackPlugin" class="headerlink" title="CleanWebpackPlugin"></a>CleanWebpackPlugin</h4><p>서드파티로 제공하는 CleanWebpackPlugin는 빌드 이전 결과물을 모두 제거해 주는 플러그인다(output 폴더를 모두 삭제 후에 빌드가 된다). 해당 플러그인은 export시에 객체로 감싸기 때문에 <code>{ CleanWebpackPlugin }</code>으로 사용해야 한다.  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D clean-webpack-plugin</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> CleanWebpackPlugin()</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="MiniCssExtractPlugin"><a href="#MiniCssExtractPlugin" class="headerlink" title="MiniCssExtractPlugin"></a>MiniCssExtractPlugin</h4><p>스타일 시트의 양이 많을때 자바스크립트 하나로 결과물을 모두 번들링 하게 되면 부담이 커진다. 번들 결과에서 스타일시트 코드만 뽑아서 별도의 css 파일로 관리 할수 있다. 최종 결과물이 css 파일하나, js 파일 하나가 된다(물론 그 이상도 만들수 있다).<br>개발 모드일때는 하나의 js로 하는게 작업에 좋다고 한다. 배포시에만 설정하도록 해보자.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mini-css-extract-plugin</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> MiniCssExtracPlugin = <span class="built_in">require</span>(<span class="string">'mini-css-extract-plugin'</span>);</span><br><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">            test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">            use: [</span><br><span class="line">                process.env.NODE_ENV === <span class="string">'development'</span></span><br><span class="line">                    ? MiniCssExtracPlugin.loader</span><br><span class="line">                    : <span class="string">'style-loader'</span>,</span><br><span class="line">                <span class="string">'css-loader'</span>    </span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br><span class="line">plugins: [</span><br><span class="line">    ...(</span><br><span class="line">        process.env.NODE_ENV === <span class="string">'development'</span> </span><br><span class="line">            ? [<span class="keyword">new</span> MiniCssExtracPlugin(&#123; <span class="attr">filename</span>: <span class="string">'[name].css'</span> &#125;)] </span><br><span class="line">            : []</span><br><span class="line">    )</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>위에 코드에서도 확인 할수 있듯이 MiniCssExtracPlugin를 사용하려면 loader 또한 <code>MiniCssExtracPlugin.loader</code>를 사용하여야 한다.</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/webpack/" rel="tag">webpack</a> <a class="tag tag--primary tag--small t-link" href="/tags/webpack-plugin/" rel="tag">webpack-plugin</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/30/front-setting-babel/"
+                    data-tooltip="바벨"
+                    aria-label="PREVIOUS: 바벨"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/29/front-setting-webpack-loader/"
+                    data-tooltip="웹팩 로더"
+                    aria-label="NEXT: 웹팩 로더"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Moon Star. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/30/front-setting-babel/"
+                    data-tooltip="바벨"
+                    aria-label="PREVIOUS: 바벨"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/03/29/front-setting-webpack-loader/"
+                    data-tooltip="웹팩 로더"
+                    aria-label="NEXT: 웹팩 로더"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://suld2495.github.io/2020/03/29/front-setting-webpack-plugin/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Moon Star</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
